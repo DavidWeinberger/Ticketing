@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="tickets">
+            <h2><span jhiTranslate="ticketingProjectApp.tickets.detail.title">Tickets</span> {{tickets.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="ticketingProjectApp.tickets.ticketType">Ticket Type</span></dt>
+                <dd>
+                    <span>{{tickets.ticketType}}</span>
+                </dd>
+                <dt><span jhiTranslate="ticketingProjectApp.tickets.price">Price</span></dt>
+                <dd>
+                    <span>{{tickets.price}}</span>
+                </dd>
+                <dt><span jhiTranslate="ticketingProjectApp.tickets.amount">Amount</span></dt>
+                <dd>
+                    <span>{{tickets.amount}}</span>
+                </dd>
+                <dt><span jhiTranslate="ticketingProjectApp.tickets.place">Place</span></dt>
+                <dd>
+                    <span>{{tickets.place}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/tickets', tickets.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

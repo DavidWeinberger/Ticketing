@@ -1,0 +1,25 @@
+{
+  "ticketingProjectApp": {
+    "tickets": {
+      "home": {
+        "title": "Tickets",
+        "createLabel": "Tickets erstellen",
+        "createOrEditLabel": "Tickets erstellen oder bearbeiten",
+        "notFound": "No Tickets found"
+      },
+      "created": "Tickets erstellt mit ID {{ param }}",
+      "updated": "Tickets aktualisiert mit ID {{ param }}",
+      "deleted": "Tickets gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Tickets {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Tickets"
+      },
+      "ticketType": "Ticket Type",
+      "price": "Price",
+      "amount": "Amount",
+      "place": "Place"
+    }
+  }
+}

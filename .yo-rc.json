@@ -1,0 +1,44 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "at.htl.diplproject",
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "6.2.0",
+    "applicationType": "monolith",
+    "baseName": "TicketingProject",
+    "packageName": "at.htl.diplproject",
+    "packageFolder": "at/htl/diplproject",
+    "serverPort": "8180",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZDk0YWRmMzFjMWI2MGQyNTY5N2Y1NjAzZDVjMWZiYjU3NGZhMmNiYWFkZmMwOTE4ZDIxZjlmM2U4YjExNTk2NjVjZjk5Y2ViNDA5NGFlNTcwOTIyNjk2ZmQxODA2NjFhYTQzZjVmMjk2ZmQ4M2M0M2ZjZmNmYTRkOTEzZjJlN2M=",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": [
+      "en",
+      "de"
+    ],
+    "blueprints": []
+  }
+}
