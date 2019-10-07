@@ -17,6 +17,7 @@ import { TicketingProjectAppRoutingModule } from './app-routing.module';
 import { TicketingProjectHomeModule } from './home/home.module';
 import { TicketingProjectAccountModule } from './account/account.module';
 import { TicketingProjectEntityModule } from './entities/entity.module';
+import { SaleModule } from 'app/tickets/sale/sale.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
@@ -38,7 +39,8 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
     TicketingProjectAccountModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     TicketingProjectEntityModule,
-    TicketingProjectAppRoutingModule
+    TicketingProjectAppRoutingModule,
+    SaleModule
   ],
   declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   providers: [

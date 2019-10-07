@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-import { SaleComponent } from './sale.component';
+import { SaleComponent } from './';
 
 export const saleRoute: Route = {
   path: 'sale',
