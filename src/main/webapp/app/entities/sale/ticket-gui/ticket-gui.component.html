@@ -14,7 +14,7 @@
     </div>
     <div class="row">
         <div class="col-sm">
-            <button class="button">-</button> <p class="button"> 0 </p> <button class="button">+</button>
+            <button (click)="remove()" [disabled]="count == 0" class="button">-</button> <p class="button"> {{count}} </p> <button (click)="reserve()" class="button">+</button>
         </div>
     </div>
 </div>

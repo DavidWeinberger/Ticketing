@@ -17,18 +17,6 @@
                 <dd>
                     <span>{{cart.time}}</span>
                 </dd>
-                <dt><span jhiTranslate="ticketingProjectApp.cart.jHI_USER">J HI USER</span></dt>
-                <dd>
-                    <div *ngIf="cart.jHI_USERId">
-                        <a [routerLink]="['/jhi-user', cart.jHI_USERId, 'view']">{{cart.jHI_USERId}}</a>
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="ticketingProjectApp.cart.tICKETS">T ICKETS</span></dt>
-                <dd>
-                    <div *ngIf="cart.tICKETSId">
-                        <a [routerLink]="['/tickets', cart.tICKETSId, 'view']">{{cart.tICKETSId}}</a>
-                    </div>
-                </dd>
             </dl>
 
             <button type="submit"

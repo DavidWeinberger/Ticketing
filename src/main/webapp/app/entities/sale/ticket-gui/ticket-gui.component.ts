@@ -8,10 +8,18 @@ import { Tickets } from 'app/shared/model/tickets.model';
 })
 export class TicketGuiComponent implements OnInit {
   @Input() ticket: Tickets;
-
+  count = 0;
   constructor() {}
 
   ngOnInit() {
     console.log(this.ticket);
+  }
+
+  reserve() {
+    this.count++;
+  }
+
+  remove() {
+    this.count--;
   }
 }

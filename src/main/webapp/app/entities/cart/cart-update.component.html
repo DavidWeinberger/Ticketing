@@ -56,20 +56,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="ticketingProjectApp.cart.jHI_USER" for="field_jHI_USER">J HI USER</label>
-                    <select class="form-control" id="field_jHI_USER" name="jHI_USER" formControlName="jHI_USERId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="jHI_USEROption.id" *ngFor="let jHI_USEROption of jhi_users; trackBy: trackJHI_USERById">{{jHI_USEROption.id}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="ticketingProjectApp.cart.tICKETS" for="field_tICKETS">T ICKETS</label>
-                    <select class="form-control" id="field_tICKETS" name="tICKETS" formControlName="tICKETSId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="tICKETSOption.id" *ngFor="let tICKETSOption of tickets; trackBy: trackTICKETSById">{{tICKETSOption.id}}</option>
-                    </select>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

@@ -1,5 +1,4 @@
 package at.htl.diplproject.domain;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -34,13 +33,6 @@ public class Cart implements Serializable {
     @NotNull
     @Column(name = "time", nullable = false)
     private ZonedDateTime time;
-
-    @OneToOne
-    @JoinColumn(unique = true)
-    private JHI_USER jHI_USER;
-
-    @ManyToOne
-    private TICKETS tICKETS;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -88,32 +80,6 @@ public class Cart implements Serializable {
 
     public void setTime(ZonedDateTime time) {
         this.time = time;
-    }
-
-    public JHI_USER getJHI_USER() {
-        return jHI_USER;
-    }
-
-    public Cart jHI_USER(JHI_USER jHI_USER) {
-        this.jHI_USER = jHI_USER;
-        return this;
-    }
-
-    public void setJHI_USER(JHI_USER jHI_USER) {
-        this.jHI_USER = jHI_USER;
-    }
-
-    public TICKETS getTICKETS() {
-        return tICKETS;
-    }
-
-    public Cart tICKETS(TICKETS tICKETS) {
-        this.tICKETS = tICKETS;
-        return this;
-    }
-
-    public void setTICKETS(TICKETS tICKETS) {
-        this.tICKETS = tICKETS;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

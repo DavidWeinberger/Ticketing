@@ -18,6 +18,5 @@
     <include file="config/liquibase/changelog/20191008083206_added_entity_Sale.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191008102756_added_entity_Cart.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20191008102756_added_entity_constraints_Cart.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

@@ -5,17 +5,8 @@ export interface ICart {
   ticketId?: number;
   userId?: number;
   time?: Moment;
-  jHI_USERId?: number;
-  tICKETSId?: number;
 }
 
 export class Cart implements ICart {
-  constructor(
-    public id?: number,
-    public ticketId?: number,
-    public userId?: number,
-    public time?: Moment,
-    public jHI_USERId?: number,
-    public tICKETSId?: number
-  ) {}
+  constructor(public id?: number, public ticketId?: number, public userId?: number, public time?: Moment) {}
 }

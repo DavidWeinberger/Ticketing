@@ -21,10 +21,6 @@ public class CartDTO implements Serializable {
     private ZonedDateTime time;
 
 
-    private Long jHI_USERId;
-
-    private Long tICKETSId;
-
     public Long getId() {
         return id;
     }
@@ -57,22 +53,6 @@ public class CartDTO implements Serializable {
         this.time = time;
     }
 
-    public Long getJHI_USERId() {
-        return jHI_USERId;
-    }
-
-    public void setJHI_USERId(Long jHI_USERId) {
-        this.jHI_USERId = jHI_USERId;
-    }
-
-    public Long getTICKETSId() {
-        return tICKETSId;
-    }
-
-    public void setTICKETSId(Long tICKETSId) {
-        this.tICKETSId = tICKETSId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -101,8 +81,6 @@ public class CartDTO implements Serializable {
             ", ticketId=" + getTicketId() +
             ", userId=" + getUserId() +
             ", time='" + getTime() + "'" +
-            ", jHI_USER=" + getJHI_USERId() +
-            ", tICKETS=" + getTICKETSId() +
             "}";
     }
 }

@@ -18,9 +18,7 @@
       },
       "ticketId": "Ticket Id",
       "userId": "User Id",
-      "time": "Time",
-      "jHI_USER": "J HI USER",
-      "tICKETS": "T ICKETS"
+      "time": "Time"
     }
   }
 }
