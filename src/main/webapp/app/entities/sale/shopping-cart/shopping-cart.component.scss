@@ -1,8 +1,23 @@
 .shopping {
-  background-color: #e4e5e6;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 10px;
+  width: 40vh;
+  height: auto;
+}
+
+.ticket {
+  background: #e4e5e6;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  width: 40vh;
 }
 
 .button {
   margin: 5px;
-  alignment: right;
+}
+
+ul {
+  text-align: right;
 }

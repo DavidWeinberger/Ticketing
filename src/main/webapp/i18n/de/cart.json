@@ -1,0 +1,26 @@
+{
+  "ticketingProjectApp": {
+    "cart": {
+      "home": {
+        "title": "Carts",
+        "createLabel": "Cart erstellen",
+        "createOrEditLabel": "Cart erstellen oder bearbeiten",
+        "notFound": "No Carts found"
+      },
+      "created": "Cart erstellt mit ID {{ param }}",
+      "updated": "Cart aktualisiert mit ID {{ param }}",
+      "deleted": "Cart gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Cart {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Cart"
+      },
+      "ticketId": "Ticket Id",
+      "userId": "User Id",
+      "time": "Time",
+      "jHI_USER": "J HI USER",
+      "tICKETS": "T ICKETS"
+    }
+  }
+}

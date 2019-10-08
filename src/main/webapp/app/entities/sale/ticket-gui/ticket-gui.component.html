@@ -1,15 +1,15 @@
-<div class="container">
+<div class="container" *ngIf="ticket.ticketType !== undefined">
     <div class="row">
         <div class="col-sm">
-            <p>Ticketname</p>
+            <p>{{ticket.ticketType}}</p>
         </div>
         <div class="col-sm">
-            <p>Preis</p>
+            <p>{{ticket.price}}</p>
         </div>
     </div>
     <div class="row">
         <div class="col-sm">
-            <p>Platz</p>
+            <p>{{ticket.place}}</p>
         </div>
     </div>
     <div class="row">

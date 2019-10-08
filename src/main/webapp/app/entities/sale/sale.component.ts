@@ -7,6 +7,8 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { ISale } from 'app/shared/model/sale.model';
 import { AccountService } from 'app/core';
 import { SaleService } from './sale.service';
+import { ITickets } from 'app/shared/model/tickets.model';
+import { TicketsService } from 'app/entities/tickets';
 
 @Component({
   selector: 'jhi-sale',
@@ -15,6 +17,7 @@ import { SaleService } from './sale.service';
 })
 export class SaleComponent implements OnInit, OnDestroy {
   sales: ISale[];
+  tickets: ITickets[];
   currentAccount: any;
   eventSubscriber: Subscription;
 
@@ -22,19 +25,20 @@ export class SaleComponent implements OnInit, OnDestroy {
     protected saleService: SaleService,
     protected jhiAlertService: JhiAlertService,
     protected eventManager: JhiEventManager,
-    protected accountService: AccountService
+    protected accountService: AccountService,
+    protected ticketsService: TicketsService
   ) {}
 
   loadAll() {
-    this.saleService
+    this.ticketsService
       .query()
       .pipe(
-        filter((res: HttpResponse<ISale[]>) => res.ok),
-        map((res: HttpResponse<ISale[]>) => res.body)
+        filter((res: HttpResponse<ITickets[]>) => res.ok),
+        map((res: HttpResponse<ITickets[]>) => res.body)
       )
       .subscribe(
-        (res: ISale[]) => {
-          this.sales = res;
+        (res: ITickets[]) => {
+          this.tickets = res;
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );

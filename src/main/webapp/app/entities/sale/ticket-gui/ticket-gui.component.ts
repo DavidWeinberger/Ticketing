@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Tickets } from 'app/shared/model/tickets.model';
 
 @Component({
   selector: 'jhi-ticket-gui',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ticket-gui.component.scss']
 })
 export class TicketGuiComponent implements OnInit {
+  @Input() ticket: Tickets;
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.ticket);
+  }
 }
