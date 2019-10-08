@@ -2,7 +2,12 @@
     <h1>Warenkorb</h1>
     <div class="row">
         <div class="ticket" *ngFor="let ticket of tickets">
-            <jhi-ticket-gui [isCart]="true" [ticket]="ticket"></jhi-ticket-gui>
+            <div class="col">
+                <jhi-ticket-gui [isCart]="true" [ticket]="ticket"></jhi-ticket-gui>
+            </div>
+            <div class="col">
+                <button class="button" (click)="remove(ticket)">-</button>
+            </div>
         </div>
     </div>
     <div class="row" >

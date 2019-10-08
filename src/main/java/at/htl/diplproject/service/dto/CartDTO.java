@@ -1,5 +1,4 @@
 package at.htl.diplproject.service.dto;
-import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -16,9 +15,6 @@ public class CartDTO implements Serializable {
 
     @NotNull
     private Integer userId;
-
-    @NotNull
-    private ZonedDateTime time;
 
 
     public Long getId() {
@@ -43,14 +39,6 @@ public class CartDTO implements Serializable {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public ZonedDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(ZonedDateTime time) {
-        this.time = time;
     }
 
     @Override
@@ -80,7 +68,6 @@ public class CartDTO implements Serializable {
             "id=" + getId() +
             ", ticketId=" + getTicketId() +
             ", userId=" + getUserId() +
-            ", time='" + getTime() + "'" +
             "}";
     }
 }

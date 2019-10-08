@@ -3,8 +3,6 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { ICart, Cart } from 'app/shared/model/cart.model';
 import { CartService } from './cart.service';
 
@@ -18,8 +16,7 @@ export class CartUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     ticketId: [null, [Validators.required]],
-    userId: [null, [Validators.required]],
-    time: [null, [Validators.required]]
+    userId: [null, [Validators.required]]
   });
 
   constructor(protected cartService: CartService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -35,8 +32,7 @@ export class CartUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: cart.id,
       ticketId: cart.ticketId,
-      userId: cart.userId,
-      time: cart.time != null ? cart.time.format(DATE_TIME_FORMAT) : null
+      userId: cart.userId
     });
   }
 
@@ -59,8 +55,7 @@ export class CartUpdateComponent implements OnInit {
       ...new Cart(),
       id: this.editForm.get(['id']).value,
       ticketId: this.editForm.get(['ticketId']).value,
-      userId: this.editForm.get(['userId']).value,
-      time: this.editForm.get(['time']).value != null ? moment(this.editForm.get(['time']).value, DATE_TIME_FORMAT) : undefined
+      userId: this.editForm.get(['userId']).value
     };
   }
 

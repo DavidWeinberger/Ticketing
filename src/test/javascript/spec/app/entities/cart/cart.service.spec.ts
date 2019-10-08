@@ -4,8 +4,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { take, map } from 'rxjs/operators';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { CartService } from 'app/entities/cart/cart.service';
 import { ICart, Cart } from 'app/shared/model/cart.model';
 
@@ -16,7 +14,6 @@ describe('Service Tests', () => {
     let httpMock: HttpTestingController;
     let elemDefault: ICart;
     let expectedResult;
-    let currentDate: moment.Moment;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
@@ -25,19 +22,13 @@ describe('Service Tests', () => {
       injector = getTestBed();
       service = injector.get(CartService);
       httpMock = injector.get(HttpTestingController);
-      currentDate = moment();
 
-      elemDefault = new Cart(0, 0, 0, currentDate);
+      elemDefault = new Cart(0, 0, 0);
     });
 
     describe('Service methods', () => {
       it('should find an element', async () => {
-        const returnedFromService = Object.assign(
-          {
-            time: currentDate.format(DATE_TIME_FORMAT)
-          },
-          elemDefault
-        );
+        const returnedFromService = Object.assign({}, elemDefault);
         service
           .find(123)
           .pipe(take(1))
@@ -51,17 +42,11 @@ describe('Service Tests', () => {
       it('should create a Cart', async () => {
         const returnedFromService = Object.assign(
           {
-            id: 0,
-            time: currentDate.format(DATE_TIME_FORMAT)
+            id: 0
           },
           elemDefault
         );
-        const expected = Object.assign(
-          {
-            time: currentDate
-          },
-          returnedFromService
-        );
+        const expected = Object.assign({}, returnedFromService);
         service
           .create(new Cart(null))
           .pipe(take(1))
@@ -75,18 +60,12 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             ticketId: 1,
-            userId: 1,
-            time: currentDate.format(DATE_TIME_FORMAT)
+            userId: 1
           },
           elemDefault
         );
 
-        const expected = Object.assign(
-          {
-            time: currentDate
-          },
-          returnedFromService
-        );
+        const expected = Object.assign({}, returnedFromService);
         service
           .update(expected)
           .pipe(take(1))
@@ -100,17 +79,11 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             ticketId: 1,
-            userId: 1,
-            time: currentDate.format(DATE_TIME_FORMAT)
+            userId: 1
           },
           elemDefault
         );
-        const expected = Object.assign(
-          {
-            time: currentDate
-          },
-          returnedFromService
-        );
+        const expected = Object.assign({}, returnedFromService);
         service
           .query(expected)
           .pipe(

@@ -9,52 +9,50 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2019-10-08T20:08:26+0200",
+    date = "2019-10-08T22:04:11+0200",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 1.8.0_162 (Oracle Corporation)"
 )
 @Component
 public class CartMapperImpl implements CartMapper {
 
     @Override
-    public Cart toEntity(CartDTO arg0) {
-        if ( arg0 == null ) {
+    public Cart toEntity(CartDTO dto) {
+        if ( dto == null ) {
             return null;
         }
 
         Cart cart = new Cart();
 
-        cart.setId( arg0.getId() );
-        cart.setTicketId( arg0.getTicketId() );
-        cart.setUserId( arg0.getUserId() );
-        cart.setTime( arg0.getTime() );
+        cart.setId( dto.getId() );
+        cart.setTicketId( dto.getTicketId() );
+        cart.setUserId( dto.getUserId() );
 
         return cart;
     }
 
     @Override
-    public CartDTO toDto(Cart arg0) {
-        if ( arg0 == null ) {
+    public CartDTO toDto(Cart entity) {
+        if ( entity == null ) {
             return null;
         }
 
         CartDTO cartDTO = new CartDTO();
 
-        cartDTO.setId( arg0.getId() );
-        cartDTO.setTicketId( arg0.getTicketId() );
-        cartDTO.setUserId( arg0.getUserId() );
-        cartDTO.setTime( arg0.getTime() );
+        cartDTO.setId( entity.getId() );
+        cartDTO.setTicketId( entity.getTicketId() );
+        cartDTO.setUserId( entity.getUserId() );
 
         return cartDTO;
     }
 
     @Override
-    public List<Cart> toEntity(List<CartDTO> arg0) {
-        if ( arg0 == null ) {
+    public List<Cart> toEntity(List<CartDTO> dtoList) {
+        if ( dtoList == null ) {
             return null;
         }
 
-        List<Cart> list = new ArrayList<Cart>( arg0.size() );
-        for ( CartDTO cartDTO : arg0 ) {
+        List<Cart> list = new ArrayList<Cart>( dtoList.size() );
+        for ( CartDTO cartDTO : dtoList ) {
             list.add( toEntity( cartDTO ) );
         }
 
@@ -62,13 +60,13 @@ public class CartMapperImpl implements CartMapper {
     }
 
     @Override
-    public List<CartDTO> toDto(List<Cart> arg0) {
-        if ( arg0 == null ) {
+    public List<CartDTO> toDto(List<Cart> entityList) {
+        if ( entityList == null ) {
             return null;
         }
 
-        List<CartDTO> list = new ArrayList<CartDTO>( arg0.size() );
-        for ( Cart cart : arg0 ) {
+        List<CartDTO> list = new ArrayList<CartDTO>( entityList.size() );
+        for ( Cart cart : entityList ) {
             list.add( toDto( cart ) );
         }
 

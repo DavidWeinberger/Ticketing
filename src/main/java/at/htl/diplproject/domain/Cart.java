@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 
 /**
  * A Cart.
@@ -29,10 +28,6 @@ public class Cart implements Serializable {
     @NotNull
     @Column(name = "user_id", nullable = false)
     private Integer userId;
-
-    @NotNull
-    @Column(name = "time", nullable = false)
-    private ZonedDateTime time;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -68,19 +63,6 @@ public class Cart implements Serializable {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-
-    public ZonedDateTime getTime() {
-        return time;
-    }
-
-    public Cart time(ZonedDateTime time) {
-        this.time = time;
-        return this;
-    }
-
-    public void setTime(ZonedDateTime time) {
-        this.time = time;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -105,7 +87,6 @@ public class Cart implements Serializable {
             "id=" + getId() +
             ", ticketId=" + getTicketId() +
             ", userId=" + getUserId() +
-            ", time='" + getTime() + "'" +
             "}";
     }
 }

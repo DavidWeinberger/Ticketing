@@ -1,0 +1,21 @@
+{
+  "ticketingProjectApp": {
+    "tabletView": {
+      "home": {
+        "title": "Tablet Views",
+        "createLabel": "Tablet View erstellen",
+        "createOrEditLabel": "Tablet View erstellen oder bearbeiten",
+        "notFound": "No Tablet Views found"
+      },
+      "created": "Tablet View erstellt mit ID {{ param }}",
+      "updated": "Tablet View aktualisiert mit ID {{ param }}",
+      "deleted": "Tablet View gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Tablet View {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Tablet View"
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "ticketingProjectApp": {
+    "tabletView": {
+      "home": {
+        "title": "Tablet Views",
+        "createLabel": "Create a new Tablet View",
+        "createOrEditLabel": "Create or edit a Tablet View",
+        "notFound": "No Tablet Views found"
+      },
+      "created": "A new Tablet View is created with identifier {{ param }}",
+      "updated": "A Tablet View is updated with identifier {{ param }}",
+      "deleted": "A Tablet View is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Tablet View {{ id }}?"
+      },
+      "detail": {
+        "title": "Tablet View"
+      }
+    }
+  }
+}

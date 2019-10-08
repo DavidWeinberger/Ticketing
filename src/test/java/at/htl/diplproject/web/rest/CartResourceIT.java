@@ -22,13 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
 import java.util.List;
 
-import static at.htl.diplproject.web.rest.TestUtil.sameInstant;
 import static at.htl.diplproject.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -48,10 +43,6 @@ public class CartResourceIT {
     private static final Integer DEFAULT_USER_ID = 1;
     private static final Integer UPDATED_USER_ID = 2;
     private static final Integer SMALLER_USER_ID = 1 - 1;
-
-    private static final ZonedDateTime DEFAULT_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final ZonedDateTime SMALLER_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
 
     @Autowired
     private CartRepository cartRepository;
@@ -102,8 +93,7 @@ public class CartResourceIT {
     public static Cart createEntity(EntityManager em) {
         Cart cart = new Cart()
             .ticketId(DEFAULT_TICKET_ID)
-            .userId(DEFAULT_USER_ID)
-            .time(DEFAULT_TIME);
+            .userId(DEFAULT_USER_ID);
         return cart;
     }
     /**
@@ -115,8 +105,7 @@ public class CartResourceIT {
     public static Cart createUpdatedEntity(EntityManager em) {
         Cart cart = new Cart()
             .ticketId(UPDATED_TICKET_ID)
-            .userId(UPDATED_USER_ID)
-            .time(UPDATED_TIME);
+            .userId(UPDATED_USER_ID);
         return cart;
     }
 
@@ -143,7 +132,6 @@ public class CartResourceIT {
         Cart testCart = cartList.get(cartList.size() - 1);
         assertThat(testCart.getTicketId()).isEqualTo(DEFAULT_TICKET_ID);
         assertThat(testCart.getUserId()).isEqualTo(DEFAULT_USER_ID);
-        assertThat(testCart.getTime()).isEqualTo(DEFAULT_TIME);
     }
 
     @Test
@@ -207,25 +195,6 @@ public class CartResourceIT {
 
     @Test
     @Transactional
-    public void checkTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = cartRepository.findAll().size();
-        // set the field null
-        cart.setTime(null);
-
-        // Create the Cart, which fails.
-        CartDTO cartDTO = cartMapper.toDto(cart);
-
-        restCartMockMvc.perform(post("/api/carts")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(cartDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Cart> cartList = cartRepository.findAll();
-        assertThat(cartList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllCarts() throws Exception {
         // Initialize the database
         cartRepository.saveAndFlush(cart);
@@ -236,8 +205,7 @@ public class CartResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(cart.getId().intValue())))
             .andExpect(jsonPath("$.[*].ticketId").value(hasItem(DEFAULT_TICKET_ID)))
-            .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID)))
-            .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))));
+            .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID)));
     }
     
     @Test
@@ -252,8 +220,7 @@ public class CartResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(cart.getId().intValue()))
             .andExpect(jsonPath("$.ticketId").value(DEFAULT_TICKET_ID))
-            .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID))
-            .andExpect(jsonPath("$.time").value(sameInstant(DEFAULT_TIME)));
+            .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID));
     }
 
     @Test
@@ -278,8 +245,7 @@ public class CartResourceIT {
         em.detach(updatedCart);
         updatedCart
             .ticketId(UPDATED_TICKET_ID)
-            .userId(UPDATED_USER_ID)
-            .time(UPDATED_TIME);
+            .userId(UPDATED_USER_ID);
         CartDTO cartDTO = cartMapper.toDto(updatedCart);
 
         restCartMockMvc.perform(put("/api/carts")
@@ -293,7 +259,6 @@ public class CartResourceIT {
         Cart testCart = cartList.get(cartList.size() - 1);
         assertThat(testCart.getTicketId()).isEqualTo(UPDATED_TICKET_ID);
         assertThat(testCart.getUserId()).isEqualTo(UPDATED_USER_ID);
-        assertThat(testCart.getTime()).isEqualTo(UPDATED_TIME);
     }
 
     @Test

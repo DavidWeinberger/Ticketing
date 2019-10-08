@@ -32,7 +32,7 @@ export class ShoppingCartComponent implements OnInit {
     this.registerChangeInCarts();
   }
 
-  public async refreshCart() {
+  public refreshCart() {
     this.cartService
       .query()
       .pipe(
@@ -55,6 +55,13 @@ export class ShoppingCartComponent implements OnInit {
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
+  }
+
+  public remove(ticket: ITickets) {
+    const cartEntry = this.carts.find(x => x.ticketId === ticket.id);
+    this.cartService.delete(cartEntry.id).subscribe();
+    console.log('testestsetsetset');
+    this.refreshCart();
   }
 
   registerChangeInCarts() {

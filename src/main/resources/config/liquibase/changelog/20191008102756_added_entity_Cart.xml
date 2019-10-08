@@ -24,14 +24,9 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="time" type="datetime">
-                <constraints nullable="false" />
-            </column>
-
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
 
-        <dropDefaultValue tableName="cart" columnName="time" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20191008102756-1-relations" author="jhipster">
@@ -55,7 +50,6 @@
             <column name="id" type="numeric"/>
             <column name="ticket_id" type="numeric"/>
             <column name="user_id" type="numeric"/>
-            <column name="time" type="datetime"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

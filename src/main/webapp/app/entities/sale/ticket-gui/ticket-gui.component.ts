@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Tickets } from 'app/shared/model/tickets.model';
+import { AccountService } from 'app/core';
+import { CartService } from 'app/entities/cart';
+import { Cart } from 'app/shared/model/cart.model';
 
 @Component({
   selector: 'jhi-ticket-gui',
@@ -8,19 +11,22 @@ import { Tickets } from 'app/shared/model/tickets.model';
 })
 export class TicketGuiComponent implements OnInit {
   @Input() ticket: Tickets;
-  count = 0;
   @Input() isCart: Boolean;
-  constructor() {}
+  private cart: Cart = new Cart();
+  private account: Promise<Account>;
+  private userId: number;
+  constructor(private accountService: AccountService, private cartService: CartService) {}
 
-  ngOnInit() {
-    console.log(this.ticket);
-  }
+  ngOnInit() {}
 
   reserve() {
-    this.count++;
-  }
-
-  remove() {
-    this.count--;
+    this.account = this.accountService.identity().then();
+    this.account.then(x => {
+      this.userId = Number(x.id);
+      this.cart.userId = this.userId;
+      this.cart.ticketId = this.ticket.id;
+      this.cartService.create(this.cart).subscribe();
+    });
+    console.log('create');
   }
 }

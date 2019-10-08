@@ -46,6 +46,7 @@ public class CacheConfiguration {
             createCache(cm, at.htl.diplproject.domain.Tickets.class.getName());
             createCache(cm, at.htl.diplproject.domain.Sale.class.getName());
             createCache(cm, at.htl.diplproject.domain.Cart.class.getName());
+            createCache(cm, at.htl.diplproject.domain.TabletView.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

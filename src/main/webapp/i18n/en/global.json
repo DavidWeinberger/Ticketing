@@ -10,6 +10,7 @@
         "tickets": "Tickets",
         "sale": "Sale",
         "cart": "Cart",
+        "tabletView": "Tablet View",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
