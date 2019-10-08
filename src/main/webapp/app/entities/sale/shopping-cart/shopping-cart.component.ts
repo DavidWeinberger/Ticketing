@@ -3,6 +3,7 @@ import { Cart, ICart } from 'app/shared/model/cart.model';
 import { CartService } from 'app/entities/cart';
 import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Tickets } from 'app/shared/model/tickets.model';
 
 @Component({
   selector: 'jhi-shopping-cart',
@@ -10,7 +11,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
   styleUrls: ['./shopping-cart.component.scss']
 })
 export class ShoppingCartComponent implements OnInit {
-  cart: Cart;
+  private ticket: Tickets[];
   private carts: ICart[];
   constructor(private cartService: CartService) {}
   ngOnInit() {
@@ -26,6 +27,7 @@ export class ShoppingCartComponent implements OnInit {
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
+    this.carts = this.carts.filter(data => data.userId === 3);
   }
 
   private onError(message: string) {
