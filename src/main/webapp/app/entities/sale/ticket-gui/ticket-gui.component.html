@@ -6,15 +6,14 @@
         <div class="col-sm">
             <p>{{ticket.price}}</p>
         </div>
-    </div>
-    <div class="row">
         <div class="col-sm">
-            <p>{{ticket.place}}</p>
+            <button *ngIf="!isCart" (click)="reserve()" class="button">+</button>
+            <button *ngIf="isCart" (click)="remove()" class="button">-</button>
         </div>
     </div>
     <div class="row">
         <div class="col-sm">
-            <button (click)="remove()" [disabled]="count == 0" class="button">-</button> <p class="button"> {{count}} </p> <button (click)="reserve()" class="button">+</button>
+            <p>{{ticket.place}}</p>
         </div>
     </div>
 </div>

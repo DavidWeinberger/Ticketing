@@ -3,7 +3,11 @@ import { Cart, ICart } from 'app/shared/model/cart.model';
 import { CartService } from 'app/entities/cart';
 import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Tickets } from 'app/shared/model/tickets.model';
+import { ITickets } from 'app/shared/model/tickets.model';
+import { TicketsService } from 'app/entities/tickets';
+import { Subscription } from 'rxjs';
+import { JhiEventManager } from 'ng-jhipster';
+import { AccountService } from 'app/core';
 
 @Component({
   selector: 'jhi-shopping-cart',
@@ -11,10 +15,24 @@ import { Tickets } from 'app/shared/model/tickets.model';
   styleUrls: ['./shopping-cart.component.scss']
 })
 export class ShoppingCartComponent implements OnInit {
-  private ticket: Tickets[];
+  private tickets: ITickets[] = [];
   private carts: ICart[];
-  constructor(private cartService: CartService) {}
+  eventSubscriber: Subscription;
+  private account: Promise<Account>;
+  private userId = 0;
+
+  constructor(
+    private cartService: CartService,
+    private ticketService: TicketsService,
+    protected eventManager: JhiEventManager,
+    protected accountService: AccountService
+  ) {}
   ngOnInit() {
+    this.refreshCart();
+    this.registerChangeInCarts();
+  }
+
+  public async refreshCart() {
     this.cartService
       .query()
       .pipe(
@@ -24,10 +42,23 @@ export class ShoppingCartComponent implements OnInit {
       .subscribe(
         (res: ICart[]) => {
           this.carts = res;
+          this.account = this.accountService.identity().then();
+          this.account.then(x => {
+            this.userId = Number(x.id);
+            this.carts = this.carts.filter(data => data.userId === this.userId);
+            this.carts.forEach(y => {
+              this.ticketService.find(y.ticketId).subscribe(ticket => {
+                this.tickets.push(ticket.body);
+              });
+            });
+          });
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
-    this.carts = this.carts.filter(data => data.userId === 3);
+  }
+
+  registerChangeInCarts() {
+    this.eventSubscriber = this.eventManager.subscribe('cartListModification', response => this.refreshCart());
   }
 
   private onError(message: string) {
