@@ -1,0 +1,21 @@
+{
+  "ticketingProjectApp": {
+    "sale": {
+      "home": {
+        "title": "Sales",
+        "createLabel": "Sale erstellen",
+        "createOrEditLabel": "Sale erstellen oder bearbeiten",
+        "notFound": "No Sales found"
+      },
+      "created": "Sale erstellt mit ID {{ param }}",
+      "updated": "Sale aktualisiert mit ID {{ param }}",
+      "deleted": "Sale gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Sale {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Sale"
+      }
+    }
+  }
+}

@@ -17,10 +17,10 @@ import { TicketingProjectAppRoutingModule } from './app-routing.module';
 import { TicketingProjectHomeModule } from './home/home.module';
 import { TicketingProjectAccountModule } from './account/account.module';
 import { TicketingProjectEntityModule } from './entities/entity.module';
-import { SaleModule } from 'app/tickets/sale/sale.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
+import { RouterModule, Routes } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -39,8 +39,7 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
     TicketingProjectAccountModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     TicketingProjectEntityModule,
-    TicketingProjectAppRoutingModule,
-    SaleModule
+    TicketingProjectAppRoutingModule
   ],
   declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   providers: [
@@ -65,6 +64,7 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
       multi: true
     }
   ],
+  exports: [],
   bootstrap: [JhiMainComponent]
 })
 export class TicketingProjectAppModule {
