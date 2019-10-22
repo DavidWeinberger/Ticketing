@@ -1,0 +1,19 @@
+<!--<table class="customTable">-->
+<!--    <tr *ngFor="let x of rowArr">-->
+<!--        <td *ngFor="let y of seatArr">-->
+<!--            <span class="dot"></span>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--</table>-->
+<div class="container">
+    <div class="row" *ngFor="let x of rowArr">
+        <span class="dot places" *ngFor="let y of seatArr"></span>
+<!--        <div class="col" *ngFor="let y of seatArr">-->
+<!--                <span class="dot"></span>-->
+<!--        </div>-->
+    </div>
+    <div class="row">
+        <p>
+        </p>
+    </div>
+</div>

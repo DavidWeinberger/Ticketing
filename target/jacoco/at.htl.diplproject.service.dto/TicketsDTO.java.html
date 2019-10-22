@@ -11,88 +11,118 @@ import java.util.Objects;
     private Long id;
 
     @NotNull
-    private Integer type;
-
-    @NotNull
     @DecimalMin(value = &quot;0&quot;)
     private Double price;
 
     private String place;
 
-    @NotNull
-    @Min(value = 0)
+    private Integer type;
+
     private Integer amount;
+
+    private Integer rows;
+
+    private Integer seats;
+
+    private Integer state;
 
 
     public Long getId() {
-<span class="fc" id="L28">        return id;</span>
+<span class="fc" id="L31">        return id;</span>
     }
 
     public void setId(Long id) {
-<span class="fc" id="L32">        this.id = id;</span>
-<span class="fc" id="L33">    }</span>
-
-    public Integer getType() {
-<span class="fc" id="L36">        return type;</span>
-    }
-
-    public void setType(Integer type) {
-<span class="fc" id="L40">        this.type = type;</span>
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L35">        this.id = id;</span>
+<span class="fc" id="L36">    }</span>
 
     public Double getPrice() {
-<span class="fc" id="L44">        return price;</span>
+<span class="fc" id="L39">        return price;</span>
     }
 
     public void setPrice(Double price) {
-<span class="fc" id="L48">        this.price = price;</span>
-<span class="fc" id="L49">    }</span>
+<span class="fc" id="L43">        this.price = price;</span>
+<span class="fc" id="L44">    }</span>
 
     public String getPlace() {
-<span class="fc" id="L52">        return place;</span>
+<span class="fc" id="L47">        return place;</span>
     }
 
     public void setPlace(String place) {
-<span class="fc" id="L56">        this.place = place;</span>
-<span class="fc" id="L57">    }</span>
+<span class="fc" id="L51">        this.place = place;</span>
+<span class="fc" id="L52">    }</span>
+
+    public Integer getType() {
+<span class="fc" id="L55">        return type;</span>
+    }
+
+    public void setType(Integer type) {
+<span class="fc" id="L59">        this.type = type;</span>
+<span class="fc" id="L60">    }</span>
 
     public Integer getAmount() {
-<span class="fc" id="L60">        return amount;</span>
+<span class="fc" id="L63">        return amount;</span>
     }
 
     public void setAmount(Integer amount) {
-<span class="fc" id="L64">        this.amount = amount;</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L67">        this.amount = amount;</span>
+<span class="fc" id="L68">    }</span>
+
+    public Integer getRows() {
+<span class="fc" id="L71">        return rows;</span>
+    }
+
+    public void setRows(Integer rows) {
+<span class="fc" id="L75">        this.rows = rows;</span>
+<span class="fc" id="L76">    }</span>
+
+    public Integer getSeats() {
+<span class="fc" id="L79">        return seats;</span>
+    }
+
+    public void setSeats(Integer seats) {
+<span class="fc" id="L83">        this.seats = seats;</span>
+<span class="fc" id="L84">    }</span>
+
+    public Integer getState() {
+<span class="fc" id="L87">        return state;</span>
+    }
+
+    public void setState(Integer state) {
+<span class="fc" id="L91">        this.state = state;</span>
+<span class="fc" id="L92">    }</span>
 
     @Override
     public boolean equals(Object o) {
-<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (this == o) {</span>
-<span class="fc" id="L70">            return true;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (this == o) {</span>
+<span class="fc" id="L97">            return true;</span>
         }
-<span class="fc bfc" id="L72" title="All 4 branches covered.">        if (o == null || getClass() != o.getClass()) {</span>
-<span class="fc" id="L73">            return false;</span>
+<span class="fc bfc" id="L99" title="All 4 branches covered.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="fc" id="L100">            return false;</span>
         }
 
-<span class="fc" id="L76">        TicketsDTO ticketsDTO = (TicketsDTO) o;</span>
-<span class="fc bfc" id="L77" title="All 4 branches covered.">        if (ticketsDTO.getId() == null || getId() == null) {</span>
-<span class="fc" id="L78">            return false;</span>
+<span class="fc" id="L103">        TicketsDTO ticketsDTO = (TicketsDTO) o;</span>
+<span class="fc bfc" id="L104" title="All 4 branches covered.">        if (ticketsDTO.getId() == null || getId() == null) {</span>
+<span class="fc" id="L105">            return false;</span>
         }
-<span class="fc" id="L80">        return Objects.equals(getId(), ticketsDTO.getId());</span>
+<span class="fc" id="L107">        return Objects.equals(getId(), ticketsDTO.getId());</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L85">        return Objects.hashCode(getId());</span>
+<span class="fc" id="L112">        return Objects.hashCode(getId());</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L90">        return &quot;TicketsDTO{&quot; +</span>
-<span class="fc" id="L91">            &quot;id=&quot; + getId() +</span>
-<span class="fc" id="L92">            &quot;, type=&quot; + getType() +</span>
-<span class="fc" id="L93">            &quot;, price=&quot; + getPrice() +</span>
-<span class="fc" id="L94">            &quot;, place='&quot; + getPlace() + &quot;'&quot; +</span>
-<span class="fc" id="L95">            &quot;, amount=&quot; + getAmount() +</span>
+<span class="fc" id="L117">        return &quot;TicketsDTO{&quot; +</span>
+<span class="fc" id="L118">            &quot;id=&quot; + getId() +</span>
+<span class="fc" id="L119">            &quot;, price=&quot; + getPrice() +</span>
+<span class="fc" id="L120">            &quot;, place='&quot; + getPlace() + &quot;'&quot; +</span>
+<span class="fc" id="L121">            &quot;, type=&quot; + getType() +</span>
+<span class="fc" id="L122">            &quot;, amount=&quot; + getAmount() +</span>
+<span class="fc" id="L123">            &quot;, rows=&quot; + getRows() +</span>
+<span class="fc" id="L124">            &quot;, seats=&quot; + getSeats() +</span>
+<span class="fc" id="L125">            &quot;, state=&quot; + getState() +</span>
             &quot;}&quot;;
     }
 }

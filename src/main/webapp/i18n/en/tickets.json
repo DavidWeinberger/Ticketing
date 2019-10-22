@@ -18,8 +18,11 @@
       },
       "price": "Price",
       "place": "Place",
+      "type": "Type",
       "amount": "Amount",
-      "type": "Type"
+      "rows": "Rows",
+      "seats": "Seats",
+      "state": "State"
     }
   }
 }

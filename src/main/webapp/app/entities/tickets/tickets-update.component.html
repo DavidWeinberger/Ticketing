@@ -47,41 +47,24 @@
                     <label class="form-control-label" jhiTranslate="ticketingProjectApp.tickets.amount" for="field_amount">Amount</label>
                     <input type="number" class="form-control" name="amount" id="field_amount"
                            formControlName="amount"/>
-                    <div *ngIf="editForm.get('amount').invalid && (editForm.get('amount').dirty || editForm.get('amount').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('amount').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('amount').errors.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
-                            This field should be at least 0.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.get('amount')?.errors?.number" jhiTranslate="entity.validation.number">
-                            This field should be a number.
-                        </small>
+                </div>
+                <div *ngIf="isSeatTicket">
+                    <div class="form-group">
+                        <label class="form-control-label" jhiTranslate="ticketingProjectApp.tickets.rows" for="field_rows">Rows</label>
+                        <input type="number" class="form-control" name="rows" id="field_rows"
+                               formControlName="rows"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" jhiTranslate="ticketingProjectApp.tickets.seats" for="field_seats">Seats</label>
+                        <input type="number" class="form-control" name="seats" id="field_seats"
+                               formControlName="seats"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" jhiTranslate="ticketingProjectApp.tickets.state" for="field_state">State</label>
+                        <input type="number" class="form-control" name="state" id="field_state"
+                               formControlName="state"/>
                     </div>
                 </div>
-                <div class="form-group" *ngIf="!isSeatTicket">
-                    <label class="form-control-label" jhiTranslate="ticketingProjectApp.tickets.amount" for="field_amount">Amount</label>
-                    <input type="number" class="form-control" name="amount" id="field_amount"
-                           formControlName="amount"/>
-                    <div *ngIf="editForm.get('amount').invalid && (editForm.get('amount').dirty || editForm.get('amount').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('amount').errors.required" jhiTranslate="entity.validation.required">
-                            This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('amount').errors.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
-                            This field should be at least 0.
-                        </small>
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.get('amount')?.errors?.number" jhiTranslate="entity.validation.number">
-                            This field should be a number.
-                        </small>
-                    </div>
-                </div>
-
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

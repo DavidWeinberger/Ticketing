@@ -23,7 +23,7 @@ describe('Service Tests', () => {
       service = injector.get(TicketsService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Tickets(0, 0, 'AAAAAAA', 0, 0);
+      elemDefault = new Tickets(0, 0, 'AAAAAAA', 0, 0, 0, 0, 0);
     });
 
     describe('Service methods', () => {
@@ -61,8 +61,11 @@ describe('Service Tests', () => {
           {
             price: 1,
             place: 'BBBBBB',
+            type: 1,
             amount: 1,
-            type: 1
+            rows: 1,
+            seats: 1,
+            state: 1
           },
           elemDefault
         );
@@ -82,8 +85,11 @@ describe('Service Tests', () => {
           {
             price: 1,
             place: 'BBBBBB',
+            type: 1,
             amount: 1,
-            type: 1
+            rows: 1,
+            seats: 1,
+            state: 1
           },
           elemDefault
         );

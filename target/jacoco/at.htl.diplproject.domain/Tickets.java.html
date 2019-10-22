@@ -22,10 +22,6 @@ import java.io.Serializable;
     private Long id;
 
     @NotNull
-    @Column(name = &quot;type&quot;, nullable = false)
-    private Integer type;
-
-    @NotNull
     @DecimalMin(value = &quot;0&quot;)
     @Column(name = &quot;price&quot;, nullable = false)
     private Double price;
@@ -33,97 +29,149 @@ import java.io.Serializable;
     @Column(name = &quot;place&quot;)
     private String place;
 
-    @NotNull
-    @Min(value = 0)
-    @Column(name = &quot;amount&quot;, nullable = false)
+    @Column(name = &quot;type&quot;)
+    private Integer type;
+
+    @Column(name = &quot;amount&quot;)
     private Integer amount;
+
+    @Column(name = &quot;rows&quot;)
+    private Integer rows;
+
+    @Column(name = &quot;seats&quot;)
+    private Integer seats;
+
+    @Column(name = &quot;state&quot;)
+    private Integer state;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
-<span class="fc" id="L43">        return id;</span>
+<span class="fc" id="L49">        return id;</span>
     }
 
     public void setId(Long id) {
-<span class="fc" id="L47">        this.id = id;</span>
-<span class="fc" id="L48">    }</span>
-
-    public Integer getType() {
-<span class="fc" id="L51">        return type;</span>
-    }
-
-    public Tickets type(Integer type) {
-<span class="fc" id="L55">        this.type = type;</span>
-<span class="fc" id="L56">        return this;</span>
-    }
-
-    public void setType(Integer type) {
-<span class="fc" id="L60">        this.type = type;</span>
-<span class="fc" id="L61">    }</span>
+<span class="fc" id="L53">        this.id = id;</span>
+<span class="fc" id="L54">    }</span>
 
     public Double getPrice() {
-<span class="fc" id="L64">        return price;</span>
+<span class="fc" id="L57">        return price;</span>
     }
 
     public Tickets price(Double price) {
-<span class="fc" id="L68">        this.price = price;</span>
-<span class="fc" id="L69">        return this;</span>
+<span class="fc" id="L61">        this.price = price;</span>
+<span class="fc" id="L62">        return this;</span>
     }
 
     public void setPrice(Double price) {
-<span class="fc" id="L73">        this.price = price;</span>
-<span class="fc" id="L74">    }</span>
+<span class="fc" id="L66">        this.price = price;</span>
+<span class="fc" id="L67">    }</span>
 
     public String getPlace() {
-<span class="fc" id="L77">        return place;</span>
+<span class="fc" id="L70">        return place;</span>
     }
 
     public Tickets place(String place) {
-<span class="fc" id="L81">        this.place = place;</span>
-<span class="fc" id="L82">        return this;</span>
+<span class="fc" id="L74">        this.place = place;</span>
+<span class="fc" id="L75">        return this;</span>
     }
 
     public void setPlace(String place) {
-<span class="fc" id="L86">        this.place = place;</span>
-<span class="fc" id="L87">    }</span>
+<span class="fc" id="L79">        this.place = place;</span>
+<span class="fc" id="L80">    }</span>
+
+    public Integer getType() {
+<span class="fc" id="L83">        return type;</span>
+    }
+
+    public Tickets type(Integer type) {
+<span class="fc" id="L87">        this.type = type;</span>
+<span class="fc" id="L88">        return this;</span>
+    }
+
+    public void setType(Integer type) {
+<span class="fc" id="L92">        this.type = type;</span>
+<span class="fc" id="L93">    }</span>
 
     public Integer getAmount() {
-<span class="fc" id="L90">        return amount;</span>
+<span class="fc" id="L96">        return amount;</span>
     }
 
     public Tickets amount(Integer amount) {
-<span class="fc" id="L94">        this.amount = amount;</span>
-<span class="fc" id="L95">        return this;</span>
+<span class="fc" id="L100">        this.amount = amount;</span>
+<span class="fc" id="L101">        return this;</span>
     }
 
     public void setAmount(Integer amount) {
-<span class="fc" id="L99">        this.amount = amount;</span>
-<span class="fc" id="L100">    }</span>
+<span class="fc" id="L105">        this.amount = amount;</span>
+<span class="fc" id="L106">    }</span>
+
+    public Integer getRows() {
+<span class="fc" id="L109">        return rows;</span>
+    }
+
+    public Tickets rows(Integer rows) {
+<span class="fc" id="L113">        this.rows = rows;</span>
+<span class="fc" id="L114">        return this;</span>
+    }
+
+    public void setRows(Integer rows) {
+<span class="fc" id="L118">        this.rows = rows;</span>
+<span class="fc" id="L119">    }</span>
+
+    public Integer getSeats() {
+<span class="fc" id="L122">        return seats;</span>
+    }
+
+    public Tickets seats(Integer seats) {
+<span class="fc" id="L126">        this.seats = seats;</span>
+<span class="fc" id="L127">        return this;</span>
+    }
+
+    public void setSeats(Integer seats) {
+<span class="fc" id="L131">        this.seats = seats;</span>
+<span class="fc" id="L132">    }</span>
+
+    public Integer getState() {
+<span class="fc" id="L135">        return state;</span>
+    }
+
+    public Tickets state(Integer state) {
+<span class="fc" id="L139">        this.state = state;</span>
+<span class="fc" id="L140">        return this;</span>
+    }
+
+    public void setState(Integer state) {
+<span class="fc" id="L144">        this.state = state;</span>
+<span class="fc" id="L145">    }</span>
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
-<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (this == o) {</span>
-<span class="fc" id="L106">            return true;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (this == o) {</span>
+<span class="fc" id="L151">            return true;</span>
         }
-<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (!(o instanceof Tickets)) {</span>
-<span class="fc" id="L109">            return false;</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (!(o instanceof Tickets)) {</span>
+<span class="fc" id="L154">            return false;</span>
         }
-<span class="fc bfc" id="L111" title="All 4 branches covered.">        return id != null &amp;&amp; id.equals(((Tickets) o).id);</span>
+<span class="fc bfc" id="L156" title="All 4 branches covered.">        return id != null &amp;&amp; id.equals(((Tickets) o).id);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L116">        return 31;</span>
+<span class="fc" id="L161">        return 31;</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L121">        return &quot;Tickets{&quot; +</span>
-<span class="fc" id="L122">            &quot;id=&quot; + getId() +</span>
-<span class="fc" id="L123">            &quot;, type=&quot; + getType() +</span>
-<span class="fc" id="L124">            &quot;, price=&quot; + getPrice() +</span>
-<span class="fc" id="L125">            &quot;, place='&quot; + getPlace() + &quot;'&quot; +</span>
-<span class="fc" id="L126">            &quot;, amount=&quot; + getAmount() +</span>
+<span class="fc" id="L166">        return &quot;Tickets{&quot; +</span>
+<span class="fc" id="L167">            &quot;id=&quot; + getId() +</span>
+<span class="fc" id="L168">            &quot;, price=&quot; + getPrice() +</span>
+<span class="fc" id="L169">            &quot;, place='&quot; + getPlace() + &quot;'&quot; +</span>
+<span class="fc" id="L170">            &quot;, type=&quot; + getType() +</span>
+<span class="fc" id="L171">            &quot;, amount=&quot; + getAmount() +</span>
+<span class="fc" id="L172">            &quot;, rows=&quot; + getRows() +</span>
+<span class="fc" id="L173">            &quot;, seats=&quot; + getSeats() +</span>
+<span class="fc" id="L174">            &quot;, state=&quot; + getState() +</span>
             &quot;}&quot;;
     }
 }

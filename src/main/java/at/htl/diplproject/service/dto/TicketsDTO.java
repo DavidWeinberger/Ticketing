@@ -16,11 +16,15 @@ public class TicketsDTO implements Serializable {
 
     private String place;
 
-    @NotNull
-    @Min(value = 0)
+    private Integer type;
+
     private Integer amount;
 
-    private Integer type;
+    private Integer rows;
+
+    private Integer seats;
+
+    private Integer state;
 
 
     public Long getId() {
@@ -47,6 +51,14 @@ public class TicketsDTO implements Serializable {
         this.place = place;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public Integer getAmount() {
         return amount;
     }
@@ -55,12 +67,28 @@ public class TicketsDTO implements Serializable {
         this.amount = amount;
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getRows() {
+        return rows;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setRows(Integer rows) {
+        this.rows = rows;
+    }
+
+    public Integer getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Integer seats) {
+        this.seats = seats;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     @Override
@@ -90,8 +118,11 @@ public class TicketsDTO implements Serializable {
             "id=" + getId() +
             ", price=" + getPrice() +
             ", place='" + getPlace() + "'" +
-            ", amount=" + getAmount() +
             ", type=" + getType() +
+            ", amount=" + getAmount() +
+            ", rows=" + getRows() +
+            ", seats=" + getSeats() +
+            ", state=" + getState() +
             "}";
     }
 }

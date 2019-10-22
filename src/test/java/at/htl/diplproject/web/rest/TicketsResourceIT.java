@@ -43,13 +43,25 @@ public class TicketsResourceIT {
     private static final String DEFAULT_PLACE = "AAAAAAAAAA";
     private static final String UPDATED_PLACE = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_AMOUNT = 0;
-    private static final Integer UPDATED_AMOUNT = 1;
-    private static final Integer SMALLER_AMOUNT = 0 - 1;
-
     private static final Integer DEFAULT_TYPE = 1;
     private static final Integer UPDATED_TYPE = 2;
     private static final Integer SMALLER_TYPE = 1 - 1;
+
+    private static final Integer DEFAULT_AMOUNT = 1;
+    private static final Integer UPDATED_AMOUNT = 2;
+    private static final Integer SMALLER_AMOUNT = 1 - 1;
+
+    private static final Integer DEFAULT_ROWS = 1;
+    private static final Integer UPDATED_ROWS = 2;
+    private static final Integer SMALLER_ROWS = 1 - 1;
+
+    private static final Integer DEFAULT_SEATS = 1;
+    private static final Integer UPDATED_SEATS = 2;
+    private static final Integer SMALLER_SEATS = 1 - 1;
+
+    private static final Integer DEFAULT_STATE = 1;
+    private static final Integer UPDATED_STATE = 2;
+    private static final Integer SMALLER_STATE = 1 - 1;
 
     @Autowired
     private TicketsRepository ticketsRepository;
@@ -101,8 +113,11 @@ public class TicketsResourceIT {
         Tickets tickets = new Tickets()
             .price(DEFAULT_PRICE)
             .place(DEFAULT_PLACE)
+            .type(DEFAULT_TYPE)
             .amount(DEFAULT_AMOUNT)
-            .type(DEFAULT_TYPE);
+            .rows(DEFAULT_ROWS)
+            .seats(DEFAULT_SEATS)
+            .state(DEFAULT_STATE);
         return tickets;
     }
     /**
@@ -115,8 +130,11 @@ public class TicketsResourceIT {
         Tickets tickets = new Tickets()
             .price(UPDATED_PRICE)
             .place(UPDATED_PLACE)
+            .type(UPDATED_TYPE)
             .amount(UPDATED_AMOUNT)
-            .type(UPDATED_TYPE);
+            .rows(UPDATED_ROWS)
+            .seats(UPDATED_SEATS)
+            .state(UPDATED_STATE);
         return tickets;
     }
 
@@ -143,8 +161,11 @@ public class TicketsResourceIT {
         Tickets testTickets = ticketsList.get(ticketsList.size() - 1);
         assertThat(testTickets.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testTickets.getPlace()).isEqualTo(DEFAULT_PLACE);
-        assertThat(testTickets.getAmount()).isEqualTo(DEFAULT_AMOUNT);
         assertThat(testTickets.getType()).isEqualTo(DEFAULT_TYPE);
+        assertThat(testTickets.getAmount()).isEqualTo(DEFAULT_AMOUNT);
+        assertThat(testTickets.getRows()).isEqualTo(DEFAULT_ROWS);
+        assertThat(testTickets.getSeats()).isEqualTo(DEFAULT_SEATS);
+        assertThat(testTickets.getState()).isEqualTo(DEFAULT_STATE);
     }
 
     @Test
@@ -189,25 +210,6 @@ public class TicketsResourceIT {
 
     @Test
     @Transactional
-    public void checkAmountIsRequired() throws Exception {
-        int databaseSizeBeforeTest = ticketsRepository.findAll().size();
-        // set the field null
-        tickets.setAmount(null);
-
-        // Create the Tickets, which fails.
-        TicketsDTO ticketsDTO = ticketsMapper.toDto(tickets);
-
-        restTicketsMockMvc.perform(post("/api/tickets")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(ticketsDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Tickets> ticketsList = ticketsRepository.findAll();
-        assertThat(ticketsList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllTickets() throws Exception {
         // Initialize the database
         ticketsRepository.saveAndFlush(tickets);
@@ -219,8 +221,11 @@ public class TicketsResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(tickets.getId().intValue())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
             .andExpect(jsonPath("$.[*].place").value(hasItem(DEFAULT_PLACE.toString())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT)))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)));
+            .andExpect(jsonPath("$.[*].rows").value(hasItem(DEFAULT_ROWS)))
+            .andExpect(jsonPath("$.[*].seats").value(hasItem(DEFAULT_SEATS)))
+            .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE)));
     }
     
     @Test
@@ -236,8 +241,11 @@ public class TicketsResourceIT {
             .andExpect(jsonPath("$.id").value(tickets.getId().intValue()))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
             .andExpect(jsonPath("$.place").value(DEFAULT_PLACE.toString()))
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE));
+            .andExpect(jsonPath("$.rows").value(DEFAULT_ROWS))
+            .andExpect(jsonPath("$.seats").value(DEFAULT_SEATS))
+            .andExpect(jsonPath("$.state").value(DEFAULT_STATE));
     }
 
     @Test
@@ -263,8 +271,11 @@ public class TicketsResourceIT {
         updatedTickets
             .price(UPDATED_PRICE)
             .place(UPDATED_PLACE)
+            .type(UPDATED_TYPE)
             .amount(UPDATED_AMOUNT)
-            .type(UPDATED_TYPE);
+            .rows(UPDATED_ROWS)
+            .seats(UPDATED_SEATS)
+            .state(UPDATED_STATE);
         TicketsDTO ticketsDTO = ticketsMapper.toDto(updatedTickets);
 
         restTicketsMockMvc.perform(put("/api/tickets")
@@ -278,8 +289,11 @@ public class TicketsResourceIT {
         Tickets testTickets = ticketsList.get(ticketsList.size() - 1);
         assertThat(testTickets.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testTickets.getPlace()).isEqualTo(UPDATED_PLACE);
-        assertThat(testTickets.getAmount()).isEqualTo(UPDATED_AMOUNT);
         assertThat(testTickets.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testTickets.getAmount()).isEqualTo(UPDATED_AMOUNT);
+        assertThat(testTickets.getRows()).isEqualTo(UPDATED_ROWS);
+        assertThat(testTickets.getSeats()).isEqualTo(UPDATED_SEATS);
+        assertThat(testTickets.getState()).isEqualTo(UPDATED_STATE);
     }
 
     @Test

@@ -17,16 +17,23 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "amount",
-            "fieldType": "Integer",
-            "fieldValidateRules": [
-                "required",
-                "min"
-            ],
-            "fieldValidateRulesMin": 0
+            "fieldName": "type",
+            "fieldType": "Integer"
         },
         {
-            "fieldName": "type",
+            "fieldName": "amount",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "rows",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "seats",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "state",
             "fieldType": "Integer"
         }
     ],

@@ -29,13 +29,20 @@ public class Tickets implements Serializable {
     @Column(name = "place")
     private String place;
 
-    @NotNull
-    @Min(value = 0)
-    @Column(name = "amount", nullable = false)
-    private Integer amount;
-
     @Column(name = "type")
     private Integer type;
+
+    @Column(name = "amount")
+    private Integer amount;
+
+    @Column(name = "rows")
+    private Integer rows;
+
+    @Column(name = "seats")
+    private Integer seats;
+
+    @Column(name = "state")
+    private Integer state;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -72,6 +79,19 @@ public class Tickets implements Serializable {
         this.place = place;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public Tickets type(Integer type) {
+        this.type = type;
+        return this;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public Integer getAmount() {
         return amount;
     }
@@ -85,17 +105,43 @@ public class Tickets implements Serializable {
         this.amount = amount;
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getRows() {
+        return rows;
     }
 
-    public Tickets type(Integer type) {
-        this.type = type;
+    public Tickets rows(Integer rows) {
+        this.rows = rows;
         return this;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setRows(Integer rows) {
+        this.rows = rows;
+    }
+
+    public Integer getSeats() {
+        return seats;
+    }
+
+    public Tickets seats(Integer seats) {
+        this.seats = seats;
+        return this;
+    }
+
+    public void setSeats(Integer seats) {
+        this.seats = seats;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public Tickets state(Integer state) {
+        this.state = state;
+        return this;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -121,8 +167,11 @@ public class Tickets implements Serializable {
             "id=" + getId() +
             ", price=" + getPrice() +
             ", place='" + getPlace() + "'" +
-            ", amount=" + getAmount() +
             ", type=" + getType() +
+            ", amount=" + getAmount() +
+            ", rows=" + getRows() +
+            ", seats=" + getSeats() +
+            ", state=" + getState() +
             "}";
     }
 }

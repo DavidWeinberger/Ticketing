@@ -16,10 +16,6 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="type" type="integer">
-                <constraints nullable="false" />
-            </column>
-
             <column name="price" type="double">
                 <constraints nullable="false" />
             </column>
@@ -28,8 +24,24 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="type" type="integer">
+                <constraints nullable="true" />
+            </column>
+
             <column name="amount" type="integer">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
+            </column>
+
+            <column name="rows" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="seats" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="state" type="integer">
+                <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
@@ -56,10 +68,13 @@
                   separator=";"
                   tableName="tickets">
             <column name="id" type="numeric"/>
-            <column name="type" type="numeric"/>
             <column name="price" type="numeric"/>
             <column name="place" type="string"/>
+            <column name="type" type="numeric"/>
             <column name="amount" type="numeric"/>
+            <column name="rows" type="numeric"/>
+            <column name="seats" type="numeric"/>
+            <column name="state" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

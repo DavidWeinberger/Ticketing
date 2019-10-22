@@ -5,12 +5,14 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ITickets, Tickets } from 'app/shared/model/tickets.model';
 import { TicketsService } from './tickets.service';
+import { reflectIdentifierOfDeclaration } from '@angular/compiler-cli/src/ngtsc/reflection';
 
 enum Types {
   Stehplatz,
   Vip_Stehplatz,
   Sitzplatz
 }
+
 export namespace types {
   export function values() {
     return Object.keys(Types).filter(type => isNaN(<any>type) && type !== 'values');
@@ -30,10 +32,13 @@ export class TicketsUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    type: [],
     price: [null, [Validators.required, Validators.min(0)]],
     place: [],
-    amount: []
+    type: [],
+    amount: [],
+    rows: [],
+    seats: [],
+    state: []
   });
 
   constructor(protected ticketsService: TicketsService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -49,23 +54,18 @@ export class TicketsUpdateComponent implements OnInit {
     this.items = Types[tickets.type];
     this.editForm.patchValue({
       id: tickets.id,
-      type: tickets.type,
       price: tickets.price,
       place: tickets.place,
-      amount: tickets.amount
+      type: tickets.type,
+      amount: tickets.amount,
+      rows: tickets.rows,
+      seats: tickets.seats,
+      state: tickets.state
     });
   }
 
   previousState() {
     window.history.back();
-  }
-
-  changedSelection() {
-    if (this.items === Types[Types.Sitzplatz]) {
-      this.isSeatTicket = true;
-    } else {
-      this.isSeatTicket = false;
-    }
   }
 
   save() {
@@ -75,14 +75,22 @@ export class TicketsUpdateComponent implements OnInit {
     if (tickets.id !== undefined) {
       this.subscribeToSaveResponse(this.ticketsService.update(tickets));
     } else {
-      // console.log(this.items.equals(Types.Sitzplatz.toString()));
       console.log(this.items + '=' + Types[Types.Sitzplatz]);
       if (this.items === Types[Types.Sitzplatz]) {
-        console.log('found');
-        const amount = tickets.amount;
+        const rows = tickets.rows;
+        const seats = tickets.seats;
+        for (let row = 1; row <= rows; row++) {
+          for (let seat = 1; seat <= seats; seat++) {
+            tickets.amount = 1;
+            tickets.seats = seat;
+            tickets.rows = row;
+            this.subscribeToSaveResponse(this.ticketsService.create(tickets));
+          }
+        }
         tickets.amount = 1;
+      } else {
+        this.subscribeToSaveResponse(this.ticketsService.create(tickets));
       }
-      this.subscribeToSaveResponse(this.ticketsService.create(tickets));
     }
   }
 
@@ -90,10 +98,13 @@ export class TicketsUpdateComponent implements OnInit {
     return {
       ...new Tickets(),
       id: this.editForm.get(['id']).value,
-      type: Number(Types[this.items]),
       price: this.editForm.get(['price']).value,
       place: this.editForm.get(['place']).value,
-      amount: this.editForm.get(['amount']).value
+      type: Number(Types[this.items]),
+      amount: this.editForm.get(['amount']).value,
+      rows: this.editForm.get(['rows']).value,
+      seats: this.editForm.get(['seats']).value,
+      state: this.editForm.get(['state']).value
     };
   }
 
@@ -108,5 +119,13 @@ export class TicketsUpdateComponent implements OnInit {
 
   protected onSaveError() {
     this.isSaving = false;
+  }
+
+  changedSelection() {
+    if (this.items === Types[Types.Sitzplatz]) {
+      this.isSeatTicket = true;
+    } else {
+      this.isSeatTicket = false;
+    }
   }
 }

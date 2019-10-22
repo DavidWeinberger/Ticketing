@@ -9,7 +9,7 @@ Ticketing Project,at.htl.diplproject.domain,Cart,0,82,0,8,0,24,0,16,0,12
 Ticketing Project,at.htl.diplproject.domain,Sale,0,48,0,8,0,12,0,10,0,6
 Ticketing Project,at.htl.diplproject.domain,TabletView,0,48,0,8,0,12,0,10,0,6
 Ticketing Project,at.htl.diplproject.domain,Cart_,3,0,0,0,1,0,1,0,1,0
-Ticketing Project,at.htl.diplproject.domain,Tickets,0,116,0,8,0,36,0,22,0,18
+Ticketing Project,at.htl.diplproject.domain,Tickets,0,167,0,8,0,54,0,31,0,27
 Ticketing Project,at.htl.diplproject.domain,AbstractAuditingEntity_,3,0,0,0,1,0,1,0,1,0
 Ticketing Project,at.htl.diplproject.domain,TabletView_,3,0,0,0,1,0,1,0,1,0
 Ticketing Project,at.htl.diplproject.domain,User_,3,0,0,0,1,0,1,0,1,0
@@ -23,7 +23,7 @@ Ticketing Project,at.htl.diplproject.service.mapper,CartMapper,0,13,0,2,0,5,0,2,
 Ticketing Project,at.htl.diplproject.service.mapper,CartMapperImpl,62,43,10,2,16,13,8,3,2,3
 Ticketing Project,at.htl.diplproject.service.mapper,TicketsMapper,0,13,0,2,0,5,0,2,0,1
 Ticketing Project,at.htl.diplproject.service.mapper,UserMapper,0,118,0,6,0,37,0,11,0,8
-Ticketing Project,at.htl.diplproject.service.mapper,TicketsMapperImpl,62,59,10,2,16,17,8,3,2,3
+Ticketing Project,at.htl.diplproject.service.mapper,TicketsMapperImpl,62,83,10,2,16,23,8,3,2,3
 Ticketing Project,at.htl.diplproject.config.audit,AuditEventConverter,41,83,8,8,10,19,7,6,1,4
 Ticketing Project,at.htl.diplproject.web.websocket,ActivityService,41,10,0,0,11,4,2,2,2,2
 Ticketing Project,at.htl.diplproject.service.util,RandomUtil,0,9,0,0,0,3,0,3,0,3
@@ -80,7 +80,7 @@ Ticketing Project,at.htl.diplproject.security.jwt,JWTConfigurer,0,18,0,0,0,6,0,2
 Ticketing Project,at.htl.diplproject.security.jwt,JWTFilter,54,6,10,0,14,3,7,1,2,1
 Ticketing Project,at.htl.diplproject.security.jwt,TokenProvider,100,108,1,3,28,28,3,4,2,3
 Ticketing Project,at.htl.diplproject.aop.logging,LoggingAspect,177,0,10,0,24,0,10,0,5,0
-Ticketing Project,at.htl.diplproject.service.dto,TicketsDTO,0,105,0,10,0,31,0,19,0,14
+Ticketing Project,at.htl.diplproject.service.dto,TicketsDTO,0,141,0,10,0,43,0,25,0,20
 Ticketing Project,at.htl.diplproject.service.dto,CartDTO,0,81,0,10,0,23,0,15,0,10
 Ticketing Project,at.htl.diplproject.service.dto,PasswordChangeDTO,0,26,0,0,0,12,0,6,0,6
 Ticketing Project,at.htl.diplproject.service.dto,UserDTO,0,242,0,0,0,60,0,29,0,29

@@ -1,11 +1,11 @@
-id;type;price;place;amount
-1;37454;79654;Fish multi-byte Savings Account;44583
-2;15599;9997;Trace;33370
-3;60111;14286;deposit Tasty Metal Bacon Implementation;77
-4;18182;99221;Money Market Account;61165
-5;52475;706;Home Namibia;39986
-6;13949;4666;Coordinator;23277
-7;45606;9060;Savings Account syndicate Planner;46676
-8;4645;85994;Yuan Renminbi Centers;1326
-9;94888;94220;South Dakota envisioneer Music;23089
-10;68423;24102;Bahamian Dollar Investment Account;83319
+id;price;place;type;amount;rows;seats;state
+1;37454;Directives application Home Loan Account;15601;44583;15599;9997;5808
+2;45924;seamless Metal deposit;5641;96990;72199;83244;93855
+3;21233;Chips;18340;61748;30424;61165;52475
+4;706;Home Namibia;39986;13949;4666;29214;97375
+5;36636;Common;78517;61838;19967;38246;51423
+6;98323;Canyon HDD;68030;17052;45049;6505;1326
+7;94888;Planner cross-platform access;9767;23089;68423;24102;44015
+8;68326;Investment Account;83319;3438;17336;90932;39106
+9;25877;invoice;31171;42515;52006;20794;54671
+10;56770;Industrial;84228;77513;44975;93949;39515

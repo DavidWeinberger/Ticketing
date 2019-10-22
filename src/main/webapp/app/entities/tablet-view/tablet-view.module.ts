@@ -5,12 +5,13 @@ import { JhiLanguageHelper } from 'app/core';
 
 import { TicketingProjectSharedModule } from 'app/shared';
 import { TabletViewComponent, tabletViewRoute } from './';
+import { SectorsComponent } from './sectors/sectors.component';
 
 const ENTITY_STATES = [...tabletViewRoute];
 
 @NgModule({
   imports: [TicketingProjectSharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [TabletViewComponent],
+  declarations: [TabletViewComponent, SectorsComponent],
   entryComponents: [TabletViewComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
