@@ -11,18 +11,16 @@ public class TicketsDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private String ticketType;
+    @DecimalMin(value = "0")
+    private Double price;
 
-    @NotNull
-    @Min(value = 0)
-    private Integer price;
+    private String place;
 
     @NotNull
     @Min(value = 0)
     private Integer amount;
 
-    @NotNull
-    private String place;
+    private Integer type;
 
 
     public Long getId() {
@@ -33,20 +31,20 @@ public class TicketsDTO implements Serializable {
         this.id = id;
     }
 
-    public String getTicketType() {
-        return ticketType;
-    }
-
-    public void setTicketType(String ticketType) {
-        this.ticketType = ticketType;
-    }
-
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public Integer getAmount() {
@@ -57,12 +55,12 @@ public class TicketsDTO implements Serializable {
         this.amount = amount;
     }
 
-    public String getPlace() {
-        return place;
+    public Integer getType() {
+        return type;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     @Override
@@ -90,10 +88,10 @@ public class TicketsDTO implements Serializable {
     public String toString() {
         return "TicketsDTO{" +
             "id=" + getId() +
-            ", ticketType='" + getTicketType() + "'" +
             ", price=" + getPrice() +
-            ", amount=" + getAmount() +
             ", place='" + getPlace() + "'" +
+            ", amount=" + getAmount() +
+            ", type=" + getType() +
             "}";
     }
 }

@@ -36,19 +36,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = TicketingProjectApp.class)
 public class TicketsResourceIT {
 
-    private static final String DEFAULT_TICKET_TYPE = "AAAAAAAAAA";
-    private static final String UPDATED_TICKET_TYPE = "BBBBBBBBBB";
+    private static final Double DEFAULT_PRICE = 0D;
+    private static final Double UPDATED_PRICE = 1D;
+    private static final Double SMALLER_PRICE = 0D - 1D;
 
-    private static final Integer DEFAULT_PRICE = 0;
-    private static final Integer UPDATED_PRICE = 1;
-    private static final Integer SMALLER_PRICE = 0 - 1;
+    private static final String DEFAULT_PLACE = "AAAAAAAAAA";
+    private static final String UPDATED_PLACE = "BBBBBBBBBB";
 
     private static final Integer DEFAULT_AMOUNT = 0;
     private static final Integer UPDATED_AMOUNT = 1;
     private static final Integer SMALLER_AMOUNT = 0 - 1;
 
-    private static final String DEFAULT_PLACE = "AAAAAAAAAA";
-    private static final String UPDATED_PLACE = "BBBBBBBBBB";
+    private static final Integer DEFAULT_TYPE = 1;
+    private static final Integer UPDATED_TYPE = 2;
+    private static final Integer SMALLER_TYPE = 1 - 1;
 
     @Autowired
     private TicketsRepository ticketsRepository;
@@ -98,10 +99,10 @@ public class TicketsResourceIT {
      */
     public static Tickets createEntity(EntityManager em) {
         Tickets tickets = new Tickets()
-            .ticketType(DEFAULT_TICKET_TYPE)
             .price(DEFAULT_PRICE)
+            .place(DEFAULT_PLACE)
             .amount(DEFAULT_AMOUNT)
-            .place(DEFAULT_PLACE);
+            .type(DEFAULT_TYPE);
         return tickets;
     }
     /**
@@ -112,10 +113,10 @@ public class TicketsResourceIT {
      */
     public static Tickets createUpdatedEntity(EntityManager em) {
         Tickets tickets = new Tickets()
-            .ticketType(UPDATED_TICKET_TYPE)
             .price(UPDATED_PRICE)
+            .place(UPDATED_PLACE)
             .amount(UPDATED_AMOUNT)
-            .place(UPDATED_PLACE);
+            .type(UPDATED_TYPE);
         return tickets;
     }
 
@@ -140,10 +141,10 @@ public class TicketsResourceIT {
         List<Tickets> ticketsList = ticketsRepository.findAll();
         assertThat(ticketsList).hasSize(databaseSizeBeforeCreate + 1);
         Tickets testTickets = ticketsList.get(ticketsList.size() - 1);
-        assertThat(testTickets.getTicketType()).isEqualTo(DEFAULT_TICKET_TYPE);
         assertThat(testTickets.getPrice()).isEqualTo(DEFAULT_PRICE);
-        assertThat(testTickets.getAmount()).isEqualTo(DEFAULT_AMOUNT);
         assertThat(testTickets.getPlace()).isEqualTo(DEFAULT_PLACE);
+        assertThat(testTickets.getAmount()).isEqualTo(DEFAULT_AMOUNT);
+        assertThat(testTickets.getType()).isEqualTo(DEFAULT_TYPE);
     }
 
     @Test
@@ -166,25 +167,6 @@ public class TicketsResourceIT {
         assertThat(ticketsList).hasSize(databaseSizeBeforeCreate);
     }
 
-
-    @Test
-    @Transactional
-    public void checkTicketTypeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = ticketsRepository.findAll().size();
-        // set the field null
-        tickets.setTicketType(null);
-
-        // Create the Tickets, which fails.
-        TicketsDTO ticketsDTO = ticketsMapper.toDto(tickets);
-
-        restTicketsMockMvc.perform(post("/api/tickets")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(ticketsDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Tickets> ticketsList = ticketsRepository.findAll();
-        assertThat(ticketsList).hasSize(databaseSizeBeforeTest);
-    }
 
     @Test
     @Transactional
@@ -226,25 +208,6 @@ public class TicketsResourceIT {
 
     @Test
     @Transactional
-    public void checkPlaceIsRequired() throws Exception {
-        int databaseSizeBeforeTest = ticketsRepository.findAll().size();
-        // set the field null
-        tickets.setPlace(null);
-
-        // Create the Tickets, which fails.
-        TicketsDTO ticketsDTO = ticketsMapper.toDto(tickets);
-
-        restTicketsMockMvc.perform(post("/api/tickets")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(ticketsDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Tickets> ticketsList = ticketsRepository.findAll();
-        assertThat(ticketsList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllTickets() throws Exception {
         // Initialize the database
         ticketsRepository.saveAndFlush(tickets);
@@ -254,10 +217,10 @@ public class TicketsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(tickets.getId().intValue())))
-            .andExpect(jsonPath("$.[*].ticketType").value(hasItem(DEFAULT_TICKET_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)))
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
+            .andExpect(jsonPath("$.[*].place").value(hasItem(DEFAULT_PLACE.toString())))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT)))
-            .andExpect(jsonPath("$.[*].place").value(hasItem(DEFAULT_PLACE.toString())));
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)));
     }
     
     @Test
@@ -271,10 +234,10 @@ public class TicketsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(tickets.getId().intValue()))
-            .andExpect(jsonPath("$.ticketType").value(DEFAULT_TICKET_TYPE.toString()))
-            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE))
+            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
+            .andExpect(jsonPath("$.place").value(DEFAULT_PLACE.toString()))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT))
-            .andExpect(jsonPath("$.place").value(DEFAULT_PLACE.toString()));
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE));
     }
 
     @Test
@@ -298,10 +261,10 @@ public class TicketsResourceIT {
         // Disconnect from session so that the updates on updatedTickets are not directly saved in db
         em.detach(updatedTickets);
         updatedTickets
-            .ticketType(UPDATED_TICKET_TYPE)
             .price(UPDATED_PRICE)
+            .place(UPDATED_PLACE)
             .amount(UPDATED_AMOUNT)
-            .place(UPDATED_PLACE);
+            .type(UPDATED_TYPE);
         TicketsDTO ticketsDTO = ticketsMapper.toDto(updatedTickets);
 
         restTicketsMockMvc.perform(put("/api/tickets")
@@ -313,10 +276,10 @@ public class TicketsResourceIT {
         List<Tickets> ticketsList = ticketsRepository.findAll();
         assertThat(ticketsList).hasSize(databaseSizeBeforeUpdate);
         Tickets testTickets = ticketsList.get(ticketsList.size() - 1);
-        assertThat(testTickets.getTicketType()).isEqualTo(UPDATED_TICKET_TYPE);
         assertThat(testTickets.getPrice()).isEqualTo(UPDATED_PRICE);
-        assertThat(testTickets.getAmount()).isEqualTo(UPDATED_AMOUNT);
         assertThat(testTickets.getPlace()).isEqualTo(UPDATED_PLACE);
+        assertThat(testTickets.getAmount()).isEqualTo(UPDATED_AMOUNT);
+        assertThat(testTickets.getType()).isEqualTo(UPDATED_TYPE);
     }
 
     @Test

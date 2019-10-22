@@ -4,20 +4,17 @@
     "relationships": [],
     "fields": [
         {
-            "fieldName": "ticketType",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "price",
-            "fieldType": "Integer",
+            "fieldType": "Double",
             "fieldValidateRules": [
                 "required",
                 "min"
             ],
-            "fieldValidateRulesMin": "0"
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "place",
+            "fieldType": "String"
         },
         {
             "fieldName": "amount",
@@ -29,11 +26,8 @@
             "fieldValidateRulesMin": 0
         },
         {
-            "fieldName": "place",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldName": "type",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20191005133421",

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketsResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ticketing Project</a> &gt; <a href="index.source.html" class="el_package">at.htl.diplproject.web.rest</a> &gt; <span class="el_source">TicketsResource.java</span></div><h1>TicketsResource.java</h1><pre class="source lang-java linenums">package at.htl.diplproject.web.rest;
+
+import at.htl.diplproject.service.TicketsService;
+import at.htl.diplproject.web.rest.errors.BadRequestAlertException;
+import at.htl.diplproject.service.dto.TicketsDTO;
+
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.ResponseUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * REST controller for managing {@link at.htl.diplproject.domain.Tickets}.
+ */
+@RestController
+@RequestMapping(&quot;/api&quot;)
+public class TicketsResource {
+
+<span class="fc" id="L29">    private final Logger log = LoggerFactory.getLogger(TicketsResource.class);</span>
+
+    private static final String ENTITY_NAME = &quot;tickets&quot;;
+
+    @Value(&quot;${jhipster.clientApp.name}&quot;)
+    private String applicationName;
+
+    private final TicketsService ticketsService;
+
+<span class="fc" id="L38">    public TicketsResource(TicketsService ticketsService) {</span>
+<span class="fc" id="L39">        this.ticketsService = ticketsService;</span>
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * {@code POST  /tickets} : Create a new tickets.
+     *
+     * @param ticketsDTO the ticketsDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new ticketsDTO, or with status {@code 400 (Bad Request)} if the tickets has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping(&quot;/tickets&quot;)
+    public ResponseEntity&lt;TicketsDTO&gt; createTickets(@Valid @RequestBody TicketsDTO ticketsDTO) throws URISyntaxException {
+<span class="fc" id="L51">        log.debug(&quot;REST request to save Tickets : {}&quot;, ticketsDTO);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (ticketsDTO.getId() != null) {</span>
+<span class="fc" id="L53">            throw new BadRequestAlertException(&quot;A new tickets cannot already have an ID&quot;, ENTITY_NAME, &quot;idexists&quot;);</span>
+        }
+<span class="fc" id="L55">        TicketsDTO result = ticketsService.save(ticketsDTO);</span>
+<span class="fc" id="L56">        return ResponseEntity.created(new URI(&quot;/api/tickets/&quot; + result.getId()))</span>
+<span class="fc" id="L57">            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))</span>
+<span class="fc" id="L58">            .body(result);</span>
+    }
+
+    /**
+     * {@code PUT  /tickets} : Updates an existing tickets.
+     *
+     * @param ticketsDTO the ticketsDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated ticketsDTO,
+     * or with status {@code 400 (Bad Request)} if the ticketsDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the ticketsDTO couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PutMapping(&quot;/tickets&quot;)
+    public ResponseEntity&lt;TicketsDTO&gt; updateTickets(@Valid @RequestBody TicketsDTO ticketsDTO) throws URISyntaxException {
+<span class="fc" id="L72">        log.debug(&quot;REST request to update Tickets : {}&quot;, ticketsDTO);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (ticketsDTO.getId() == null) {</span>
+<span class="fc" id="L74">            throw new BadRequestAlertException(&quot;Invalid id&quot;, ENTITY_NAME, &quot;idnull&quot;);</span>
+        }
+<span class="fc" id="L76">        TicketsDTO result = ticketsService.save(ticketsDTO);</span>
+<span class="fc" id="L77">        return ResponseEntity.ok()</span>
+<span class="fc" id="L78">            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, ticketsDTO.getId().toString()))</span>
+<span class="fc" id="L79">            .body(result);</span>
+    }
+
+    /**
+     * {@code GET  /tickets} : get all the tickets.
+     *
+
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tickets in body.
+     */
+    @GetMapping(&quot;/tickets&quot;)
+    public List&lt;TicketsDTO&gt; getAllTickets() {
+<span class="fc" id="L90">        log.debug(&quot;REST request to get all Tickets&quot;);</span>
+<span class="fc" id="L91">        return ticketsService.findAll();</span>
+    }
+
+    /**
+     * {@code GET  /tickets/:id} : get the &quot;id&quot; tickets.
+     *
+     * @param id the id of the ticketsDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the ticketsDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping(&quot;/tickets/{id}&quot;)
+    public ResponseEntity&lt;TicketsDTO&gt; getTickets(@PathVariable Long id) {
+<span class="fc" id="L102">        log.debug(&quot;REST request to get Tickets : {}&quot;, id);</span>
+<span class="fc" id="L103">        Optional&lt;TicketsDTO&gt; ticketsDTO = ticketsService.findOne(id);</span>
+<span class="fc" id="L104">        return ResponseUtil.wrapOrNotFound(ticketsDTO);</span>
+    }
+
+    /**
+     * {@code DELETE  /tickets/:id} : delete the &quot;id&quot; tickets.
+     *
+     * @param id the id of the ticketsDTO to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping(&quot;/tickets/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteTickets(@PathVariable Long id) {
+<span class="fc" id="L115">        log.debug(&quot;REST request to delete Tickets : {}&quot;, id);</span>
+<span class="fc" id="L116">        ticketsService.delete(id);</span>
+<span class="fc" id="L117">        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

@@ -6,19 +6,34 @@ import { Observable } from 'rxjs';
 import { ITickets, Tickets } from 'app/shared/model/tickets.model';
 import { TicketsService } from './tickets.service';
 
+enum Types {
+  Stehplatz,
+  Vip_Stehplatz,
+  Sitzplatz
+}
+export namespace types {
+  export function values() {
+    return Object.keys(Types).filter(type => isNaN(<any>type) && type !== 'values');
+  }
+}
+
 @Component({
   selector: 'jhi-tickets-update',
   templateUrl: './tickets-update.component.html'
 })
 export class TicketsUpdateComponent implements OnInit {
+  typesEnum = types;
+  Enum = Types;
   isSaving: boolean;
+  items;
+  isSeatTicket: boolean;
 
   editForm = this.fb.group({
     id: [],
-    ticketType: [null, [Validators.required]],
+    type: [],
     price: [null, [Validators.required, Validators.min(0)]],
-    amount: [null, [Validators.required, Validators.min(0)]],
-    place: [null, [Validators.required]]
+    place: [],
+    amount: []
   });
 
   constructor(protected ticketsService: TicketsService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -31,12 +46,13 @@ export class TicketsUpdateComponent implements OnInit {
   }
 
   updateForm(tickets: ITickets) {
+    this.items = Types[tickets.type];
     this.editForm.patchValue({
       id: tickets.id,
-      ticketType: tickets.ticketType,
+      type: tickets.type,
       price: tickets.price,
-      amount: tickets.amount,
-      place: tickets.place
+      place: tickets.place,
+      amount: tickets.amount
     });
   }
 
@@ -44,12 +60,28 @@ export class TicketsUpdateComponent implements OnInit {
     window.history.back();
   }
 
+  changedSelection() {
+    if (this.items === Types[Types.Sitzplatz]) {
+      this.isSeatTicket = true;
+    } else {
+      this.isSeatTicket = false;
+    }
+  }
+
   save() {
     this.isSaving = true;
+    console.log('saving');
     const tickets = this.createFromForm();
     if (tickets.id !== undefined) {
       this.subscribeToSaveResponse(this.ticketsService.update(tickets));
     } else {
+      // console.log(this.items.equals(Types.Sitzplatz.toString()));
+      console.log(this.items + '=' + Types[Types.Sitzplatz]);
+      if (this.items === Types[Types.Sitzplatz]) {
+        console.log('found');
+        const amount = tickets.amount;
+        tickets.amount = 1;
+      }
       this.subscribeToSaveResponse(this.ticketsService.create(tickets));
     }
   }
@@ -58,10 +90,10 @@ export class TicketsUpdateComponent implements OnInit {
     return {
       ...new Tickets(),
       id: this.editForm.get(['id']).value,
-      ticketType: this.editForm.get(['ticketType']).value,
+      type: Number(Types[this.items]),
       price: this.editForm.get(['price']).value,
-      amount: this.editForm.get(['amount']).value,
-      place: this.editForm.get(['place']).value
+      place: this.editForm.get(['place']).value,
+      amount: this.editForm.get(['amount']).value
     };
   }
 

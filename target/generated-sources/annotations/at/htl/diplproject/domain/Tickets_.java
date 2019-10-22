@@ -9,16 +9,16 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Tickets_ {
 
 	public static volatile SingularAttribute<Tickets, Integer> amount;
-	public static volatile SingularAttribute<Tickets, Integer> price;
-	public static volatile SingularAttribute<Tickets, String> ticketType;
+	public static volatile SingularAttribute<Tickets, Double> price;
 	public static volatile SingularAttribute<Tickets, Long> id;
 	public static volatile SingularAttribute<Tickets, String> place;
+	public static volatile SingularAttribute<Tickets, Integer> type;
 
 	public static final String AMOUNT = "amount";
 	public static final String PRICE = "price";
-	public static final String TICKET_TYPE = "ticketType";
 	public static final String ID = "id";
 	public static final String PLACE = "place";
+	public static final String TYPE = "type";
 
 }
 

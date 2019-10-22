@@ -23,7 +23,7 @@ describe('Service Tests', () => {
       service = injector.get(TicketsService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Tickets(0, 'AAAAAAA', 0, 0, 'AAAAAAA');
+      elemDefault = new Tickets(0, 0, 'AAAAAAA', 0, 0);
     });
 
     describe('Service methods', () => {
@@ -59,10 +59,10 @@ describe('Service Tests', () => {
       it('should update a Tickets', async () => {
         const returnedFromService = Object.assign(
           {
-            ticketType: 'BBBBBB',
             price: 1,
+            place: 'BBBBBB',
             amount: 1,
-            place: 'BBBBBB'
+            type: 1
           },
           elemDefault
         );
@@ -80,10 +80,10 @@ describe('Service Tests', () => {
       it('should return a list of Tickets', async () => {
         const returnedFromService = Object.assign(
           {
-            ticketType: 'BBBBBB',
             price: 1,
+            place: 'BBBBBB',
             amount: 1,
-            place: 'BBBBBB'
+            type: 1
           },
           elemDefault
         );

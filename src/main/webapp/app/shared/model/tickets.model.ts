@@ -1,11 +1,11 @@
 export interface ITickets {
   id?: number;
-  ticketType?: string;
   price?: number;
-  amount?: number;
   place?: string;
+  amount?: number;
+  type?: number;
 }
 
 export class Tickets implements ITickets {
-  constructor(public id?: number, public ticketType?: string, public price?: number, public amount?: number, public place?: string) {}
+  constructor(public id?: number, public price?: number, public place?: string, public amount?: number, public type?: number) {}
 }

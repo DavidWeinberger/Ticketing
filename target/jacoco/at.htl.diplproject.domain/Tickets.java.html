@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tickets.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ticketing Project</a> &gt; <a href="index.source.html" class="el_package">at.htl.diplproject.domain</a> &gt; <span class="el_source">Tickets.java</span></div><h1>Tickets.java</h1><pre class="source lang-java linenums">package at.htl.diplproject.domain;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import java.io.Serializable;
+
+/**
+ * A Tickets.
+ */
+@Entity
+@Table(name = &quot;tickets&quot;)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+<span class="fc" id="L16">public class Tickets implements Serializable {</span>
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
+    @Column(name = &quot;type&quot;, nullable = false)
+    private Integer type;
+
+    @NotNull
+    @DecimalMin(value = &quot;0&quot;)
+    @Column(name = &quot;price&quot;, nullable = false)
+    private Double price;
+
+    @Column(name = &quot;place&quot;)
+    private String place;
+
+    @NotNull
+    @Min(value = 0)
+    @Column(name = &quot;amount&quot;, nullable = false)
+    private Integer amount;
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    public Long getId() {
+<span class="fc" id="L43">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L47">        this.id = id;</span>
+<span class="fc" id="L48">    }</span>
+
+    public Integer getType() {
+<span class="fc" id="L51">        return type;</span>
+    }
+
+    public Tickets type(Integer type) {
+<span class="fc" id="L55">        this.type = type;</span>
+<span class="fc" id="L56">        return this;</span>
+    }
+
+    public void setType(Integer type) {
+<span class="fc" id="L60">        this.type = type;</span>
+<span class="fc" id="L61">    }</span>
+
+    public Double getPrice() {
+<span class="fc" id="L64">        return price;</span>
+    }
+
+    public Tickets price(Double price) {
+<span class="fc" id="L68">        this.price = price;</span>
+<span class="fc" id="L69">        return this;</span>
+    }
+
+    public void setPrice(Double price) {
+<span class="fc" id="L73">        this.price = price;</span>
+<span class="fc" id="L74">    }</span>
+
+    public String getPlace() {
+<span class="fc" id="L77">        return place;</span>
+    }
+
+    public Tickets place(String place) {
+<span class="fc" id="L81">        this.place = place;</span>
+<span class="fc" id="L82">        return this;</span>
+    }
+
+    public void setPlace(String place) {
+<span class="fc" id="L86">        this.place = place;</span>
+<span class="fc" id="L87">    }</span>
+
+    public Integer getAmount() {
+<span class="fc" id="L90">        return amount;</span>
+    }
+
+    public Tickets amount(Integer amount) {
+<span class="fc" id="L94">        this.amount = amount;</span>
+<span class="fc" id="L95">        return this;</span>
+    }
+
+    public void setAmount(Integer amount) {
+<span class="fc" id="L99">        this.amount = amount;</span>
+<span class="fc" id="L100">    }</span>
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (this == o) {</span>
+<span class="fc" id="L106">            return true;</span>
+        }
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (!(o instanceof Tickets)) {</span>
+<span class="fc" id="L109">            return false;</span>
+        }
+<span class="fc bfc" id="L111" title="All 4 branches covered.">        return id != null &amp;&amp; id.equals(((Tickets) o).id);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L116">        return 31;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L121">        return &quot;Tickets{&quot; +</span>
+<span class="fc" id="L122">            &quot;id=&quot; + getId() +</span>
+<span class="fc" id="L123">            &quot;, type=&quot; + getType() +</span>
+<span class="fc" id="L124">            &quot;, price=&quot; + getPrice() +</span>
+<span class="fc" id="L125">            &quot;, place='&quot; + getPlace() + &quot;'&quot; +</span>
+<span class="fc" id="L126">            &quot;, amount=&quot; + getAmount() +</span>
+            &quot;}&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

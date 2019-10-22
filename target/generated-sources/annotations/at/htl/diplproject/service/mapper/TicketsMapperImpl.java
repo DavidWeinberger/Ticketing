@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2019-10-05T15:38:18+0200",
+    date = "2019-10-22T13:52:54+0200",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 1.8.0_162 (Oracle Corporation)"
 )
 @Component
@@ -24,10 +24,10 @@ public class TicketsMapperImpl implements TicketsMapper {
         Tickets tickets = new Tickets();
 
         tickets.setId( dto.getId() );
-        tickets.setTicketType( dto.getTicketType() );
+        tickets.setType( dto.getType() );
         tickets.setPrice( dto.getPrice() );
-        tickets.setAmount( dto.getAmount() );
         tickets.setPlace( dto.getPlace() );
+        tickets.setAmount( dto.getAmount() );
 
         return tickets;
     }
@@ -41,10 +41,10 @@ public class TicketsMapperImpl implements TicketsMapper {
         TicketsDTO ticketsDTO = new TicketsDTO();
 
         ticketsDTO.setId( entity.getId() );
-        ticketsDTO.setTicketType( entity.getTicketType() );
+        ticketsDTO.setType( entity.getType() );
         ticketsDTO.setPrice( entity.getPrice() );
-        ticketsDTO.setAmount( entity.getAmount() );
         ticketsDTO.setPlace( entity.getPlace() );
+        ticketsDTO.setAmount( entity.getAmount() );
 
         return ticketsDTO;
     }

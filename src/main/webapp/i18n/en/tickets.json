@@ -16,10 +16,10 @@
       "detail": {
         "title": "Tickets"
       },
-      "ticketType": "Ticket Type",
       "price": "Price",
+      "place": "Place",
       "amount": "Amount",
-      "place": "Place"
+      "type": "Type"
     }
   }
 }

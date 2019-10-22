@@ -22,22 +22,20 @@ public class Tickets implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "ticket_type", nullable = false)
-    private String ticketType;
-
-    @NotNull
-    @Min(value = 0)
+    @DecimalMin(value = "0")
     @Column(name = "price", nullable = false)
-    private Integer price;
+    private Double price;
+
+    @Column(name = "place")
+    private String place;
 
     @NotNull
     @Min(value = 0)
     @Column(name = "amount", nullable = false)
     private Integer amount;
 
-    @NotNull
-    @Column(name = "place", nullable = false)
-    private String place;
+    @Column(name = "type")
+    private Integer type;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -48,30 +46,30 @@ public class Tickets implements Serializable {
         this.id = id;
     }
 
-    public String getTicketType() {
-        return ticketType;
-    }
-
-    public Tickets ticketType(String ticketType) {
-        this.ticketType = ticketType;
-        return this;
-    }
-
-    public void setTicketType(String ticketType) {
-        this.ticketType = ticketType;
-    }
-
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public Tickets price(Integer price) {
+    public Tickets price(Double price) {
         this.price = price;
         return this;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public Tickets place(String place) {
+        this.place = place;
+        return this;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public Integer getAmount() {
@@ -87,17 +85,17 @@ public class Tickets implements Serializable {
         this.amount = amount;
     }
 
-    public String getPlace() {
-        return place;
+    public Integer getType() {
+        return type;
     }
 
-    public Tickets place(String place) {
-        this.place = place;
+    public Tickets type(Integer type) {
+        this.type = type;
         return this;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setType(Integer type) {
+        this.type = type;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -121,10 +119,10 @@ public class Tickets implements Serializable {
     public String toString() {
         return "Tickets{" +
             "id=" + getId() +
-            ", ticketType='" + getTicketType() + "'" +
             ", price=" + getPrice() +
-            ", amount=" + getAmount() +
             ", place='" + getPlace() + "'" +
+            ", amount=" + getAmount() +
+            ", type=" + getType() +
             "}";
     }
 }
