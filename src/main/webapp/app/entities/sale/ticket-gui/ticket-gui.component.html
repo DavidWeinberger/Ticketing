@@ -4,7 +4,7 @@
             <p>{{ticket.type}}</p>
         </div>
         <div class="col-sm">
-            <p>{{ticket.price}}</p>
+            <p>Preis: {{ticket.price}}€</p>
         </div>
         <div class="col-sm">
             <button *ngIf="!isCart" (click)="reserve()" class="button">+</button>
@@ -12,7 +12,7 @@
     </div>
     <div class="row">
         <div class="col-sm">
-            <p>{{ticket.place}}</p>
+            <p>Sektor: {{ticket.place}}</p>
         </div>
     </div>
 </div>

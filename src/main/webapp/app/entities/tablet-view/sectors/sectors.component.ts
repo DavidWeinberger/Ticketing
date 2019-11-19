@@ -4,6 +4,9 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ITickets } from 'app/shared/model/tickets.model';
 import { TicketsService } from 'app/entities/tickets';
 import { JhiAlertService } from 'ng-jhipster';
+import { AccountService } from 'app/core';
+import { CartService } from 'app/entities/cart';
+import { Cart } from 'app/shared/model/cart.model';
 
 @Component({
   selector: 'jhi-sectors',
@@ -17,8 +20,17 @@ export class SectorsComponent implements OnInit {
   private seats: number;
   private rowArr: number[];
   private seatArr: number[];
+  private cart: Cart = new Cart();
+  private account: Promise<Account>;
+  private userId: number;
+  private ticket: ITickets;
 
-  constructor(protected jhiAlertService: JhiAlertService, protected ticketsService: TicketsService) {}
+  constructor(
+    private accountService: AccountService,
+    private cartService: CartService,
+    protected jhiAlertService: JhiAlertService,
+    protected ticketsService: TicketsService
+  ) {}
 
   ngOnInit() {
     this.ticketsService
@@ -42,5 +54,48 @@ export class SectorsComponent implements OnInit {
 
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  getState(row, seat) {
+    seat++;
+    row = this.rows - row;
+    const ticket = this.tickets.find(x => x.rows === row && x.seats === seat);
+    // console.log(ticket);
+    if (ticket.state === null || ticket.state == null || ticket.state === undefined) {
+      console.log('i am here');
+      ticket.state = 0;
+    }
+    return ticket.state;
+  }
+
+  dotClick(row, seat) {
+    seat++;
+    row = this.rows - row;
+    console.log(row + '______----______' + seat);
+    this.tickets.find(x => x.rows === row && x.seats === seat).state = 1;
+    this.ticket = this.tickets.find(x => x.rows === row && x.seats === seat);
+    this.reserve();
+  }
+
+  reserve() {
+    this.account = this.accountService.identity().then();
+    this.account.then(x => {
+      this.userId = Number(x.id);
+      this.cart.userId = this.userId;
+      this.cart.ticketId = this.ticket.id;
+      this.cartService.create(this.cart).subscribe();
+    });
+    this.ticket.state = 1;
+    this.ticketsService.update(this.ticket).subscribe();
+  }
+  getColor(state) {
+    switch (state) {
+      case 0:
+        return 'green';
+      case 1:
+        return 'gold';
+      case 2:
+        return 'darkgrey';
+    }
   }
 }

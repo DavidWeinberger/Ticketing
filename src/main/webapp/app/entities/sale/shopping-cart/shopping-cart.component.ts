@@ -60,8 +60,10 @@ export class ShoppingCartComponent implements OnInit {
   public remove(ticket: ITickets) {
     const cartEntry = this.carts.find(x => x.ticketId === ticket.id);
     this.cartService.delete(cartEntry.id).subscribe();
-    console.log('testestsetsetset');
-    this.refreshCart();
+    ticket.state = 0;
+    this.ticketService.update(ticket).subscribe();
+    // console.log('testestsetsetset');
+    // this.refreshCart();
   }
 
   registerChangeInCarts() {

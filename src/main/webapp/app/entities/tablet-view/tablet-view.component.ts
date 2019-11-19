@@ -9,6 +9,7 @@ import { AccountService } from 'app/core';
 import { TabletViewService } from './tablet-view.service';
 import { ITickets } from 'app/shared/model/tickets.model';
 import { TicketsService } from 'app/entities/tickets';
+import { ModalDismissReasons, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'jhi-tablet-view',
@@ -21,13 +22,16 @@ export class TabletViewComponent implements OnInit, OnDestroy {
   currentAccount: any;
   eventSubscriber: Subscription;
   private tickets: ITickets[];
+  closeResult: string;
+  activeSector: string;
 
   constructor(
     protected tabletViewService: TabletViewService,
     protected jhiAlertService: JhiAlertService,
     protected eventManager: JhiEventManager,
     protected accountService: AccountService,
-    protected ticketsService: TicketsService
+    protected ticketsService: TicketsService,
+    private modalService: NgbModal
   ) {}
 
   loadAll() {
@@ -80,5 +84,28 @@ export class TabletViewComponent implements OnInit, OnDestroy {
 
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  open(content, sector) {
+    this.activeSector = sector;
+
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      result => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      reason => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 }

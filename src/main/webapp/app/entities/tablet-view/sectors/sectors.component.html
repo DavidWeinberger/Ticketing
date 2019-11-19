@@ -6,14 +6,11 @@
 <!--    </tr>-->
 <!--</table>-->
 <div class="container">
-    <div class="row" *ngFor="let x of rowArr">
-        <span class="dot places" *ngFor="let y of seatArr"></span>
-<!--        <div class="col" *ngFor="let y of seatArr">-->
-<!--                <span class="dot"></span>-->
-<!--        </div>-->
-    </div>
     <div class="row">
-        <p>
-        </p>
     </div>
+    <div class="row" *ngFor="let x of rowArr; let a = index">
+<!--        <p class="rows">{{rows - a}}</p>-->
+        <span class="dot places"  [style.backgroundColor]="getColor(getState(a,b))" *ngFor="let y of seatArr; let b = index" (click)="dotClick(a,b)"></span>
+    </div>
+
 </div>

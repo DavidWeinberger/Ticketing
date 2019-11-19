@@ -1,13 +1,28 @@
 .dot {
   height: 10px;
   width: 2%;
-  background-color: green;
   border-radius: 50%;
   display: inline-block;
+}
+
+.avaiable {
+  background-color: green;
+}
+
+.reserved {
+  background-color: gold;
+}
+
+.rows {
+  font-size: small;
+}
+
+.sold {
+  background-color: darkgrey;
 }
 
 .places {
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 1vh;
+  margin-bottom: 5px;
 }

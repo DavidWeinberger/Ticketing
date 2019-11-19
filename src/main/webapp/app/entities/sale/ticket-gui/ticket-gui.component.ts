@@ -3,6 +3,7 @@ import { Tickets } from 'app/shared/model/tickets.model';
 import { AccountService } from 'app/core';
 import { CartService } from 'app/entities/cart';
 import { Cart } from 'app/shared/model/cart.model';
+import { TicketsService } from 'app/entities/tickets';
 
 @Component({
   selector: 'jhi-ticket-gui',
@@ -15,7 +16,7 @@ export class TicketGuiComponent implements OnInit {
   private cart: Cart = new Cart();
   private account: Promise<Account>;
   private userId: number;
-  constructor(private accountService: AccountService, private cartService: CartService) {}
+  constructor(private accountService: AccountService, private cartService: CartService, private ticketService: TicketsService) {}
 
   ngOnInit() {}
 
@@ -27,6 +28,7 @@ export class TicketGuiComponent implements OnInit {
       this.cart.ticketId = this.ticket.id;
       this.cartService.create(this.cart).subscribe();
     });
-    console.log('create');
+    this.ticket.state = 1;
+    this.ticketService.update(this.ticket).subscribe();
   }
 }

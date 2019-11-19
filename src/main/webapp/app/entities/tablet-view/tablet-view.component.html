@@ -5,8 +5,7 @@
             </div>
         </div>
         <div class="padding-0">
-            <div class="middleTopBottom">
-                <jhi-sectors [sector]="'1'"></jhi-sectors>
+            <div class="middleTopBottom" (click)="open(content, '1')">
             </div>
         </div>
         <div class="padding-0">
@@ -14,8 +13,8 @@
         </div>
     </div>
     <div class="row">
-        <div class="padding-0">
-            <div class="leftAndRight">
+        <div class="padding-0" >
+            <div class="leftAndRight" (click)="open(content, '3')">
 
             </div>
         </div>
@@ -23,7 +22,7 @@
             <div class="middle"> </div>
         </div>
         <div class="padding-0">
-            <div class="leftAndRight"> </div>
+            <div class="leftAndRight" (click)="open(content, '4')"> </div>
         </div>
     </div>
     <div class="row">
@@ -31,8 +30,8 @@
             <div class="leftBottomCorner"> </div>
         </div>
         <div class="padding-0">
-            <div class="middleTopBottom rotated">
-                <jhi-sectors [sector]="'2'"></jhi-sectors>
+            <div class="middleTopBottom rotated" (click)="open(content, '2')">
+<!--                <jhi-sectors [sector]="'2'"></jhi-sectors> -->
             </div>
         </div>
         <div class="padding-0">
@@ -40,4 +39,17 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-content">
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <jhi-sectors [sector]="activeSector"></jhi-sectors>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
 
