@@ -1,0 +1,38 @@
+.shopping {
+  border-style: solid;
+  border-color: gray;
+  border-radius: 10px;
+  width: 40vh;
+  height: 80vh;
+}
+
+.scrolling {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.list {
+  height: 65vh;
+}
+
+.ticket {
+  background: #cccccc;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  width: 40vh;
+  border-style: solid;
+  border-width: 1px;
+}
+.button {
+  display: inline-block;
+  margin: 5px;
+}
+
+ul {
+  text-align: right;
+}
+
+.fix {
+  position: fixed;
+}

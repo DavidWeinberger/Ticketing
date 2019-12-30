@@ -3,18 +3,18 @@ import { RouterModule } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
 import { JhiLanguageHelper } from 'app/core';
 
-import { TicketingProjectSharedModule } from 'app/shared';
 import { SaleComponent, saleRoute } from './';
-import { TicketGuiComponent } from './ticket-gui/ticket-gui.component';
-import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { CommonModule } from '@angular/common';
+import { TicketingProjectSharedModule } from 'app/shared';
 
 const ENTITY_STATES = [...saleRoute];
 
 @NgModule({
-  imports: [TicketingProjectSharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [SaleComponent, TicketGuiComponent, ShoppingCartComponent],
+  imports: [RouterModule.forChild(ENTITY_STATES), CommonModule, TicketingProjectSharedModule],
+  declarations: [SaleComponent],
   entryComponents: [SaleComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
+  exports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TicketingProjectSaleModule {

@@ -6,6 +6,10 @@
   height: 40vh;
 }
 
+.resize {
+  transform: scale(0.8);
+}
+
 .middleTopBottom {
   background: lightgrey;
   width: 60vh;
@@ -66,4 +70,27 @@
 }
 
 .modal-body {
+}
+
+.split_left {
+  height: 100%;
+  width: 80%;
+  position: fixed;
+  left: -50px;
+  top: -20px;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.split_right {
+  height: 100%;
+  width: 20%;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+  float: right;
+  margin-right: 100px;
 }

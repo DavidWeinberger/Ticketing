@@ -1,0 +1,19 @@
+<div class="container shopping fix">
+    <h1>Warenkorb</h1>
+    <div class="row scrolling list">
+        <div class="ticket" *ngFor="let ticket of tickets">
+            <div class="col">
+                <jhi-ticket-gui [isCart]="true" [ticket]="ticket"></jhi-ticket-gui>
+            </div>
+            <div class="col">
+                <button class="button" (click)="remove(ticket)">-</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <ul>
+            <button class="button">Kaufen</button>
+            <button class="button">Abbrechen</button>
+        </ul>
+    </div>
+</div>

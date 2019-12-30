@@ -1,46 +1,50 @@
-<div class="container">
-    <div class="row">
-        <div class="padding-0">
-            <div class="leftTopCorner">
+<div class="split_left">
+    <div class="container resize">
+        <div class="row">
+            <div class="padding-0">
+                <div class="leftTopCorner">
+                </div>
+            </div>
+            <div class="padding-0">
+                <div class="middleTopBottom" (click)="open(content, '1')">
+                </div>
+            </div>
+            <div class="padding-0">
+                <div class="rightTopCorner"></div>
             </div>
         </div>
-        <div class="padding-0">
-            <div class="middleTopBottom" (click)="open(content, '1')">
-            </div>
-        </div>
-        <div class="padding-0">
-            <div class="rightTopCorner"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="padding-0" >
-            <div class="leftAndRight" (click)="open(content, '3')">
+        <div class="row">
+            <div class="padding-0">
+                <div class="leftAndRight" (click)="open(content, '3')">
 
+                </div>
+            </div>
+            <div class="padding-0">
+                <div class="middle"></div>
+            </div>
+            <div class="padding-0">
+                <div class="leftAndRight" (click)="open(content, '4')"></div>
             </div>
         </div>
-        <div class="padding-0">
-            <div class="middle"> </div>
-        </div>
-        <div class="padding-0">
-            <div class="leftAndRight" (click)="open(content, '4')"> </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="padding-0">
-            <div class="leftBottomCorner"> </div>
-        </div>
-        <div class="padding-0">
-            <div class="middleTopBottom rotated" (click)="open(content, '2')">
-<!--                <jhi-sectors [sector]="'2'"></jhi-sectors> -->
+        <div class="row">
+            <div class="padding-0">
+                <div class="leftBottomCorner"></div>
             </div>
-        </div>
-        <div class="padding-0">
-            <div class="rightBottomCorner"> </div>
+            <div class="padding-0">
+                <div class="middleTopBottom rotated" (click)="open(content, '2')">
+                    <!--                <jhi-sectors [sector]="'2'"></jhi-sectors> -->
+                </div>
+            </div>
+            <div class="padding-0">
+                <div class="rightBottomCorner"></div>
+            </div>
         </div>
     </div>
 </div>
 
-
+<div class="split_right">
+        <jhi-shopping-cart></jhi-shopping-cart>
+</div>
 <ng-template #content let-modal>
     <div class="modal-content">
         <div class="modal-body">
