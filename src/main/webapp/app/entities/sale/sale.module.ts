@@ -6,12 +6,13 @@ import { JhiLanguageHelper } from 'app/core';
 import { SaleComponent, saleRoute } from './';
 import { CommonModule } from '@angular/common';
 import { TicketingProjectSharedModule } from 'app/shared';
+import { CollapsableTicketsComponent } from './collapsable-tickets/collapsable-tickets.component';
 
 const ENTITY_STATES = [...saleRoute];
 
 @NgModule({
   imports: [RouterModule.forChild(ENTITY_STATES), CommonModule, TicketingProjectSharedModule],
-  declarations: [SaleComponent],
+  declarations: [SaleComponent, CollapsableTicketsComponent],
   entryComponents: [SaleComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
   exports: [],
