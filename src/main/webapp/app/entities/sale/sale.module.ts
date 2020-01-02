@@ -13,7 +13,7 @@ const ENTITY_STATES = [...saleRoute];
 @NgModule({
   imports: [RouterModule.forChild(ENTITY_STATES), CommonModule, TicketingProjectSharedModule],
   declarations: [SaleComponent, CollapsableTicketsComponent],
-  entryComponents: [SaleComponent],
+  entryComponents: [],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
   exports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

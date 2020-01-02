@@ -1,0 +1,18 @@
+.ticket {
+  background: #a29999;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  width: 40vh;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.size {
+  height: 50vh;
+}
+
+.scrolling {
+  overflow: scroll;
+  overflow-x: hidden;
+}

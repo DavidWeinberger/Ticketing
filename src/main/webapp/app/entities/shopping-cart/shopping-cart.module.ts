@@ -1,7 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { TicketingProjectSharedModule } from 'app/shared';
 import { RouterModule } from '@angular/router';
-import { SaleComponent, saleRoute } from 'app/entities/sale';
 import { JhiLanguageService } from 'ng-jhipster';
 import { JhiLanguageHelper } from 'app/core';
 
@@ -9,8 +8,8 @@ import { JhiLanguageHelper } from 'app/core';
 
 @NgModule({
   imports: [TicketingProjectSharedModule /*, RouterModule.forChild(ENTITY_STATES)*/],
-  declarations: [SaleComponent],
-  entryComponents: [SaleComponent],
+  declarations: [],
+  entryComponents: [],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
   exports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

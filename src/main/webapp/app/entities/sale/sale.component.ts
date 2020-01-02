@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -9,6 +9,8 @@ import { AccountService } from 'app/core';
 import { SaleService } from './sale.service';
 import { ITickets } from 'app/shared/model/tickets.model';
 import { TicketsService } from 'app/entities/tickets';
+import { SERVER_API_URL } from 'app/app.constants';
+import { NotificationService } from 'app/shared/notification.service';
 
 @Component({
   selector: 'jhi-sale',
@@ -20,13 +22,15 @@ export class SaleComponent implements OnInit, OnDestroy {
   tickets: ITickets[];
   currentAccount: any;
   eventSubscriber: Subscription;
+  sektors: string[] = [];
 
   constructor(
     protected saleService: SaleService,
     protected jhiAlertService: JhiAlertService,
     protected eventManager: JhiEventManager,
     protected accountService: AccountService,
-    protected ticketsService: TicketsService
+    protected ticketsService: TicketsService,
+    protected notificationService: NotificationService
   ) {}
 
   loadAll() {
@@ -39,6 +43,12 @@ export class SaleComponent implements OnInit, OnDestroy {
       .subscribe(
         (res: ITickets[]) => {
           this.tickets = res;
+          this.tickets.forEach(x => {
+            if (!this.sektors.includes(x.place)) {
+              this.sektors.push(x.place);
+            }
+          });
+          console.log(this.sektors);
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
@@ -50,6 +60,9 @@ export class SaleComponent implements OnInit, OnDestroy {
       this.currentAccount = account;
     });
     this.registerChangeInSales();
+    this.notificationService.listen().subscribe(data => {
+      console.log(data);
+    });
   }
 
   ngOnDestroy() {

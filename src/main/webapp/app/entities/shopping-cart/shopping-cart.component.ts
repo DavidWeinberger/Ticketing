@@ -8,6 +8,7 @@ import { TicketsService } from 'app/entities/tickets';
 import { Subscription } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { AccountService } from 'app/core';
+import { NotificationService } from 'app/shared/notification.service';
 
 @Component({
   selector: 'jhi-shopping-cart',
@@ -25,14 +26,18 @@ export class ShoppingCartComponent implements OnInit {
     private cartService: CartService,
     private ticketService: TicketsService,
     protected eventManager: JhiEventManager,
-    protected accountService: AccountService
+    protected accountService: AccountService,
+    protected notificationService: NotificationService
   ) {}
   ngOnInit() {
     this.refreshCart();
-    this.registerChangeInCarts();
+    this.notificationService.listen().subscribe(data => {
+      this.refreshCart();
+    });
   }
 
   public refreshCart() {
+    const _tickets: ITickets[] = [];
     this.cartService
       .query()
       .pipe(
@@ -48,9 +53,10 @@ export class ShoppingCartComponent implements OnInit {
             this.carts = this.carts.filter(data => data.userId === this.userId);
             this.carts.forEach(y => {
               this.ticketService.find(y.ticketId).subscribe(ticket => {
-                this.tickets.push(ticket.body);
+                _tickets.push(ticket.body);
               });
             });
+            this.tickets = _tickets;
           });
         },
         (res: HttpErrorResponse) => this.onError(res.message)
@@ -62,12 +68,6 @@ export class ShoppingCartComponent implements OnInit {
     this.cartService.delete(cartEntry.id).subscribe();
     ticket.state = 0;
     this.ticketService.update(ticket).subscribe();
-    // console.log('testestsetsetset');
-    // this.refreshCart();
-  }
-
-  registerChangeInCarts() {
-    this.eventSubscriber = this.eventManager.subscribe('cartListModification', response => this.refreshCart());
   }
 
   private onError(message: string) {

@@ -1,21 +1,21 @@
 package at.htl.diplproject.web.rest;
 
 import at.htl.diplproject.service.CartService;
-import at.htl.diplproject.web.rest.errors.BadRequestAlertException;
 import at.htl.diplproject.service.dto.CartDTO;
-
+import at.htl.diplproject.web.rest.errors.BadRequestAlertException;
+import at.htl.diplproject.web.websocket.SocketHandler;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +24,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@EnableScheduling
 public class CartResource {
 
     private final Logger log = LoggerFactory.getLogger(CartResource.class);
@@ -53,6 +54,7 @@ public class CartResource {
             throw new BadRequestAlertException("A new cart cannot already have an ID", ENTITY_NAME, "idexists");
         }
         CartDTO result = cartService.save(cartDTO);
+        SocketHandler.getSocketHandler().sendTextMessage();
         return ResponseEntity.created(new URI("/api/carts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -73,6 +75,7 @@ public class CartResource {
         if (cartDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        SocketHandler.getSocketHandler().sendTextMessage();
         CartDTO result = cartService.save(cartDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, cartDTO.getId().toString()))
@@ -114,6 +117,7 @@ public class CartResource {
     public ResponseEntity<Void> deleteCart(@PathVariable Long id) {
         log.debug("REST request to delete Cart : {}", id);
         cartService.delete(id);
+        SocketHandler.getSocketHandler().sendTextMessage();
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

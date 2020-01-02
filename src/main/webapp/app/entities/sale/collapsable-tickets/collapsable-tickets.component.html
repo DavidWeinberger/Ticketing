@@ -1,3 +1,15 @@
-<p>
-  collapsable-tickets works!
-</p>
+<h2>Sektor {{sektor}}</h2>
+<div *ngIf="!opened && tickets.length !== 0">
+    <button (click)="open()">˅</button>
+</div>
+<div *ngIf="opened && tickets.length !== 0">
+    <button (click)="close()">˄</button>
+    <div class="scrolling size">
+        <div *ngFor="let ticket of tickets" class="ticket">
+            <jhi-ticket-gui [ticket]="ticket"></jhi-ticket-gui>
+        </div>
+    </div>
+</div>
+<div *ngIf="tickets.length === 0">
+    <h3>Ausverkauft</h3>
+</div>
