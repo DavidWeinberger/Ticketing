@@ -27,11 +27,11 @@ public class SocketHandler extends TextWebSocketHandler {
 
     private SocketHandler() {}
 
-    public void sendTextMessage() {
+    public void sendTextMessage(String msg) {
         List<WebSocketSession> dead = new CopyOnWriteArrayList<>();
         sessions.forEach( x -> {
             try {
-                x.sendMessage(new TextMessage("Hello!"));
+                x.sendMessage(new TextMessage("update"+msg));
             } catch (IOException e) {
                 dead.add(x);
             }
@@ -43,6 +43,5 @@ public class SocketHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         //the messages will be broadcasted to all users.
         sessions.add(session);
-        sendTextMessage();
     }
 }

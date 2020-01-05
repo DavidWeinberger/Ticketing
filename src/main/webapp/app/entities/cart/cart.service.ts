@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { ICart } from 'app/shared/model/cart.model';
+import { Cart, ICart } from 'app/shared/model/cart.model';
 
 type EntityResponseType = HttpResponse<ICart>;
 type EntityArrayResponseType = HttpResponse<ICart[]>;
@@ -34,5 +34,13 @@ export class CartService {
 
   delete(id: number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  deleteByTicketId(id: number): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`${this.resourceUrl}/ticket/${id}`, { observe: 'response' });
+  }
+
+  findCartsByUserId(id: number): Observable<HttpResponse<ICart[]>> {
+    return this.http.get<ICart[]>(`${this.resourceUrl}/all/${id}`, { observe: 'response' });
   }
 }

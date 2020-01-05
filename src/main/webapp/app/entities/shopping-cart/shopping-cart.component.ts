@@ -16,23 +16,37 @@ import { NotificationService } from 'app/shared/notification.service';
   styleUrls: ['./shopping-cart.component.scss']
 })
 export class ShoppingCartComponent implements OnInit {
-  private tickets: ITickets[] = [];
-  private carts: ICart[];
+  tickets: ITickets[] = [];
+  protected carts: ICart[];
   eventSubscriber: Subscription;
-  private account: Promise<Account>;
-  private userId = 0;
+  protected account: Promise<Account> = null;
+  protected userId = 0;
 
   constructor(
-    private cartService: CartService,
-    private ticketService: TicketsService,
+    protected cartService: CartService,
+    protected ticketService: TicketsService,
     protected eventManager: JhiEventManager,
     protected accountService: AccountService,
     protected notificationService: NotificationService
   ) {}
+
   ngOnInit() {
     this.refreshCart();
     this.notificationService.listen().subscribe(data => {
-      this.refreshCart();
+      if (data !== undefined) {
+        const parts = data.toString().split('|');
+        console.log(parts);
+        if (parts.length > 1) {
+          const chunks = parts[1].split(':');
+          if (this.userId.toString() === chunks[1]) {
+            console.log('User found');
+            this.refreshCart();
+          }
+        } else {
+          this.refreshCart();
+        }
+        // this.refreshCart();
+      }
     });
   }
 
@@ -47,9 +61,14 @@ export class ShoppingCartComponent implements OnInit {
       .subscribe(
         (res: ICart[]) => {
           this.carts = res;
-          this.account = this.accountService.identity().then();
+          if (this.account === null) {
+            this.account = this.accountService.identity().then();
+          }
           this.account.then(x => {
-            this.userId = Number(x.id);
+            if (this.userId === 0) {
+              this.userId = Number(x.id);
+            }
+
             this.carts = this.carts.filter(data => data.userId === this.userId);
             this.carts.forEach(y => {
               this.ticketService.find(y.ticketId).subscribe(ticket => {
@@ -64,8 +83,10 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   public remove(ticket: ITickets) {
-    const cartEntry = this.carts.find(x => x.ticketId === ticket.id);
-    this.cartService.delete(cartEntry.id).subscribe();
+    // const cartEntry = this.carts.find(x => x.ticketId === ticket.id);
+    // console.log(cartEntry);
+    // this.cartService.delete(cartEntry.id).subscribe();
+    this.cartService.deleteByTicketId(ticket.id).subscribe();
     ticket.state = 0;
     this.ticketService.update(ticket).subscribe();
   }

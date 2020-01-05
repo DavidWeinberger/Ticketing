@@ -61,15 +61,14 @@
   border-style: solid;
 }
 
-.modal-content {
-  background: white;
-  width: auto;
-  //left: -13vh;
-  //top: 20vh;
-  transform: scale(1.25);
-}
-
-.modal-body {
+.modal-backdrop {
+  background-color: white;
+  height: 80vh;
+  width: 80vw;
+  opacity: 1;
+  position: fixed;
+  left: 10vh;
+  top: 10vh;
 }
 
 .split_left {
@@ -93,4 +92,17 @@
   padding-top: 20px;
   float: right;
   margin-right: 100px;
+}
+
+.places {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+}
+
+.dot {
+  height: 10px;
+  width: 2%;
+  border-radius: 50%;
+  display: inline-block;
 }

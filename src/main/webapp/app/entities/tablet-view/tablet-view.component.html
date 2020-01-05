@@ -1,59 +1,59 @@
-<div class="split_left">
-    <div class="container resize">
-        <div class="row">
-            <div class="padding-0">
-                <div class="leftTopCorner">
+<div style="height: 90vh; background-color: white">
+    <div class="split_left">
+        <div class="container resize">
+            <div class="row">
+                <div class="padding-0">
+                    <div class="leftTopCorner">
+                    </div>
+                </div>
+                <div class="padding-0">
+                    <div class="middleTopBottom" (click)="open(content, '1')">
+                        <jhi-displaysector></jhi-displaysector>
+                    </div>
+                </div>
+                <div class="padding-0">
+                    <div class="rightTopCorner"></div>
                 </div>
             </div>
-            <div class="padding-0">
-                <div class="middleTopBottom" (click)="open(content, '1')">
+            <div class="row">
+                <div class="padding-0">
+                    <div class="leftAndRight" (click)="open(content, '3')">
+                    </div>
+                </div>
+                <div class="padding-0">
+                    <div class="middle"></div>
+                </div>
+                <div class="padding-0">
+                    <div class="leftAndRight" (click)="open(content, '4')"></div>
                 </div>
             </div>
-            <div class="padding-0">
-                <div class="rightTopCorner"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="padding-0">
-                <div class="leftAndRight" (click)="open(content, '3')">
-
+            <div class="row">
+                <div class="padding-0">
+                    <div class="leftBottomCorner"></div>
                 </div>
-            </div>
-            <div class="padding-0">
-                <div class="middle"></div>
-            </div>
-            <div class="padding-0">
-                <div class="leftAndRight" (click)="open(content, '4')"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="padding-0">
-                <div class="leftBottomCorner"></div>
-            </div>
-            <div class="padding-0">
-                <div class="middleTopBottom rotated" (click)="open(content, '2')">
-                    <!--                <jhi-sectors [sector]="'2'"></jhi-sectors> -->
+                <div class="padding-0">
+                    <div class="middleTopBottom rotated" (click)="open(content, '2')">
+                        <!--                <jhi-sectors [sector]="'2'"></jhi-sectors> -->
+                    </div>
                 </div>
-            </div>
-            <div class="padding-0">
-                <div class="rightBottomCorner"></div>
+                <div class="padding-0">
+                    <div class="rightBottomCorner"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="split_right">
+    <div class="split_right">
         <jhi-shopping-cart></jhi-shopping-cart>
+    </div>
 </div>
 <ng-template #content let-modal>
-    <div class="modal-content">
-        <div class="modal-body">
-            <form>
-                <div class="form-group">
-                    <jhi-sectors [sector]="activeSector"></jhi-sectors>
-                </div>
-            </form>
-        </div>
+    <div class="modal-backdrop">
+        <form>
+            <div class="form-group">
+                <jhi-sectors [sector]="activeSector"></jhi-sectors>
+            </div>
+        </form>
     </div>
 </ng-template>
 
