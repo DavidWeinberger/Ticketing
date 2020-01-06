@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Cart, ICart } from 'app/shared/model/cart.model';
 import { CartService } from 'app/entities/cart';
 import { filter, map } from 'rxjs/operators';
@@ -16,12 +16,13 @@ import { NotificationService } from 'app/shared/notification.service';
   styleUrls: ['./shopping-cart.component.scss']
 })
 export class ShoppingCartComponent implements OnInit {
+  @Input() tablet = false;
   tickets: ITickets[] = [];
   protected carts: ICart[];
   eventSubscriber: Subscription;
   protected account: Promise<Account> = null;
   protected userId = 0;
-
+  protected price = 0;
   constructor(
     protected cartService: CartService,
     protected ticketService: TicketsService,
@@ -68,11 +69,12 @@ export class ShoppingCartComponent implements OnInit {
             if (this.userId === 0) {
               this.userId = Number(x.id);
             }
-
+            this.price = 0;
             this.carts = this.carts.filter(data => data.userId === this.userId);
             this.carts.forEach(y => {
               this.ticketService.find(y.ticketId).subscribe(ticket => {
                 _tickets.push(ticket.body);
+                this.price += ticket.body.price;
               });
             });
             this.tickets = _tickets;
@@ -83,15 +85,32 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   public remove(ticket: ITickets) {
-    // const cartEntry = this.carts.find(x => x.ticketId === ticket.id);
-    // console.log(cartEntry);
-    // this.cartService.delete(cartEntry.id).subscribe();
     this.cartService.deleteByTicketId(ticket.id).subscribe();
-    ticket.state = 0;
+    if (ticket.type !== 2) {
+      ticket.state -= 1;
+    } else {
+      ticket.state = 0;
+    }
     this.ticketService.update(ticket).subscribe();
   }
 
   private onError(message: string) {
     console.log('Error');
+  }
+
+  buy() {
+    this.tickets.forEach(ticket => {
+      this.cartService.deleteByTicketId(ticket.id).subscribe();
+      ticket.state = 2;
+      this.ticketService.update(ticket).subscribe();
+    });
+  }
+
+  cancle() {
+    this.tickets.forEach(ticket => {
+      this.cartService.deleteByTicketId(ticket.id).subscribe();
+      ticket.state = 0;
+      this.ticketService.update(ticket).subscribe();
+    });
   }
 }

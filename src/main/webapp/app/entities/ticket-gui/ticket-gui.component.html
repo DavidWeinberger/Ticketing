@@ -14,7 +14,8 @@
     </div>
     <div class="row">
         <div class="col-sm">
-            <p>Sektor: {{ticket.place}} &nbsp;&nbsp; Reihe: {{ticket.rows}} &nbsp;&nbsp;   Sitzplatz: {{ticket.seats}}</p> <p></p>
+            <span>Sektor: {{ticket.place}}</span>
+            <span *ngIf="ticket.rows > 0"> &nbsp;&nbsp; Reihe: {{ticket.rows}} &nbsp;&nbsp;   Sitzplatz: {{ticket.seats}}</span> <p></p>
         </div>
     </div>
 </div>

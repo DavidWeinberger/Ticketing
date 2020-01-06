@@ -5,6 +5,15 @@ import { ITickets } from 'app/shared/model/tickets.model';
 import { TicketsService } from 'app/entities/tickets';
 import { JhiAlertService } from 'ng-jhipster';
 import { NotificationService } from 'app/shared/notification.service';
+import { AccountService } from 'app/core';
+import { Cart } from 'app/shared/model/cart.model';
+import { CartService } from 'app/entities/cart';
+
+enum Types {
+  Stehplatz,
+  Vip_Stehplatz,
+  Sitzplatz
+}
 
 @Component({
   selector: 'jhi-collapsable-tickets',
@@ -15,11 +24,17 @@ export class CollapsableTicketsComponent implements OnInit {
   @Input() sektor: String;
   tickets: ITickets[] = [];
   opened = false;
+  protected bulkTicket = false;
+  private account: Promise<Account>;
+  private userId: number;
+  private cart: Cart = new Cart();
 
   constructor(
     protected ticketsService: TicketsService,
     protected jhiAlertService: JhiAlertService,
-    protected notificationService: NotificationService
+    protected notificationService: NotificationService,
+    protected accountService: AccountService,
+    protected cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -27,6 +42,10 @@ export class CollapsableTicketsComponent implements OnInit {
     this.notificationService.listen().subscribe(data => {
       this.loadAll();
     });
+  }
+
+  selectType(type: number) {
+    return Types[type];
   }
 
   loadAll() {
@@ -38,7 +57,25 @@ export class CollapsableTicketsComponent implements OnInit {
       )
       .subscribe(
         (res: ITickets[]) => {
-          this.tickets = res.filter(ticket => ticket.place === this.sektor && ticket.state === 0);
+          if (res.length > 0) {
+            if (res.filter(ticket => ticket.place === this.sektor && ticket.type === 0).length > 0) {
+              console.log('Bulkticket');
+              this.bulkTicket = true;
+              this.tickets = res.filter(ticket => ticket.place === this.sektor && ticket.type === 0);
+              if (this.tickets[0].amount === 0 || this.tickets[0].amount - this.tickets[0].state <= 0) {
+                this.tickets = [];
+              }
+            } else if (res.filter(ticket => ticket.place === this.sektor && ticket.type === 1).length > 0) {
+              console.log('Bulkticket');
+              this.bulkTicket = true;
+              this.tickets = res.filter(ticket => ticket.place === this.sektor && ticket.type === 1);
+              if (this.tickets[0].amount === 0) {
+                this.tickets = [];
+              }
+            } else {
+              this.tickets = res.filter(ticket => ticket.place === this.sektor && ticket.state === 0);
+            }
+          }
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
@@ -53,5 +90,17 @@ export class CollapsableTicketsComponent implements OnInit {
   }
   close() {
     this.opened = false;
+  }
+
+  reserveBulck() {
+    this.account = this.accountService.identity().then();
+    this.account.then(x => {
+      this.userId = Number(x.id);
+      this.cart.userId = this.userId;
+      this.cart.ticketId = this.tickets[0].id;
+      this.cartService.create(this.cart).subscribe();
+    });
+    this.tickets[0].state += 1;
+    this.ticketsService.update(this.tickets[0]).subscribe();
   }
 }

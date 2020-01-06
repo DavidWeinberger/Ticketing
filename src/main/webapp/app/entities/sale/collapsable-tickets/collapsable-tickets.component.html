@@ -1,8 +1,11 @@
 <h2>Sektor {{sektor}}</h2>
-<div *ngIf="!opened && tickets.length !== 0">
+<div *ngIf="tickets.length !== 0 && bulkTicket">
+    <h3>{{selectType(tickets[0].type)}} - ({{tickets[0].amount - tickets[0].state}}/{{tickets[0].amount}})</h3> <button class="button" (click)="reserveBulck()">+</button>
+</div>
+<div *ngIf="!opened && tickets.length !== 0 && !bulkTicket">
     <button (click)="open()">˅</button>
 </div>
-<div *ngIf="opened && tickets.length !== 0">
+<div *ngIf="opened && tickets.length !== 0 && !bulkTicket">
     <button (click)="close()">˄</button>
     <div class="scrolling size">
         <div *ngFor="let ticket of tickets" class="ticket">

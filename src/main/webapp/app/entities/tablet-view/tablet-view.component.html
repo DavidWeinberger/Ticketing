@@ -3,34 +3,37 @@
         <div class="container resize" style="position: fixed">
             <div class="row">
                 <div class="padding-0">
-                    <h4>Sektor 5</h4>
+<!--                    <h4 class="font-weight-bold">Sektor 5</h4>-->
                     <div class="leftTopCorner">
+                        <jhi-displaysector [bulkTickets]="true" [sector]='7'></jhi-displaysector>
                     </div>
                 </div>
                 <div class="padding-0">
-                    <h4>Sektor 1</h4>
-                    <div class="middleTopBottom container" (click)="open(content, '1')">
-                        <form>
-                            <div class="form-group">
-                                <jhi-displaysector [sector]='1'></jhi-displaysector>
-                            </div>
-                        </form>
+<!--                    <h4 class="font-weight-bold">Sektor 1</h4>-->
+                    <div class="middleTopBottom" (click)="open(content, '1')">
+                        <jhi-displaysector [sector]='1'></jhi-displaysector>
                     </div>
                 </div>
                 <div class="padding-0">
-                    <h4>Sektor 6</h4>
-                    <div class="rightTopCorner"></div>
+<!--                    <h4 class="font-weight-bold">Sektor 6</h4>-->
+                    <div class="rightTopCorner">
+                        <jhi-displaysector [bulkTickets]="true" [sector]='8'></jhi-displaysector>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="padding-0">
-                    <div class="leftAndRight" (click)="open(content, '3')">
-                        <form>
-                            <div class="form-group">
-                                <jhi-displaysector style="transform: rotate(90deg); position: fixed; left: -1.6vh"
-                                                   [sector]='3'></jhi-displaysector>
-                            </div>
-                        </form>
+                    <div class=" leftAndRight" (click)="open(content, '3')">
+                        <div class="element-to-rotate">
+                            <jhi-displaysector style="position: relative" [rotation]="0" [sidePlace]="true"  [sector]='3' height="40"></jhi-displaysector>
+                        </div>
+
+<!--                        <form>-->
+<!--                            <div class="form-group">-->
+<!--                                <jhi-displaysector style="transform: rotate(90deg); position: fixed; left: -1.6vh"-->
+<!--                                                   [sector]='3'></jhi-displaysector>-->
+<!--                            </div>-->
+<!--                        </form>-->
                     </div>
                 </div>
                 <div class="padding-0">
@@ -38,32 +41,39 @@
                 </div>
                 <div class="padding-0">
                     <div class="leftAndRight" (click)="open(content, '4')">
-
+                        <div class="element-to-rotate-othersite">
+                            <jhi-displaysector style="position: relative" [sidePlace]="true"  [sector]='4' height="40"></jhi-displaysector>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="padding-0">
-                    <div class="leftBottomCorner"></div>
-                    <h4>Sektor 7</h4>
+                    <div class="leftBottomCorner">
+                        <jhi-displaysector [bulkTickets]="true" [sector]='5'></jhi-displaysector>
+                    </div>
+
+<!--                    <h4 class="font-weight-bold">Sektor 7</h4>-->
                 </div>
                 <div class="padding-0">
                     <div class="middleTopBottom rotated" (click)="open(content, '2')">
-                        <!--                        <jhi-displaysector [sector]='2'></jhi-displaysector>-->
+                                                <jhi-displaysector [sector]='2'></jhi-displaysector>
                         <!--                <jhi-sectors [sector]="'2'"></jhi-sectors> -->
                     </div>
-                    <h4>Sektor 2</h4>
+<!--                    <h4 class="font-weight-bold">Sektor 2</h4>-->
                 </div>
                 <div class="padding-0">
-                    <div class="rightBottomCorner"></div>
-                    <h4>Sektor 8</h4>
+                    <div class="rightBottomCorner">
+                        <jhi-displaysector [bulkTickets]="true" [sector]='6'></jhi-displaysector>
+                    </div>
+<!--                    <h4 class="font-weight-bold">Sektor 8</h4>-->
                 </div>
             </div>
         </div>
     </div>
 
     <div class="split_right">
-        <jhi-shopping-cart></jhi-shopping-cart>
+        <jhi-shopping-cart [tablet]="true"></jhi-shopping-cart>
     </div>
 </div>
 <ng-template #content let-modal>

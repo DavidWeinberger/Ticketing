@@ -150,11 +150,12 @@ public class CartResource {
     public ResponseEntity<Void> deleteCartbyTicketId(@PathVariable Long id) {
         log.debug("REST request to delete Cart by TicketId : {}", id);
         List<CartDTO> cartDTOList = cartService.findAll();
-        cartDTOList.forEach( x -> {
-            if(x.getTicketId() == Integer.parseInt(id.toString())){
+        for (CartDTO x : cartDTOList) {
+            if (x.getTicketId() == Integer.parseInt(id.toString())) {
                 cartService.delete(x.getId());
+                break;
             }
-        });
+        }
         SocketHandler.getSocketHandler().sendTextMessage("");
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }

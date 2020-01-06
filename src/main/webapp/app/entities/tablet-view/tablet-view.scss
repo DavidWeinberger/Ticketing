@@ -1,3 +1,33 @@
+.element-to-rotate {
+  display: block;
+  transform-origin: top left;
+  /* Note: for a CLOCKWISE rotation, use the commented-out
+     transform instead of this one. */
+  transform: rotate(-90deg) translate(-100%);
+  /* transform: rotate(90deg) translate(0, -100%); */
+  margin-top: 105%;
+
+  /* Not vital, but possibly a good idea if the element you're rotating contains
+     text and you want a single long vertical line of text and the pre-rotation
+     width of your element is small enough that the text wraps: */
+  white-space: nowrap;
+}
+
+.element-to-rotate-othersite {
+  display: block;
+  transform-origin: top right;
+  /* Note: for a CLOCKWISE rotation, use the commented-out
+     transform instead of this one. */
+  transform: rotate(-270deg) translate(-100%);
+  /* transform: rotate(90deg) translate(0, -100%); */
+  margin-top: 200%;
+
+  /* Not vital, but possibly a good idea if the element you're rotating contains
+     text and you want a single long vertical line of text and the pre-rotation
+     width of your element is small enough that the text wraps: */
+  white-space: nowrap;
+}
+
 .middle {
   background: lightblue;
   border-style: solid;

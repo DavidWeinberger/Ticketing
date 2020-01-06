@@ -5,15 +5,19 @@
             <div class="col">
                 <jhi-ticket-gui [isCart]="true" [ticket]="ticket"></jhi-ticket-gui>
             </div>
-            <div class="col">
+            <div *ngIf="!tablet" class="col">
                 <button class="button" (click)="remove(ticket)">-</button>
             </div>
         </div>
     </div>
-    <div>
-        <ul>
-            <button class="button">Kaufen</button>
-            <button class="button">Abbrechen</button>
-        </ul>
+    <div class="row" *ngIf="tablet">
+        <br>
+    </div>
+    <div class="row">
+        <p style="font-weight: bold; font-size: larger; margin-left: 1vh">Gesamtsumme: {{price}}€</p>
+    </div>
+    <div class="row" *ngIf="!tablet">
+        <button class="button" (click)="buy()">Kaufen</button>
+        <button class="button" (click)="cancle()">Abbrechen</button>
     </div>
 </div>

@@ -7,6 +7,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { ITickets } from 'app/shared/model/tickets.model';
 import { AccountService } from 'app/core';
 import { TicketsService } from './tickets.service';
+import { CartService } from 'app/entities/cart';
 
 @Component({
   selector: 'jhi-tickets',
@@ -21,7 +22,8 @@ export class TicketsComponent implements OnInit, OnDestroy {
     protected ticketsService: TicketsService,
     protected jhiAlertService: JhiAlertService,
     protected eventManager: JhiEventManager,
-    protected accountService: AccountService
+    protected accountService: AccountService,
+    protected cartService: CartService
   ) {}
 
   loadAll() {
@@ -61,5 +63,15 @@ export class TicketsComponent implements OnInit, OnDestroy {
 
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  resetTickets() {
+    this.cartService.query().subscribe(carts => {
+      carts.body.forEach(cart => this.cartService.delete(cart.id).toPromise());
+    });
+    this.tickets.forEach(ticket => {
+      ticket.state = 0;
+      this.ticketsService.update(ticket).subscribe();
+    });
   }
 }

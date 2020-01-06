@@ -30,5 +30,5 @@
     </div>
 </div>
 
-<button *ngIf="page < sides -2" class="btn" style="float: right;" (click)="nextPage()"><h1 style="font-weight: bold; font-size: 90px;">〉</h1></button>
-<button *ngIf="page > 0"class="btn" style="float: left;" (click)="backPage()"><h1 style="font-weight: bold; font-size: 90px;">〈</h1></button>
+<button *ngIf="page < sides -1" class="btn" style="position: fixed; top: 40vh; left: 87vw" (click)="nextPage()"><h1 style="font-weight: bold; font-size: 90px;">〉</h1></button>
+<button *ngIf="page > 0"class="btn" style="position: fixed; top: 40vh; left: 0vw" (click)="backPage()"><h1 style="font-weight: bold; font-size: 90px;">〈</h1></button>
