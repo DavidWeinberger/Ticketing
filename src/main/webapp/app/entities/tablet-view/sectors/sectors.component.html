@@ -27,9 +27,8 @@
                 <span class="dot places" style="width: 3vh; height: 3vh" [style.backgroundColor]="getColor(getState(a,b+ (10 * page)))" (click)="dotClick(a,b+ (10 * page))"></span>
             </div>
         </div>
-
     </div>
 </div>
 
-<button (click)="nextPage()"> next</button>
-
+<button *ngIf="page < sides -2" class="btn" style="float: right;" (click)="nextPage()"><h1 style="font-weight: bold; font-size: 90px;">〉</h1></button>
+<button *ngIf="page > 0"class="btn" style="float: left;" (click)="backPage()"><h1 style="font-weight: bold; font-size: 90px;">〈</h1></button>

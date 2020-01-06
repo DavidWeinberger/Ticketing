@@ -1,43 +1,62 @@
 <div style="height: 90vh; background-color: white">
     <div class="split_left">
-        <div class="container resize">
+        <div class="container resize" style="position: fixed">
             <div class="row">
                 <div class="padding-0">
+                    <h4>Sektor 5</h4>
                     <div class="leftTopCorner">
                     </div>
                 </div>
                 <div class="padding-0">
-                    <div class="middleTopBottom" (click)="open(content, '1')">
-                        <jhi-displaysector></jhi-displaysector>
+                    <h4>Sektor 1</h4>
+                    <div class="middleTopBottom container" (click)="open(content, '1')">
+                        <form>
+                            <div class="form-group">
+                                <jhi-displaysector [sector]='1'></jhi-displaysector>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="padding-0">
+                    <h4>Sektor 6</h4>
                     <div class="rightTopCorner"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="padding-0">
                     <div class="leftAndRight" (click)="open(content, '3')">
+                        <form>
+                            <div class="form-group">
+                                <jhi-displaysector style="transform: rotate(90deg); position: fixed; left: -1.6vh"
+                                                   [sector]='3'></jhi-displaysector>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="padding-0">
                     <div class="middle"></div>
                 </div>
                 <div class="padding-0">
-                    <div class="leftAndRight" (click)="open(content, '4')"></div>
+                    <div class="leftAndRight" (click)="open(content, '4')">
+
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="padding-0">
                     <div class="leftBottomCorner"></div>
+                    <h4>Sektor 7</h4>
                 </div>
                 <div class="padding-0">
                     <div class="middleTopBottom rotated" (click)="open(content, '2')">
+                        <!--                        <jhi-displaysector [sector]='2'></jhi-displaysector>-->
                         <!--                <jhi-sectors [sector]="'2'"></jhi-sectors> -->
                     </div>
+                    <h4>Sektor 2</h4>
                 </div>
                 <div class="padding-0">
                     <div class="rightBottomCorner"></div>
+                    <h4>Sektor 8</h4>
                 </div>
             </div>
         </div>

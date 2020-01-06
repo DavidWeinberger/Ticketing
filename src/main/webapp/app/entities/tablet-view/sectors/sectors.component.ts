@@ -28,6 +28,7 @@ export class SectorsComponent implements OnInit {
   private ticket: ITickets;
   private paging = false;
   private page = 0;
+  private sides = 0;
 
   constructor(
     private accountService: AccountService,
@@ -47,15 +48,20 @@ export class SectorsComponent implements OnInit {
       .subscribe(
         (res: ITickets[]) => {
           this.tickets = res;
-          this.tickets = this.tickets.filter(x => x.place === this.sector);
+          this.tickets = this.tickets.filter(x => x.place === this.sector.toString());
+          console.log(this.tickets);
           this.rows = Math.max.apply(Math, this.tickets.map(o => o.rows));
           this.seats = Math.max.apply(Math, this.tickets.map(o => o.seats));
+          console.log(this.rows);
           this.rowArr = new Array(this.rows);
           this.seatArr = new Array(this.seats).fill(1, 0, this.seats);
           if (this.seatArr.length > 10) {
-            const sides = this.seatArr.length / 10;
+            this.sides = this.seatArr.length / 10;
+            if (this.seatArr.length % 10 !== 0) {
+              this.sides++;
+            }
             this.paging = true;
-            if (this.page > sides) {
+            if (this.page === this.sides) {
               this.seatArr = this.seatArr.slice(0 + 10 * this.page);
             } else {
               this.seatArr = this.seatArr.slice(0 + 10 * this.page, 10 + 10 * this.page);
@@ -97,12 +103,14 @@ export class SectorsComponent implements OnInit {
     seat++;
     row = this.rows - row;
     const ticket = this.tickets.find(x => x.rows === row && x.seats === seat);
-    // console.log(ticket);
-    if (ticket.state === null || ticket.state == null || ticket.state === undefined) {
-      // console.log('i am here');
-      ticket.state = 0;
+    if (ticket !== undefined) {
+      if (ticket.state === null || ticket.state == null || ticket.state === undefined) {
+        // console.log('i am here');
+        ticket.state = 0;
+      }
+      return ticket.state;
     }
-    return ticket.state;
+    return 0;
   }
 
   dotClick(row, seat) {
@@ -166,6 +174,7 @@ export class SectorsComponent implements OnInit {
   backPage() {
     if (this.paging) {
       this.page--;
+      this.loadAll();
     }
   }
 }
