@@ -8,6 +8,7 @@ import { NotificationService } from 'app/shared/notification.service';
 import { AccountService } from 'app/core';
 import { Cart } from 'app/shared/model/cart.model';
 import { CartService } from 'app/entities/cart';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 enum Types {
   Stehplatz,
@@ -28,13 +29,16 @@ export class CollapsableTicketsComponent implements OnInit {
   private account: Promise<Account>;
   private userId: number;
   private cart: Cart = new Cart();
+  activeSector: number;
+  private closeResult: string;
 
   constructor(
     protected ticketsService: TicketsService,
     protected jhiAlertService: JhiAlertService,
     protected notificationService: NotificationService,
     protected accountService: AccountService,
-    protected cartService: CartService
+    protected cartService: CartService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -85,7 +89,30 @@ export class CollapsableTicketsComponent implements OnInit {
     this.jhiAlertService.error(errorMessage, null, null);
   }
 
-  open() {
+  open(content, sector) {
+    this.activeSector = sector;
+
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      result => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      reason => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  openTickets() {
     this.opened = true;
   }
   close() {

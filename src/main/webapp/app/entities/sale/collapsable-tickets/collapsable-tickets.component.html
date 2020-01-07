@@ -3,10 +3,10 @@
     <h3>{{selectType(tickets[0].type)}} - ({{tickets[0].amount - tickets[0].state}}/{{tickets[0].amount}})</h3> <button class="button" (click)="reserveBulck()">+</button>
 </div>
 <div *ngIf="!opened && tickets.length !== 0 && !bulkTicket">
-    <button (click)="open()">˅</button>
+    <button (click)="openTickets()">˅</button> <button (click)="open(content, '4')">Sektor ansicht öffnen</button>
 </div>
 <div *ngIf="opened && tickets.length !== 0 && !bulkTicket">
-    <button (click)="close()">˄</button>
+    <button (click)="close()">˄</button> <button (click)="open(content, '4')">Sektor ansicht öffnen</button>
     <div class="scrolling size">
         <div *ngFor="let ticket of tickets" class="ticket">
             <jhi-ticket-gui [ticket]="ticket"></jhi-ticket-gui>
@@ -16,3 +16,14 @@
 <div *ngIf="tickets.length === 0">
     <h3>Ausverkauft</h3>
 </div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-backdrop">
+        <form>
+            <div class="form-group">
+                <jhi-sectors [sector]="sektor"></jhi-sectors>
+            </div>
+        </form>
+    </div>
+</ng-template>

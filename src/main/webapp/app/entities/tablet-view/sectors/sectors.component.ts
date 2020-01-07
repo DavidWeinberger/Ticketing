@@ -57,9 +57,9 @@ export class SectorsComponent implements OnInit {
           this.seatArr = new Array(this.seats).fill(1, 0, this.seats);
           if (this.seatArr.length > 10) {
             this.sides = this.seatArr.length / 10;
-            if (this.seatArr.length % 10 !== 0) {
-              this.sides++;
-            }
+            // if (this.seatArr.length % 10 !== 0) {
+            // this.sides++;
+            // }
             this.paging = true;
             if (this.page === this.sides) {
               this.seatArr = this.seatArr.slice(0 + 10 * this.page);
