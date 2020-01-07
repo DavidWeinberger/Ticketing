@@ -1,9 +1,43 @@
+.element-to-rotate {
+  display: block;
+  transform-origin: top left;
+  /* Note: for a CLOCKWISE rotation, use the commented-out
+     transform instead of this one. */
+  transform: rotate(-90deg) translate(-100%);
+  /* transform: rotate(90deg) translate(0, -100%); */
+  margin-top: 105%;
+
+  /* Not vital, but possibly a good idea if the element you're rotating contains
+     text and you want a single long vertical line of text and the pre-rotation
+     width of your element is small enough that the text wraps: */
+  white-space: nowrap;
+}
+
+.element-to-rotate-othersite {
+  display: block;
+  transform-origin: top right;
+  /* Note: for a CLOCKWISE rotation, use the commented-out
+     transform instead of this one. */
+  transform: rotate(-270deg) translate(-100%);
+  /* transform: rotate(90deg) translate(0, -100%); */
+  margin-top: 200%;
+
+  /* Not vital, but possibly a good idea if the element you're rotating contains
+     text and you want a single long vertical line of text and the pre-rotation
+     width of your element is small enough that the text wraps: */
+  white-space: nowrap;
+}
+
 .middle {
   background: lightblue;
   border-style: solid;
   border-radius: 8vh;
   width: 60vh;
   height: 40vh;
+}
+
+.resize {
+  transform: scale(0.8);
 }
 
 .middleTopBottom {
@@ -57,13 +91,48 @@
   border-style: solid;
 }
 
-.modal-content {
-  background: white;
-  width: auto;
-  //left: -13vh;
-  //top: 20vh;
-  transform: scale(1.25);
+.modal-backdrop {
+  background-color: white;
+  height: 80vh;
+  width: 80vw;
+  opacity: 1;
+  position: fixed;
+  left: 10vh;
+  top: 10vh;
 }
 
-.modal-body {
+.split_left {
+  height: 100%;
+  width: 80%;
+  position: fixed;
+  left: -50px;
+  top: -20px;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.split_right {
+  height: 100%;
+  width: 20%;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+  float: right;
+  margin-right: 100px;
+}
+
+.places {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+}
+
+.dot {
+  height: 10px;
+  width: 2%;
+  border-radius: 50%;
+  display: inline-block;
 }

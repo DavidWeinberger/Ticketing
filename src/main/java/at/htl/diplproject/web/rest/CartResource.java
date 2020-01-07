@@ -1,21 +1,22 @@
 package at.htl.diplproject.web.rest;
 
 import at.htl.diplproject.service.CartService;
-import at.htl.diplproject.web.rest.errors.BadRequestAlertException;
 import at.htl.diplproject.service.dto.CartDTO;
-
+import at.htl.diplproject.web.rest.errors.BadRequestAlertException;
+import at.htl.diplproject.web.websocket.SocketHandler;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@EnableScheduling
 public class CartResource {
 
     private final Logger log = LoggerFactory.getLogger(CartResource.class);
@@ -53,6 +55,7 @@ public class CartResource {
             throw new BadRequestAlertException("A new cart cannot already have an ID", ENTITY_NAME, "idexists");
         }
         CartDTO result = cartService.save(cartDTO);
+        SocketHandler.getSocketHandler().sendTextMessage("|user:"+cartDTO.getUserId()+"|ticket:"+cartDTO.getTicketId());
         return ResponseEntity.created(new URI("/api/carts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -73,6 +76,7 @@ public class CartResource {
         if (cartDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        SocketHandler.getSocketHandler().sendTextMessage("|user:"+cartDTO.getUserId()+"|ticket:"+cartDTO.getTicketId());
         CartDTO result = cartService.save(cartDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, cartDTO.getId().toString()))
@@ -105,6 +109,24 @@ public class CartResource {
     }
 
     /**
+     * {@code GET  /carts/:id} : get the "id" cart.
+     *
+     * @param id the id of the cartDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the cartDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/carts/all/{id}")
+    public List<CartDTO> getAllCart(@PathVariable Long id) {
+        log.debug("REST request to get all Carts : {}", id);
+        List<CartDTO> cartDTO = new LinkedList<>();
+        cartService.findAll().forEach( x -> {
+            if(x.getUserId().longValue() == id){
+                cartDTO.add(x);
+            }
+        });
+        return cartDTO;
+    }
+
+    /**
      * {@code DELETE  /carts/:id} : delete the "id" cart.
      *
      * @param id the id of the cartDTO to delete.
@@ -114,6 +136,27 @@ public class CartResource {
     public ResponseEntity<Void> deleteCart(@PathVariable Long id) {
         log.debug("REST request to delete Cart : {}", id);
         cartService.delete(id);
+        SocketHandler.getSocketHandler().sendTextMessage("");
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * {@code DELETE  /carts/:id} : delete the "id" cart.
+     *
+     * @param id the id of the cartDTO to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping("/carts/ticket/{id}")
+    public ResponseEntity<Void> deleteCartbyTicketId(@PathVariable Long id) {
+        log.debug("REST request to delete Cart by TicketId : {}", id);
+        List<CartDTO> cartDTOList = cartService.findAll();
+        for (CartDTO x : cartDTOList) {
+            if (x.getTicketId() == Integer.parseInt(id.toString())) {
+                cartService.delete(x.getId());
+                break;
+            }
+        }
+        SocketHandler.getSocketHandler().sendTextMessage("");
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

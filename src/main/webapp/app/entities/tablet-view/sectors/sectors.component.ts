@@ -7,6 +7,7 @@ import { JhiAlertService } from 'ng-jhipster';
 import { AccountService } from 'app/core';
 import { CartService } from 'app/entities/cart';
 import { Cart } from 'app/shared/model/cart.model';
+import { NotificationService } from 'app/shared/notification.service';
 
 @Component({
   selector: 'jhi-sectors',
@@ -15,24 +16,29 @@ import { Cart } from 'app/shared/model/cart.model';
 })
 export class SectorsComponent implements OnInit {
   @Input() sector: String;
-  private tickets: ITickets[];
+  protected tickets: ITickets[] = [];
   private rows: number;
   private seats: number;
-  private rowArr: number[];
-  private seatArr: number[];
+  rowArr: number[];
+  seatArr: number[];
+  allSeats: number[];
   private cart: Cart = new Cart();
   private account: Promise<Account>;
   private userId: number;
   private ticket: ITickets;
+  private paging = false;
+  private page = 0;
+  private sides = 0;
 
   constructor(
     private accountService: AccountService,
     private cartService: CartService,
     protected jhiAlertService: JhiAlertService,
-    protected ticketsService: TicketsService
+    protected ticketsService: TicketsService,
+    protected notificationService: NotificationService
   ) {}
 
-  ngOnInit() {
+  loadAll() {
     this.ticketsService
       .query()
       .pipe(
@@ -42,14 +48,51 @@ export class SectorsComponent implements OnInit {
       .subscribe(
         (res: ITickets[]) => {
           this.tickets = res;
-          this.tickets = this.tickets.filter(x => x.place === this.sector);
+          this.tickets = this.tickets.filter(x => x.place === this.sector.toString());
+          console.log(this.tickets);
           this.rows = Math.max.apply(Math, this.tickets.map(o => o.rows));
           this.seats = Math.max.apply(Math, this.tickets.map(o => o.seats));
+          console.log(this.rows);
           this.rowArr = new Array(this.rows);
-          this.seatArr = new Array(this.seats);
+          this.seatArr = new Array(this.seats).fill(1, 0, this.seats);
+          if (this.seatArr.length > 10) {
+            this.sides = this.seatArr.length / 10;
+            if (this.seatArr.length % 10 !== 0) {
+              this.sides++;
+            }
+            this.paging = true;
+            if (this.page === this.sides) {
+              this.seatArr = this.seatArr.slice(0 + 10 * this.page);
+            } else {
+              this.seatArr = this.seatArr.slice(0 + 10 * this.page, 10 + 10 * this.page);
+            }
+            console.log(this.seatArr);
+          }
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
+  }
+
+  ngOnInit() {
+    this.account = this.accountService.identity().then();
+    this.account.then(x => {
+      this.userId = Number(x.id);
+    });
+    this.loadAll();
+    this.notificationService.listen().subscribe(data => {
+      if (data !== undefined) {
+        const parts = data.toString().split('|');
+        console.log(parts);
+        if (parts.length > 1) {
+          const chunks = parts[2].split(':');
+          if (this.sector === chunks[1]) {
+            this.loadAll();
+          }
+        } else {
+          this.loadAll();
+        }
+      }
+    });
   }
 
   protected onError(errorMessage: string) {
@@ -60,31 +103,53 @@ export class SectorsComponent implements OnInit {
     seat++;
     row = this.rows - row;
     const ticket = this.tickets.find(x => x.rows === row && x.seats === seat);
-    // console.log(ticket);
-    if (ticket.state === null || ticket.state == null || ticket.state === undefined) {
-      console.log('i am here');
-      ticket.state = 0;
+    if (ticket !== undefined) {
+      if (ticket.state === null || ticket.state == null || ticket.state === undefined) {
+        // console.log('i am here');
+        ticket.state = 0;
+      }
+      return ticket.state;
     }
-    return ticket.state;
+    return 0;
   }
 
   dotClick(row, seat) {
     seat++;
     row = this.rows - row;
-    console.log(row + '______----______' + seat);
-    this.tickets.find(x => x.rows === row && x.seats === seat).state = 1;
     this.ticket = this.tickets.find(x => x.rows === row && x.seats === seat);
-    this.reserve();
+    console.log(this.userId);
+    if (this.ticket.state === 0) {
+      this.reserve();
+    } else if (this.ticket.state === 1) {
+      this.cartService.findCartsByUserId(this.userId).subscribe(data => {
+        console.log(data);
+        data.body.forEach(carts => {
+          if (this.ticket.id === carts.ticketId) {
+            console.log('found');
+            this.ticketsService
+              .find(carts.ticketId)
+              .toPromise()
+              .then(_ticket => {
+                console.log('got ticket');
+                console.log(_ticket);
+                this.remove(_ticket.body);
+              });
+          }
+        });
+      });
+    }
+  }
+
+  public remove(ticket: ITickets) {
+    this.cartService.deleteByTicketId(ticket.id).subscribe();
+    ticket.state = 0;
+    this.ticketsService.update(ticket).subscribe();
   }
 
   reserve() {
-    this.account = this.accountService.identity().then();
-    this.account.then(x => {
-      this.userId = Number(x.id);
-      this.cart.userId = this.userId;
-      this.cart.ticketId = this.ticket.id;
-      this.cartService.create(this.cart).subscribe();
-    });
+    this.cart.userId = this.userId;
+    this.cart.ticketId = this.ticket.id;
+    this.cartService.create(this.cart).subscribe();
     this.ticket.state = 1;
     this.ticketsService.update(this.ticket).subscribe();
   }
@@ -96,6 +161,20 @@ export class SectorsComponent implements OnInit {
         return 'gold';
       case 2:
         return 'darkgrey';
+    }
+  }
+
+  nextPage() {
+    if (this.paging) {
+      this.page++;
+      this.loadAll();
+    }
+  }
+
+  backPage() {
+    if (this.paging) {
+      this.page--;
+      this.loadAll();
     }
   }
 }

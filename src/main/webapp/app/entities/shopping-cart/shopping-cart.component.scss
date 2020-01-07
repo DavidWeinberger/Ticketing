@@ -3,7 +3,16 @@
   border-color: gray;
   border-radius: 10px;
   width: 40vh;
-  height: auto;
+  height: 82vh;
+}
+
+.scrolling {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.list {
+  height: 65vh;
 }
 
 .ticket {
@@ -22,4 +31,8 @@
 
 ul {
   text-align: right;
+}
+
+.fix {
+  position: fixed;
 }

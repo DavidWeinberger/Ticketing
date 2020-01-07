@@ -5,6 +5,12 @@ import { CartService } from 'app/entities/cart';
 import { Cart } from 'app/shared/model/cart.model';
 import { TicketsService } from 'app/entities/tickets';
 
+enum Types {
+  Stehplatz,
+  Vip_Stehplatz,
+  Sitzplatz
+}
+
 @Component({
   selector: 'jhi-ticket-gui',
   templateUrl: './ticket-gui.component.html',
@@ -19,6 +25,10 @@ export class TicketGuiComponent implements OnInit {
   constructor(private accountService: AccountService, private cartService: CartService, private ticketService: TicketsService) {}
 
   ngOnInit() {}
+
+  selectType(type: number) {
+    return Types[type];
+  }
 
   reserve() {
     this.account = this.accountService.identity().then();

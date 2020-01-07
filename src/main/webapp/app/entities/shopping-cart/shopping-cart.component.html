@@ -1,0 +1,23 @@
+<div class="container shopping fix">
+    <h1>Warenkorb</h1>
+    <div class="row scrolling list">
+        <div class="ticket" *ngFor="let ticket of tickets">
+            <div class="col">
+                <jhi-ticket-gui [isCart]="true" [ticket]="ticket"></jhi-ticket-gui>
+            </div>
+            <div *ngIf="!tablet" class="col">
+                <button class="button" (click)="remove(ticket)">-</button>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="tablet">
+        <br>
+    </div>
+    <div class="row">
+        <p style="font-weight: bold; font-size: larger; margin-left: 1vh">Gesamtsumme: {{price}}€</p>
+    </div>
+    <div class="row" *ngIf="!tablet">
+        <button class="button" (click)="buy()">Kaufen</button>
+        <button class="button" (click)="cancle()">Abbrechen</button>
+    </div>
+</div>

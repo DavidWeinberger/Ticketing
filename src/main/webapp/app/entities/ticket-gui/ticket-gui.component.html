@@ -1,0 +1,21 @@
+<div class="container" *ngIf="ticket.type !== undefined">
+    <div class="row">
+        <div class="col-sm">
+            <p>Kategorie: {{selectType(ticket.type)}}</p>
+        </div>
+        <div *ngIf="!isCart" class="col-sm">
+            <button  (click)="reserve()" class="button">+</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Preis: {{ticket.price}}€</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <span>Sektor: {{ticket.place}}</span>
+            <span *ngIf="ticket.rows > 0"> &nbsp;&nbsp; Reihe: {{ticket.rows}} &nbsp;&nbsp;   Sitzplatz: {{ticket.seats}}</span> <p></p>
+        </div>
+    </div>
+</div>

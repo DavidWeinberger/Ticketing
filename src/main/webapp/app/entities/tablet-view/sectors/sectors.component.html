@@ -1,16 +1,34 @@
-<!--<table class="customTable">-->
-<!--    <tr *ngFor="let x of rowArr">-->
-<!--        <td *ngFor="let y of seatArr">-->
-<!--            <span class="dot"></span>-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--</table>-->
-<div class="container">
-    <div class="row">
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2 style="font-weight: bold">Sektor - {{sector}}</h2>
+            </div>
+            <div *ngIf="tickets.length > 0">
+                <h2 style="float: right; font-weight: bold; margin-right: 2vh">Ticketpreis: {{tickets[0].price}}€</h2>
+            </div>
+        </div>
     </div>
-    <div class="row" *ngFor="let x of rowArr; let a = index">
-<!--        <p class="rows">{{rows - a}}</p>-->
-        <span class="dot places"  [style.backgroundColor]="getColor(getState(a,b))" *ngFor="let y of seatArr; let b = index" (click)="dotClick(a,b)"></span>
+    <div class="container">
+        <div class="row">
+            <div style="width: 12vh; font-weight: bold; font-size: 3vh">
+                <span>Sitz ↦</span> <br>
+                <span>↧ Reihe</span>
+            </div>
+            <div class="col-sm" style="font-size: 3vh; font-weight: bold" *ngFor="let z of seatArr; let c = index">
+                <span>{{c+1 + (10 * page)}}</span>
+            </div>
+        </div>
+        <div class="row" *ngFor="let x of rowArr; let a = index">
+            <div style="width: 12vh; font-weight: bold; font-size: 3vh">
+                <span>{{rowArr.length - a}}</span>
+            </div>
+            <div *ngFor="let y of seatArr; let b = index" class="col-sm">
+                <span class="dot places" style="width: 3vh; height: 3vh" [style.backgroundColor]="getColor(getState(a,b+ (10 * page)))" (click)="dotClick(a,b+ (10 * page))"></span>
+            </div>
+        </div>
     </div>
-
 </div>
+
+<button *ngIf="page < sides -1" class="btn" style="position: fixed; top: 40vh; left: 87vw" (click)="nextPage()"><h1 style="font-weight: bold; font-size: 90px;">〉</h1></button>
+<button *ngIf="page > 0"class="btn" style="position: fixed; top: 40vh; left: 0vw" (click)="backPage()"><h1 style="font-weight: bold; font-size: 90px;">〈</h1></button>

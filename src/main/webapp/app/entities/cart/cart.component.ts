@@ -7,6 +7,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { ICart } from 'app/shared/model/cart.model';
 import { AccountService } from 'app/core';
 import { CartService } from './cart.service';
+import { NotificationService } from 'app/shared/notification.service';
 
 @Component({
   selector: 'jhi-cart',
@@ -44,7 +45,6 @@ export class CartComponent implements OnInit, OnDestroy {
     this.accountService.identity().then(account => {
       this.currentAccount = account;
     });
-    this.registerChangeInCarts();
   }
 
   ngOnDestroy() {
@@ -53,10 +53,6 @@ export class CartComponent implements OnInit, OnDestroy {
 
   trackId(index: number, item: ICart) {
     return item.id;
-  }
-
-  registerChangeInCarts() {
-    this.eventSubscriber = this.eventManager.subscribe('cartListModification', response => this.loadAll());
   }
 
   protected onError(errorMessage: string) {

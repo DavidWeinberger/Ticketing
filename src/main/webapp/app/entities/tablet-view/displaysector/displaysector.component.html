@@ -1,0 +1,14 @@
+<div *ngIf="!bulkTickets" class="one" [ngStyle]="{'height': height+'vh'}" [style.transform]="'rotate('+rotation+'deg)'" #one>
+    <div *ngFor="let row of rowArr; let a = index" style="line-height: 0vh;">
+        <span *ngFor="let seats of seatArr; let b = index" class="dot"
+              style="position: relative;"
+              [ngStyle]="{'top': a*topSpacing+'px', 'left': (0.5+b)*sideSpacing+'px', 'width' : space+'px', 'height' : space+'px'}"
+              [style.backgroundColor]="getColor(getState(a,b))"></span>
+    </div>
+</div>
+<div [ngStyle]="{'height': height+'vh'}" *ngIf="bulkTickets" (click)="reserveBulk()">
+    <h5 class="font-weight-bold">{{selectType(tickets[0].type)}}</h5>
+    <p class="font-weight-bold">{{tickets[0].amount - tickets[0].state}}/{{tickets[0].amount}}</p>
+</div>
+
+<!--"-->

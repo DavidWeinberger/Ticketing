@@ -13,7 +13,9 @@ type EntityArrayResponseType = HttpResponse<ISale[]>;
 export class SaleService {
   public resourceUrl = SERVER_API_URL + 'api/sales';
 
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient) {
+    console.log(this.resourceUrl);
+  }
 
   create(sale: ISale): Observable<EntityResponseType> {
     return this.http.post<ISale>(this.resourceUrl, sale, { observe: 'response' });
