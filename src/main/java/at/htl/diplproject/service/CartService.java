@@ -1,9 +1,7 @@
 package at.htl.diplproject.service;
 
 import at.htl.diplproject.service.dto.CartDTO;
-import org.springframework.data.jpa.repository.Lock;
 
-import javax.persistence.LockModeType;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +16,7 @@ public interface CartService {
      * @param cartDTO the entity to save.
      * @return the persisted entity.
      */
+//    @Lock(LockModeType.PESSIMISTIC_WRITE)
     CartDTO save(CartDTO cartDTO);
 
     /**
@@ -25,6 +24,7 @@ public interface CartService {
      *
      * @return the list of entities.
      */
+//    @Lock(LockModeType.PESSIMISTIC_READ)
     List<CartDTO> findAll();
 
 
@@ -34,6 +34,7 @@ public interface CartService {
      * @param id the id of the entity.
      * @return the entity.
      */
+//    @Lock(LockModeType.PESSIMISTIC_READ)
     Optional<CartDTO> findOne(Long id);
 
     /**

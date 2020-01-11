@@ -6,7 +6,6 @@ import at.htl.diplproject.service.dto.TicketsDTO;
 import at.htl.diplproject.service.mapper.TicketsMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +40,7 @@ public class TicketsService {
      * @param ticketsDTO the entity to save.
      * @return the persisted entity.
      */
+    @Lock(LockModeType.PESSIMISTIC_READ)
     public TicketsDTO save(TicketsDTO ticketsDTO) {
         log.debug("Request to save Tickets : {}", ticketsDTO);
         Tickets tickets = ticketsMapper.toEntity(ticketsDTO);
@@ -80,6 +80,7 @@ public class TicketsService {
      *
      * @param id the id of the entity.
      */
+    @Lock(LockModeType.PESSIMISTIC_READ)
     public void delete(Long id) {
         log.debug("Request to delete Tickets : {}", id);
         ticketsRepository.deleteById(id);

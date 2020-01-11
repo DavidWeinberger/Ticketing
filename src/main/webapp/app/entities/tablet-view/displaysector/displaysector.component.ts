@@ -34,11 +34,12 @@ export class DisplaysectorComponent implements OnInit {
   private sideSpacing = 0;
   private topSpacing = 0;
   private moveUp = 0;
-  rowArr: number[];
-  seatArr: number[];
+  rowArr: number[] = [];
+  seatArr: number[] = [];
   private account: Promise<Account>;
   private cart: Cart = new Cart();
   private userId: number;
+  private amount: any;
 
   constructor(
     protected ticketsService: TicketsService,
@@ -59,16 +60,19 @@ export class DisplaysectorComponent implements OnInit {
       )
       .subscribe(
         (res: ITickets[]) => {
-          this.tickets = res;
-          // console.log(this.sector.toString());
-          // console.log(this.tickets);
-          this.tickets = this.tickets.filter(x => x.place === this.sector.toString());
-          // console.log(this.tickets);
-          this.rows = Math.max.apply(Math, this.tickets.map(o => o.rows));
-          this.seats = Math.max.apply(Math, this.tickets.map(o => o.seats));
-          this.calculateSpace();
-          this.rowArr = new Array(this.rows);
-          this.seatArr = new Array(this.seats);
+          if (res.length > 0) {
+            this.tickets = res;
+            // console.log(this.sector.toString());
+            // console.log(this.tickets);
+            this.tickets = this.tickets.filter(x => x.place === this.sector.toString());
+            this.amount = this.tickets.filter(x => x.place === this.sector.toString() && x.state === 0).length;
+            // console.log(this.tickets);
+            this.rows = Math.max.apply(Math, this.tickets.map(o => o.rows));
+            this.seats = Math.max.apply(Math, this.tickets.map(o => o.seats));
+            this.calculateSpace();
+            this.rowArr = new Array(this.rows);
+            this.seatArr = new Array(this.seats);
+          }
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
@@ -108,24 +112,26 @@ export class DisplaysectorComponent implements OnInit {
   }
 
   calculateSpace() {
-    let actHeight;
-    let actWidth;
-    if (this.sidePlace) {
-      actHeight = this.d1.nativeElement.offsetWidth;
-      actWidth = this.d1.nativeElement.offsetHeight;
-    } else {
-      actHeight = this.d1.nativeElement.offsetHeight;
-      actWidth = this.d1.nativeElement.offsetWidth;
+    if (!this.bulkTickets && this.tickets.length > 0) {
+      let actHeight;
+      let actWidth;
+      if (this.sidePlace) {
+        actHeight = this.d1.nativeElement.offsetWidth;
+        actWidth = this.d1.nativeElement.offsetHeight;
+      } else {
+        actHeight = this.d1.nativeElement.offsetHeight;
+        actWidth = this.d1.nativeElement.offsetWidth;
+      }
+      if (actWidth / this.seats < actHeight / this.rows) {
+        this.space = actWidth / (this.seats * 1.125);
+      } else {
+        this.space = actHeight / (this.rows * 1.5);
+      }
+      let usedSpace = this.space * this.rows;
+      this.topSpacing = (actHeight - usedSpace) / this.rows;
+      usedSpace = this.space * this.seats;
+      this.sideSpacing = (actWidth - usedSpace) / this.seats;
     }
-    if (actWidth / this.seats < actHeight / this.rows) {
-      this.space = actWidth / (this.seats * 1.125);
-    } else {
-      this.space = actHeight / (this.rows * 1.5);
-    }
-    let usedSpace = this.space * this.rows;
-    this.topSpacing = (actHeight - usedSpace) / this.rows;
-    usedSpace = this.space * this.seats;
-    this.sideSpacing = (actWidth - usedSpace) / this.seats;
   }
 
   selectType(type: number) {
@@ -140,7 +146,8 @@ export class DisplaysectorComponent implements OnInit {
       this.cart.ticketId = this.tickets[0].id;
       this.cartService.create(this.cart).subscribe();
     });
-    this.tickets[0].state += 1;
+    this.tickets[0].state = 1;
     this.ticketsService.update(this.tickets[0]).subscribe();
+    this.loadAll();
   }
 }

@@ -21,7 +21,6 @@ import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * REST controller for managing {@link at.htl.diplproject.domain.Cart}.
@@ -54,16 +53,20 @@ public class CartResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
 
-    private void updateBulkTicket(Long id){
+    private void updateBulkTicket(Long id) {
         final int[] count = {0};
-        if(ticketsService.findOne(id).get().getType() != 2){
+        if (ticketsService.findOne(id).get().getType() != 2) {
             cartService.findAll().forEach(x -> {
-                if((long)x.getTicketId() == id){
+                if ((long) x.getTicketId() == id) {
                     count[0]++;
                 }
             });
             TicketsDTO ticketsDTO = ticketsService.findOne(id).get();
-            ticketsDTO.setState(count[0] + ticketsDTO.getSeats());
+            if (ticketsDTO.getSeats() != null) {
+                ticketsDTO.setState(count[0] + ticketsDTO.getSeats());
+            } else {
+                ticketsDTO.setState(count[0]);
+            }
             ticketsService.save(ticketsDTO);
         }
     }
@@ -77,20 +80,20 @@ public class CartResource {
         }
 
         CartDTO result = cartService.save(cartDTO);
-        updateBulkTicket((long)result.getTicketId());
+        updateBulkTicket((long) result.getTicketId());
         sentCreateWS(cartDTO);
         return ResponseEntity.created(new URI("/api/carts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
-    private void sentCreateWS(CartDTO cartDTO){
+    private void sentCreateWS(CartDTO cartDTO) {
         final int[] count = {0};
-        if(ticketsService.findOne((long)cartDTO.getTicketId()).get().getType() == 2){
+        if (ticketsService.findOne((long) cartDTO.getTicketId()).get().getType() == 2) {
             cartService.findAll().forEach(x -> {
-                if(x.getTicketId() == cartDTO.getTicketId()){
+                if (x.getTicketId() == cartDTO.getTicketId()) {
                     count[0]++;
-                    if(count[0] > 1){
+                    if (count[0] > 1) {
                         cartService.delete(x.getId());
                     }
                 }
@@ -172,9 +175,7 @@ public class CartResource {
     @DeleteMapping("/carts/{id}")
     public ResponseEntity<Void> deleteCart(@PathVariable Long id) {
         log.debug("REST request to delete Cart : {}", id);
-        // Long ticketId = (long)cartService.findOne(id).get().getTicketId();
         cartService.delete(id);
-        // updateBulkTicket(ticketId);
         SocketHandler.getSocketHandler().sendTextMessage("");
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
@@ -192,10 +193,6 @@ public class CartResource {
         for (CartDTO x : cartDTOList) {
             if (x.getTicketId() == Integer.parseInt(id.toString())) {
                 cartService.delete(x.getId());
-                updateBulkTicket((long)x.getTicketId());
-                if (ticketsService.findOne(id).get().getType() != 2) {
-                    break;
-                }
             }
         }
         SocketHandler.getSocketHandler().sendTextMessage("");

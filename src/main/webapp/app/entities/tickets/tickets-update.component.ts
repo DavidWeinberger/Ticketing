@@ -84,12 +84,21 @@ export class TicketsUpdateComponent implements OnInit {
             tickets.amount = 1;
             tickets.seats = seat;
             tickets.rows = row;
+            if (tickets.state === undefined || tickets.state === null) {
+              tickets.state = 0;
+            }
             this.subscribeToSaveResponse(this.ticketsService.create(tickets));
           }
         }
         tickets.amount = 1;
       } else {
-        this.subscribeToSaveResponse(this.ticketsService.create(tickets));
+        const amount = tickets.amount;
+        tickets.amount = 1;
+        for (let seat = 1; seat <= amount; seat++) {
+          tickets.seats = seat;
+          tickets.state = 0;
+          this.subscribeToSaveResponse(this.ticketsService.create(tickets));
+        }
       }
     }
   }

@@ -23,6 +23,7 @@ export class ShoppingCartComponent implements OnInit {
   protected account: Promise<Account> = null;
   protected userId = 0;
   protected price = 0;
+
   constructor(
     protected cartService: CartService,
     protected ticketService: TicketsService,
@@ -100,22 +101,26 @@ export class ShoppingCartComponent implements OnInit {
 
   buy() {
     this.tickets.forEach(ticket => {
-      console.log(ticket.type);
-      if (ticket.type === 2) {
-        this.cartService.deleteByTicketId(ticket.id).subscribe();
-        ticket.state = 2;
-      } else {
-        ticket.seats += 1;
-        console.log(ticket.seats);
-        this.cartService.deleteByTicketId(ticket.id).subscribe();
-        this.ticketService.update(ticket).subscribe();
-        return;
-      }
+      // console.log(ticket.type);
+      this.cartService.deleteByTicketId(ticket.id).subscribe();
+      ticket.state = 2;
       this.ticketService.update(ticket).subscribe();
+      console.log(this.tickets);
     });
+    // else {
+    //         this.tickets.filter( x => x.id === ticket.id).forEach( y => {
+    //           count++;
+    //         });
+    //         this.tickets = this.tickets.filter( x => x.id !== ticket.id);
+    //         ticket.seats += count;
+    //         console.log(ticket.seats);
+    //         await this.cartService.deleteByTicketId(ticket.id).subscribe();
+    //         await this.ticketService.update(ticket).subscribe();
+    //       }
+    // });
   }
 
-  cancle() {
+  cancel() {
     this.tickets.forEach(ticket => {
       this.cartService.deleteByTicketId(ticket.id).subscribe();
       ticket.state = 0;
