@@ -38,6 +38,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.languageHelper.getAll().then(languages => {
       this.languages = languages;
+      this.sessionStorage.store('locale', languages[1]);
+      this.languageService.changeLanguage(languages[1]);
     });
 
     this.profileService.getProfileInfo().then(profileInfo => {

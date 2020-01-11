@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Cart, ICart } from 'app/shared/model/cart.model';
 import { CartService } from 'app/entities/cart';
-import { filter, map } from 'rxjs/operators';
+import { delay, filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ITickets } from 'app/shared/model/tickets.model';
 import { TicketsService } from 'app/entities/tickets';
@@ -36,11 +36,11 @@ export class ShoppingCartComponent implements OnInit {
     this.notificationService.listen().subscribe(data => {
       if (data !== undefined) {
         const parts = data.toString().split('|');
-        console.log(parts);
+        // console.log(parts);
         if (parts.length > 1) {
           const chunks = parts[1].split(':');
           if (this.userId.toString() === chunks[1]) {
-            console.log('User found');
+            // console.log('User found');
             this.refreshCart();
           }
         } else {
@@ -100,8 +100,17 @@ export class ShoppingCartComponent implements OnInit {
 
   buy() {
     this.tickets.forEach(ticket => {
-      this.cartService.deleteByTicketId(ticket.id).subscribe();
-      ticket.state = 2;
+      console.log(ticket.type);
+      if (ticket.type === 2) {
+        this.cartService.deleteByTicketId(ticket.id).subscribe();
+        ticket.state = 2;
+      } else {
+        ticket.seats += 1;
+        console.log(ticket.seats);
+        this.cartService.deleteByTicketId(ticket.id).subscribe();
+        this.ticketService.update(ticket).subscribe();
+        return;
+      }
       this.ticketService.update(ticket).subscribe();
     });
   }

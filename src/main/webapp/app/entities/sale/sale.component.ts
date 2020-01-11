@@ -48,7 +48,7 @@ export class SaleComponent implements OnInit, OnDestroy {
               this.sektors.push(x.place);
             }
           });
-          console.log(this.sektors);
+          // console.log(this.sektors);
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
@@ -61,7 +61,7 @@ export class SaleComponent implements OnInit, OnDestroy {
     });
     this.registerChangeInSales();
     this.notificationService.listen().subscribe(data => {
-      console.log(data);
+      // console.log(data);
     });
   }
 

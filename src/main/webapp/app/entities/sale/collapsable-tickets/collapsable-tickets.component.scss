@@ -16,3 +16,13 @@
   overflow: scroll;
   overflow-x: hidden;
 }
+
+.modal-backdrop {
+  background-color: white;
+  height: 80vh;
+  width: 80vw;
+  opacity: 1;
+  position: fixed;
+  left: 10vh;
+  top: 10vh;
+}

@@ -60,10 +60,10 @@ export class DisplaysectorComponent implements OnInit {
       .subscribe(
         (res: ITickets[]) => {
           this.tickets = res;
-          console.log(this.sector.toString());
-          console.log(this.tickets);
+          // console.log(this.sector.toString());
+          // console.log(this.tickets);
           this.tickets = this.tickets.filter(x => x.place === this.sector.toString());
-          console.log(this.tickets);
+          // console.log(this.tickets);
           this.rows = Math.max.apply(Math, this.tickets.map(o => o.rows));
           this.seats = Math.max.apply(Math, this.tickets.map(o => o.seats));
           this.calculateSpace();

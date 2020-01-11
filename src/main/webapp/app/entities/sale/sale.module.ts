@@ -15,7 +15,7 @@ const ENTITY_STATES = [...saleRoute];
   declarations: [SaleComponent, CollapsableTicketsComponent],
   entryComponents: [],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-  exports: [],
+  exports: [SaleComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TicketingProjectSaleModule {
