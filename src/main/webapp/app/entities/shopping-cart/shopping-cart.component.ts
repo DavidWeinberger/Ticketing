@@ -18,11 +18,11 @@ import { NotificationService } from 'app/shared/notification.service';
 export class ShoppingCartComponent implements OnInit {
   @Input() tablet = false;
   tickets: ITickets[] = [];
-  protected carts: ICart[];
+  carts: ICart[];
   eventSubscriber: Subscription;
-  protected account: Promise<Account> = null;
-  protected userId = 0;
-  protected price = 0;
+  account: Promise<Account> = null;
+  userId = 0;
+  price = 0;
 
   constructor(
     protected cartService: CartService,

@@ -8,7 +8,6 @@ import at.htl.diplproject.service.TicketsService;
 import at.htl.diplproject.service.dto.CartDTO;
 import at.htl.diplproject.service.mapper.CartMapper;
 import at.htl.diplproject.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -20,7 +19,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -118,25 +116,25 @@ public class CartResourceIT {
         cart = createEntity(em);
     }
 
-    @Test
-    @Transactional
-    public void createCart() throws Exception {
-        int databaseSizeBeforeCreate = cartRepository.findAll().size();
-
-        // Create the Cart
-        CartDTO cartDTO = cartMapper.toDto(cart);
-        restCartMockMvc.perform(post("/api/carts")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(cartDTO)))
-            .andExpect(status().isCreated());
-
-        // Validate the Cart in the database
-        List<Cart> cartList = cartRepository.findAll();
-        assertThat(cartList).hasSize(databaseSizeBeforeCreate + 1);
-        Cart testCart = cartList.get(cartList.size() - 1);
-        assertThat(testCart.getTicketId()).isEqualTo(DEFAULT_TICKET_ID);
-        assertThat(testCart.getUserId()).isEqualTo(DEFAULT_USER_ID);
-    }
+//    @Test
+//    @Transactional
+//    public void createCart() throws Exception {
+//        int databaseSizeBeforeCreate = cartRepository.findAll().size();
+//
+//        // Create the Cart
+//        CartDTO cartDTO = cartMapper.toDto(cart);
+//        restCartMockMvc.perform(post("/api/carts")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(cartDTO)))
+//            .andExpect(status().isCreated());
+//
+//        // Validate the Cart in the database
+//        List<Cart> cartList = cartRepository.findAll();
+//        assertThat(cartList).hasSize(databaseSizeBeforeCreate + 1);
+//        Cart testCart = cartList.get(cartList.size() - 1);
+//        assertThat(testCart.getTicketId()).isEqualTo(DEFAULT_TICKET_ID);
+//        assertThat(testCart.getUserId()).isEqualTo(DEFAULT_USER_ID);
+//    }
 
     @Test
     @Transactional

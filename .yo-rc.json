@@ -35,10 +35,10 @@
     "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "en",
-    "languages": [
-      "en",
-      "de"
-    ],
-    "blueprints": []
+    "languages": ["en", "de"],
+    "blueprints": [],
+    "appsFolders": ["Ticketing"],
+    "directoryPath": "../",
+    "monitoring": "no"
   }
 }

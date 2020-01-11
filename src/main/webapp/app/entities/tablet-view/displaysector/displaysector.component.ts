@@ -27,19 +27,19 @@ export class DisplaysectorComponent implements OnInit {
   @Input() sidePlace = false;
   @Input() bulkTickets = false;
   @ViewChild('one', { static: false }) d1: ElementRef;
-  protected tickets: ITickets[] = [];
-  private rows = 0;
-  private seats = 0;
-  private space = 5;
-  private sideSpacing = 0;
-  private topSpacing = 0;
-  private moveUp = 0;
+  tickets: ITickets[] = [];
+  rows = 0;
+  seats = 0;
+  space = 5;
+  sideSpacing = 0;
+  topSpacing = 0;
+  moveUp = 0;
   rowArr: number[] = [];
   seatArr: number[] = [];
-  private account: Promise<Account>;
-  private cart: Cart = new Cart();
-  private userId: number;
-  private amount: any;
+  account: Promise<Account>;
+  cart: Cart = new Cart();
+  userId: number;
+  amount: any;
 
   constructor(
     protected ticketsService: TicketsService,

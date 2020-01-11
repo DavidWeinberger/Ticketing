@@ -19,10 +19,11 @@ enum Types {
 export class TicketGuiComponent implements OnInit {
   @Input() ticket: Tickets;
   @Input() isCart: Boolean;
-  private isReserved = false;
-  private cart: Cart = new Cart();
-  private account: Promise<Account>;
-  private userId: number;
+  isReserved = false;
+  cart: Cart = new Cart();
+  account: Promise<Account>;
+  userId: number;
+
   constructor(private accountService: AccountService, private cartService: CartService, private ticketService: TicketsService) {}
 
   ngOnInit() {}

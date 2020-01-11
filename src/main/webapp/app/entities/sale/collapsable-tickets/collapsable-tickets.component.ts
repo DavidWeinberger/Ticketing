@@ -25,13 +25,13 @@ export class CollapsableTicketsComponent implements OnInit {
   @Input() sektor: String;
   tickets: ITickets[] = [];
   opened = false;
-  protected bulkTicket = false;
-  private account: Promise<Account>;
-  private userId: number;
-  private cart: Cart = new Cart();
+  bulkTicket = false;
+  account: Promise<Account>;
+  userId: number;
+  cart: Cart = new Cart();
   activeSector: number;
-  private closeResult: string;
-  private amount: number;
+  closeResult: string;
+  amount: number;
 
   constructor(
     protected ticketsService: TicketsService,

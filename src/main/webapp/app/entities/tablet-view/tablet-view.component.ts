@@ -17,11 +17,11 @@ import { ModalDismissReasons, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng
   styleUrls: ['tablet-view.scss']
 })
 export class TabletViewComponent implements OnInit, OnDestroy {
-  protected seats: { id: string; ticket: ITickets[] }[];
+  seats: { id: string; ticket: ITickets[] }[];
   tabletViews: ITabletView[];
   currentAccount: any;
   eventSubscriber: Subscription;
-  protected tickets: ITickets[];
+  tickets: ITickets[];
   closeResult: string;
   activeSector: string;
 

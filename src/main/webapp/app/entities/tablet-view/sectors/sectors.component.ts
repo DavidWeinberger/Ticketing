@@ -16,23 +16,23 @@ import { NotificationService } from 'app/shared/notification.service';
 })
 export class SectorsComponent implements OnInit {
   @Input() sector: String;
-  protected tickets: ITickets[] = [];
-  private rows: number;
-  private seats: number;
+  tickets: ITickets[] = [];
+  rows: number;
+  seats: number;
   rowArr: number[];
   seatArr: number[];
   allSeats: number[];
-  private cart: Cart = new Cart();
-  private account: Promise<Account>;
-  private userId: number;
-  private ticket: ITickets;
-  private paging = false;
-  private page = 0;
-  private sides = 0;
+  cart: Cart = new Cart();
+  account: Promise<Account>;
+  userId: number;
+  ticket: ITickets;
+  paging = false;
+  page = 0;
+  sides = 0;
 
   constructor(
-    private accountService: AccountService,
-    private cartService: CartService,
+    protected accountService: AccountService,
+    protected cartService: CartService,
     protected jhiAlertService: JhiAlertService,
     protected ticketsService: TicketsService,
     protected notificationService: NotificationService
@@ -153,6 +153,7 @@ export class SectorsComponent implements OnInit {
     this.ticket.state = 1;
     this.ticketsService.update(this.ticket).subscribe();
   }
+
   getColor(state) {
     switch (state) {
       case 0:
