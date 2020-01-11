@@ -19,6 +19,7 @@ enum Types {
 export class TicketGuiComponent implements OnInit {
   @Input() ticket: Tickets;
   @Input() isCart: Boolean;
+  private isReserved = false;
   private cart: Cart = new Cart();
   private account: Promise<Account>;
   private userId: number;
@@ -31,6 +32,7 @@ export class TicketGuiComponent implements OnInit {
   }
 
   reserve() {
+    this.isReserved = true;
     this.account = this.accountService.identity().then();
     this.account.then(x => {
       this.userId = Number(x.id);

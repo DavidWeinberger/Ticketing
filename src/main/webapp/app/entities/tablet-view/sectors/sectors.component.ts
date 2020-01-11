@@ -49,10 +49,10 @@ export class SectorsComponent implements OnInit {
         (res: ITickets[]) => {
           this.tickets = res;
           this.tickets = this.tickets.filter(x => x.place === this.sector.toString());
-          console.log(this.tickets);
+          // console.log(this.tickets);
           this.rows = Math.max.apply(Math, this.tickets.map(o => o.rows));
           this.seats = Math.max.apply(Math, this.tickets.map(o => o.seats));
-          console.log(this.rows);
+          // console.log(this.rows);
           this.rowArr = new Array(this.rows);
           this.seatArr = new Array(this.seats).fill(1, 0, this.seats);
           if (this.seatArr.length > 10) {
@@ -66,7 +66,7 @@ export class SectorsComponent implements OnInit {
             } else {
               this.seatArr = this.seatArr.slice(0 + 10 * this.page, 10 + 10 * this.page);
             }
-            console.log(this.seatArr);
+            // console.log(this.seatArr);
           }
         },
         (res: HttpErrorResponse) => this.onError(res.message)

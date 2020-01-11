@@ -1,7 +1,9 @@
 package at.htl.diplproject.web.rest;
 
 import at.htl.diplproject.service.CartService;
+import at.htl.diplproject.service.TicketsService;
 import at.htl.diplproject.service.dto.CartDTO;
+import at.htl.diplproject.service.dto.TicketsDTO;
 import at.htl.diplproject.web.rest.errors.BadRequestAlertException;
 import at.htl.diplproject.web.websocket.SocketHandler;
 import io.github.jhipster.web.util.HeaderUtil;
@@ -19,6 +21,7 @@ import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * REST controller for managing {@link at.htl.diplproject.domain.Cart}.
@@ -36,9 +39,11 @@ public class CartResource {
     private String applicationName;
 
     private final CartService cartService;
+    private final TicketsService ticketsService;
 
-    public CartResource(CartService cartService) {
+    public CartResource(CartService cartService, TicketsService ticketsService) {
         this.cartService = cartService;
+        this.ticketsService = ticketsService;
     }
 
     /**
@@ -48,17 +53,50 @@ public class CartResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new cartDTO, or with status {@code 400 (Bad Request)} if the cart has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+
+    private void updateBulkTicket(Long id){
+        final int[] count = {0};
+        if(ticketsService.findOne(id).get().getType() != 2){
+            cartService.findAll().forEach(x -> {
+                if((long)x.getTicketId() == id){
+                    count[0]++;
+                }
+            });
+            TicketsDTO ticketsDTO = ticketsService.findOne(id).get();
+            ticketsDTO.setState(count[0] + ticketsDTO.getSeats());
+            ticketsService.save(ticketsDTO);
+        }
+    }
+
+
     @PostMapping("/carts")
     public ResponseEntity<CartDTO> createCart(@Valid @RequestBody CartDTO cartDTO) throws URISyntaxException {
         log.debug("REST request to save Cart : {}", cartDTO);
         if (cartDTO.getId() != null) {
             throw new BadRequestAlertException("A new cart cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
         CartDTO result = cartService.save(cartDTO);
-        SocketHandler.getSocketHandler().sendTextMessage("|user:"+cartDTO.getUserId()+"|ticket:"+cartDTO.getTicketId());
+        updateBulkTicket((long)result.getTicketId());
+        sentCreateWS(cartDTO);
         return ResponseEntity.created(new URI("/api/carts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    private void sentCreateWS(CartDTO cartDTO){
+        final int[] count = {0};
+        if(ticketsService.findOne((long)cartDTO.getTicketId()).get().getType() == 2){
+            cartService.findAll().forEach(x -> {
+                if(x.getTicketId() == cartDTO.getTicketId()){
+                    count[0]++;
+                    if(count[0] > 1){
+                        cartService.delete(x.getId());
+                    }
+                }
+            });
+        }
+        SocketHandler.getSocketHandler().sendTextMessage("|user:" + cartDTO.getUserId() + "|ticket:" + cartDTO.getTicketId());
     }
 
     /**
@@ -76,7 +114,7 @@ public class CartResource {
         if (cartDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        SocketHandler.getSocketHandler().sendTextMessage("|user:"+cartDTO.getUserId()+"|ticket:"+cartDTO.getTicketId());
+        SocketHandler.getSocketHandler().sendTextMessage("|user:" + cartDTO.getUserId() + "|ticket:" + cartDTO.getTicketId());
         CartDTO result = cartService.save(cartDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, cartDTO.getId().toString()))
@@ -86,7 +124,6 @@ public class CartResource {
     /**
      * {@code GET  /carts} : get all the carts.
      *
-
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of carts in body.
      */
     @GetMapping("/carts")
@@ -118,8 +155,8 @@ public class CartResource {
     public List<CartDTO> getAllCart(@PathVariable Long id) {
         log.debug("REST request to get all Carts : {}", id);
         List<CartDTO> cartDTO = new LinkedList<>();
-        cartService.findAll().forEach( x -> {
-            if(x.getUserId().longValue() == id){
+        cartService.findAll().forEach(x -> {
+            if (x.getUserId().longValue() == id) {
                 cartDTO.add(x);
             }
         });
@@ -135,7 +172,9 @@ public class CartResource {
     @DeleteMapping("/carts/{id}")
     public ResponseEntity<Void> deleteCart(@PathVariable Long id) {
         log.debug("REST request to delete Cart : {}", id);
+        // Long ticketId = (long)cartService.findOne(id).get().getTicketId();
         cartService.delete(id);
+        // updateBulkTicket(ticketId);
         SocketHandler.getSocketHandler().sendTextMessage("");
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
@@ -153,7 +192,10 @@ public class CartResource {
         for (CartDTO x : cartDTOList) {
             if (x.getTicketId() == Integer.parseInt(id.toString())) {
                 cartService.delete(x.getId());
-                break;
+                updateBulkTicket((long)x.getTicketId());
+                if (ticketsService.findOne(id).get().getType() != 2) {
+                    break;
+                }
             }
         }
         SocketHandler.getSocketHandler().sendTextMessage("");

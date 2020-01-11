@@ -4,6 +4,7 @@ import at.htl.diplproject.TicketingProjectApp;
 import at.htl.diplproject.domain.Cart;
 import at.htl.diplproject.repository.CartRepository;
 import at.htl.diplproject.service.CartService;
+import at.htl.diplproject.service.TicketsService;
 import at.htl.diplproject.service.dto.CartDTO;
 import at.htl.diplproject.service.mapper.CartMapper;
 import at.htl.diplproject.web.rest.errors.ExceptionTranslator;
@@ -54,6 +55,9 @@ public class CartResourceIT {
     private CartService cartService;
 
     @Autowired
+    private TicketsService ticketsService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -65,8 +69,8 @@ public class CartResourceIT {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
+    // @Autowired
+    // private Validator validator;
 
     private MockMvc restCartMockMvc;
 
@@ -75,13 +79,13 @@ public class CartResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CartResource cartResource = new CartResource(cartService);
+        final CartResource cartResource = new CartResource(cartService, ticketsService);
         this.restCartMockMvc = MockMvcBuilders.standaloneSetup(cartResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .build();
     }
 
     /**
@@ -207,7 +211,7 @@ public class CartResourceIT {
             .andExpect(jsonPath("$.[*].ticketId").value(hasItem(DEFAULT_TICKET_ID)))
             .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID)));
     }
-    
+
     @Test
     @Transactional
     public void getCart() throws Exception {

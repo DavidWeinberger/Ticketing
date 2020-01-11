@@ -63,14 +63,14 @@ export class CollapsableTicketsComponent implements OnInit {
         (res: ITickets[]) => {
           if (res.length > 0) {
             if (res.filter(ticket => ticket.place === this.sektor && ticket.type === 0).length > 0) {
-              console.log('Bulkticket');
+              // console.log('Bulkticket');
               this.bulkTicket = true;
               this.tickets = res.filter(ticket => ticket.place === this.sektor && ticket.type === 0);
               if (this.tickets[0].amount === 0 || this.tickets[0].amount - this.tickets[0].state <= 0) {
                 this.tickets = [];
               }
             } else if (res.filter(ticket => ticket.place === this.sektor && ticket.type === 1).length > 0) {
-              console.log('Bulkticket');
+              // console.log('Bulkticket');
               this.bulkTicket = true;
               this.tickets = res.filter(ticket => ticket.place === this.sektor && ticket.type === 1);
               if (this.tickets[0].amount === 0) {
@@ -127,7 +127,7 @@ export class CollapsableTicketsComponent implements OnInit {
       this.cart.ticketId = this.tickets[0].id;
       this.cartService.create(this.cart).subscribe();
     });
-    this.tickets[0].state += 1;
-    this.ticketsService.update(this.tickets[0]).subscribe();
+    // this.tickets[0].state += 1;
+    // this.ticketsService.update(this.tickets[0]).subscribe();
   }
 }

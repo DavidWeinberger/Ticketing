@@ -14,7 +14,7 @@ export class SaleService {
   public resourceUrl = SERVER_API_URL + 'api/sales';
 
   constructor(protected http: HttpClient) {
-    console.log(this.resourceUrl);
+    // console.log(this.resourceUrl);
   }
 
   create(sale: ISale): Observable<EntityResponseType> {
