@@ -25,7 +25,7 @@
             "fieldType": "Integer"
         },
         {
-            "fieldName": "rows",
+            "fieldName": "sectorRows",
             "fieldType": "Integer"
         },
         {

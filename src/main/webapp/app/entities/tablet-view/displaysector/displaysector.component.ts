@@ -67,7 +67,7 @@ export class DisplaysectorComponent implements OnInit {
             this.tickets = this.tickets.filter(x => x.place === this.sector.toString());
             this.amount = this.tickets.filter(x => x.place === this.sector.toString() && x.state === 0).length;
             // console.log(this.tickets);
-            this.rows = Math.max.apply(Math, this.tickets.map(o => o.rows));
+            this.rows = Math.max.apply(Math, this.tickets.map(o => o.sectorRows));
             this.seats = Math.max.apply(Math, this.tickets.map(o => o.seats));
             this.calculateSpace();
             this.rowArr = new Array(this.rows);
@@ -91,7 +91,7 @@ export class DisplaysectorComponent implements OnInit {
   getState(row, seat) {
     seat++;
     row = this.rows - row;
-    const ticket = this.tickets.find(x => x.rows === row && x.seats === seat);
+    const ticket = this.tickets.find(x => x.sectorRows === row && x.seats === seat);
     // console.log(ticket);
     if (ticket.state === null || ticket.state == null || ticket.state === undefined) {
       // console.log('i am here');

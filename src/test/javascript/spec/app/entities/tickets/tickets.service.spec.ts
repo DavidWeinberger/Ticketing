@@ -63,7 +63,7 @@ describe('Service Tests', () => {
             place: 'BBBBBB',
             type: 1,
             amount: 1,
-            rows: 1,
+            sectorRows: 1,
             seats: 1,
             state: 1
           },
@@ -87,7 +87,7 @@ describe('Service Tests', () => {
             place: 'BBBBBB',
             type: 1,
             amount: 1,
-            rows: 1,
+            sectorRows: 1,
             seats: 1,
             state: 1
           },
