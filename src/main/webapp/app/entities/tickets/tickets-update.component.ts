@@ -76,30 +76,7 @@ export class TicketsUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.ticketsService.update(tickets));
     } else {
       console.log(this.items + '=' + Types[Types.Sitzplatz]);
-      if (this.items === Types[Types.Sitzplatz]) {
-        const rows = tickets.sectorRows;
-        const seats = tickets.seats;
-        for (let row = 1; row <= rows; row++) {
-          for (let seat = 1; seat <= seats; seat++) {
-            tickets.amount = 1;
-            tickets.seats = seat;
-            tickets.sectorRows = row;
-            if (tickets.state === undefined || tickets.state === null) {
-              tickets.state = 0;
-            }
-            await this.subscribeToSaveResponse(this.ticketsService.create(tickets));
-          }
-        }
-        tickets.amount = 1;
-      } else {
-        const amount = tickets.amount;
-        tickets.amount = 1;
-        for (let seat = 1; seat <= amount; seat++) {
-          tickets.seats = seat;
-          tickets.state = 0;
-          await this.subscribeToSaveResponse(this.ticketsService.create(tickets));
-        }
-      }
+      this.subscribeToSaveResponse(this.ticketsService.create(tickets));
     }
   }
 

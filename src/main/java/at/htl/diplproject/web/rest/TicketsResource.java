@@ -1,9 +1,8 @@
 package at.htl.diplproject.web.rest;
 
 import at.htl.diplproject.service.TicketsService;
-import at.htl.diplproject.web.rest.errors.BadRequestAlertException;
 import at.htl.diplproject.service.dto.TicketsDTO;
-
+import at.htl.diplproject.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -13,9 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,15 +45,37 @@ public class TicketsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/tickets")
-    public ResponseEntity<TicketsDTO> createTickets(@Valid @RequestBody TicketsDTO ticketsDTO) throws URISyntaxException {
+    public ResponseEntity<List<TicketsDTO>> createTickets(@Valid @RequestBody TicketsDTO ticketsDTO) throws URISyntaxException {
         log.debug("REST request to save Tickets : {}", ticketsDTO);
         if (ticketsDTO.getId() != null) {
             throw new BadRequestAlertException("A new tickets cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        TicketsDTO result = ticketsService.save(ticketsDTO);
-        return ResponseEntity.created(new URI("/api/tickets/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        List<TicketsDTO> list = new LinkedList<>();
+        if(ticketsDTO.getType() == 2){
+            int rows = ticketsDTO.getSectorRows();
+            int seats = ticketsDTO.getSeats();
+            for (int i = 1; i <= rows; i++) {
+                for (int x = 1; x <= seats; x++) {
+                    TicketsDTO ticket = ticketsDTO;
+                    ticket.setSeats(x);
+                    ticket.setSectorRows(rows);
+                    ticket.setAmount(1);
+                    if(ticket.getState() == null) {
+                        ticket.setState(0);
+                    }
+                    list.add(ticketsService.save(ticket));
+                }
+            }
+        } else {
+            for (int i = 1; i <= ticketsDTO.getAmount(); i++) {
+                TicketsDTO ticket = ticketsDTO;
+                ticket.setSeats(i);
+                ticket.setAmount(1);
+                ticket.setState(0);
+                list.add(ticketsService.save(ticket));
+            }
+        }
+        return ResponseEntity.ok(list);
     }
 
     /**

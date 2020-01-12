@@ -5,8 +5,8 @@ import { SERVER_API_URL } from 'app/app.constants';
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
   socket: any;
-  readonly url: string = 'ws://127.0.0.1:8180/notification/websocket';
-  // readonly url: string = 'ws://134.255.233.103:8180/notification/websocket';
+  // readonly url: string = 'ws://127.0.0.1:8180/notification/websocket';
+  readonly url: string = 'ws://134.255.233.103:8180/notification/websocket';
 
   constructor() {}
 
