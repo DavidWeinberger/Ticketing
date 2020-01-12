@@ -68,7 +68,7 @@ export class TicketsUpdateComponent implements OnInit {
     window.history.back();
   }
 
-  save() {
+  async save() {
     this.isSaving = true;
     console.log('saving');
     const tickets = this.createFromForm();
@@ -87,7 +87,7 @@ export class TicketsUpdateComponent implements OnInit {
             if (tickets.state === undefined || tickets.state === null) {
               tickets.state = 0;
             }
-            this.subscribeToSaveResponse(this.ticketsService.create(tickets));
+            await this.subscribeToSaveResponse(this.ticketsService.create(tickets));
           }
         }
         tickets.amount = 1;
@@ -97,7 +97,7 @@ export class TicketsUpdateComponent implements OnInit {
         for (let seat = 1; seat <= amount; seat++) {
           tickets.seats = seat;
           tickets.state = 0;
-          this.subscribeToSaveResponse(this.ticketsService.create(tickets));
+          await this.subscribeToSaveResponse(this.ticketsService.create(tickets));
         }
       }
     }
