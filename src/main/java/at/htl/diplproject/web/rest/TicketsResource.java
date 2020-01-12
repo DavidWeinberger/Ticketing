@@ -58,7 +58,7 @@ public class TicketsResource {
                 for (int x = 1; x <= seats; x++) {
                     TicketsDTO ticket = ticketsDTO;
                     ticket.setSeats(x);
-                    ticket.setSectorRows(rows);
+                    ticket.setSectorRows(i);
                     ticket.setAmount(1);
                     if(ticket.getState() == null) {
                         ticket.setState(0);
@@ -70,7 +70,6 @@ public class TicketsResource {
             for (int i = 1; i <= ticketsDTO.getAmount(); i++) {
                 TicketsDTO ticket = ticketsDTO;
                 ticket.setSeats(i);
-                ticket.setAmount(1);
                 ticket.setState(0);
                 list.add(ticketsService.save(ticket));
             }
