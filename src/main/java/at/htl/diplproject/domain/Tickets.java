@@ -35,8 +35,8 @@ public class Tickets implements Serializable {
     @Column(name = "amount")
     private Integer amount;
 
-    @Column(name = "rows")
-    private Integer rows;
+    @Column(name = "sector_rows")
+    private Integer sectorRows;
 
     @Column(name = "seats")
     private Integer seats;
@@ -105,17 +105,17 @@ public class Tickets implements Serializable {
         this.amount = amount;
     }
 
-    public Integer getRows() {
-        return rows;
+    public Integer getSectorRows() {
+        return sectorRows;
     }
 
-    public Tickets rows(Integer rows) {
-        this.rows = rows;
+    public Tickets sectorRows(Integer sectorRows) {
+        this.sectorRows = sectorRows;
         return this;
     }
 
-    public void setRows(Integer rows) {
-        this.rows = rows;
+    public void setSectorRows(Integer sectorRows) {
+        this.sectorRows = sectorRows;
     }
 
     public Integer getSeats() {
@@ -169,7 +169,7 @@ public class Tickets implements Serializable {
             ", place='" + getPlace() + "'" +
             ", type=" + getType() +
             ", amount=" + getAmount() +
-            ", rows=" + getRows() +
+            ", sectorRows=" + getSectorRows() +
             ", seats=" + getSeats() +
             ", state=" + getState() +
             "}";

@@ -58,7 +58,7 @@ export class TicketsUpdateComponent implements OnInit {
       place: tickets.place,
       type: tickets.type,
       amount: tickets.amount,
-      rows: tickets.rows,
+      rows: tickets.sectorRows,
       seats: tickets.seats,
       state: tickets.state
     });
@@ -77,13 +77,13 @@ export class TicketsUpdateComponent implements OnInit {
     } else {
       console.log(this.items + '=' + Types[Types.Sitzplatz]);
       if (this.items === Types[Types.Sitzplatz]) {
-        const rows = tickets.rows;
+        const rows = tickets.sectorRows;
         const seats = tickets.seats;
         for (let row = 1; row <= rows; row++) {
           for (let seat = 1; seat <= seats; seat++) {
             tickets.amount = 1;
             tickets.seats = seat;
-            tickets.rows = row;
+            tickets.sectorRows = row;
             if (tickets.state === undefined || tickets.state === null) {
               tickets.state = 0;
             }
@@ -111,7 +111,7 @@ export class TicketsUpdateComponent implements OnInit {
       place: this.editForm.get(['place']).value,
       type: Number(Types[this.items]),
       amount: this.editForm.get(['amount']).value,
-      rows: this.editForm.get(['rows']).value,
+      sectorRows: this.editForm.get(['rows']).value,
       seats: this.editForm.get(['seats']).value,
       state: this.editForm.get(['state']).value
     };

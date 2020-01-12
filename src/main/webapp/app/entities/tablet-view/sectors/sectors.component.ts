@@ -50,7 +50,7 @@ export class SectorsComponent implements OnInit {
           this.tickets = res;
           this.tickets = this.tickets.filter(x => x.place === this.sector.toString());
           // console.log(this.tickets);
-          this.rows = Math.max.apply(Math, this.tickets.map(o => o.rows));
+          this.rows = Math.max.apply(Math, this.tickets.map(o => o.sectorRows));
           this.seats = Math.max.apply(Math, this.tickets.map(o => o.seats));
           // console.log(this.rows);
           this.rowArr = new Array(this.rows);
@@ -102,7 +102,7 @@ export class SectorsComponent implements OnInit {
   getState(row, seat) {
     seat++;
     row = this.rows - row;
-    const ticket = this.tickets.find(x => x.rows === row && x.seats === seat);
+    const ticket = this.tickets.find(x => x.sectorRows === row && x.seats === seat);
     if (ticket !== undefined) {
       if (ticket.state === null || ticket.state == null || ticket.state === undefined) {
         // console.log('i am here');
@@ -116,7 +116,7 @@ export class SectorsComponent implements OnInit {
   dotClick(row, seat) {
     seat++;
     row = this.rows - row;
-    this.ticket = this.tickets.find(x => x.rows === row && x.seats === seat);
+    this.ticket = this.tickets.find(x => x.sectorRows === row && x.seats === seat);
     console.log(this.userId);
     if (this.ticket.state === 0) {
       this.reserve();

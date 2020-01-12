@@ -20,7 +20,7 @@
       "place": "Place",
       "type": "Type",
       "amount": "Amount",
-      "rows": "Rows",
+      "sectorRows": "Sector Rows",
       "seats": "Seats",
       "state": "State"
     }

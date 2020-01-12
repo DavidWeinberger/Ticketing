@@ -20,7 +20,7 @@ public class TicketsDTO implements Serializable {
 
     private Integer amount;
 
-    private Integer rows;
+    private Integer sectorRows;
 
     private Integer seats;
 
@@ -67,12 +67,12 @@ public class TicketsDTO implements Serializable {
         this.amount = amount;
     }
 
-    public Integer getRows() {
-        return rows;
+    public Integer getSectorRows() {
+        return sectorRows;
     }
 
-    public void setRows(Integer rows) {
-        this.rows = rows;
+    public void setSectorRows(Integer sectorRows) {
+        this.sectorRows = sectorRows;
     }
 
     public Integer getSeats() {
@@ -120,7 +120,7 @@ public class TicketsDTO implements Serializable {
             ", place='" + getPlace() + "'" +
             ", type=" + getType() +
             ", amount=" + getAmount() +
-            ", rows=" + getRows() +
+            ", sectorRows=" + getSectorRows() +
             ", seats=" + getSeats() +
             ", state=" + getState() +
             "}";

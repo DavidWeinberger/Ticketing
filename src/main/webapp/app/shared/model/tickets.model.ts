@@ -4,7 +4,7 @@ export interface ITickets {
   place?: string;
   type?: number;
   amount?: number;
-  rows?: number;
+  sectorRows?: number;
   seats?: number;
   state?: number;
 }
@@ -16,7 +16,7 @@ export class Tickets implements ITickets {
     public place?: string,
     public type?: number,
     public amount?: number,
-    public rows?: number,
+    public sectorRows?: number,
     public seats?: number,
     public state?: number
   ) {}

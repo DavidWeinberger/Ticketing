@@ -51,9 +51,9 @@ public class TicketsResourceIT {
     private static final Integer UPDATED_AMOUNT = 2;
     private static final Integer SMALLER_AMOUNT = 1 - 1;
 
-    private static final Integer DEFAULT_ROWS = 1;
-    private static final Integer UPDATED_ROWS = 2;
-    private static final Integer SMALLER_ROWS = 1 - 1;
+    private static final Integer DEFAULT_SECTOR_ROWS = 1;
+    private static final Integer UPDATED_SECTOR_ROWS = 2;
+    private static final Integer SMALLER_SECTOR_ROWS = 1 - 1;
 
     private static final Integer DEFAULT_SEATS = 1;
     private static final Integer UPDATED_SEATS = 2;
@@ -115,7 +115,7 @@ public class TicketsResourceIT {
             .place(DEFAULT_PLACE)
             .type(DEFAULT_TYPE)
             .amount(DEFAULT_AMOUNT)
-            .rows(DEFAULT_ROWS)
+            .sectorRows(DEFAULT_SECTOR_ROWS)
             .seats(DEFAULT_SEATS)
             .state(DEFAULT_STATE);
         return tickets;
@@ -132,7 +132,7 @@ public class TicketsResourceIT {
             .place(UPDATED_PLACE)
             .type(UPDATED_TYPE)
             .amount(UPDATED_AMOUNT)
-            .rows(UPDATED_ROWS)
+            .sectorRows(UPDATED_SECTOR_ROWS)
             .seats(UPDATED_SEATS)
             .state(UPDATED_STATE);
         return tickets;
@@ -163,7 +163,7 @@ public class TicketsResourceIT {
         assertThat(testTickets.getPlace()).isEqualTo(DEFAULT_PLACE);
         assertThat(testTickets.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testTickets.getAmount()).isEqualTo(DEFAULT_AMOUNT);
-        assertThat(testTickets.getRows()).isEqualTo(DEFAULT_ROWS);
+        assertThat(testTickets.getSectorRows()).isEqualTo(DEFAULT_SECTOR_ROWS);
         assertThat(testTickets.getSeats()).isEqualTo(DEFAULT_SEATS);
         assertThat(testTickets.getState()).isEqualTo(DEFAULT_STATE);
     }
@@ -223,7 +223,7 @@ public class TicketsResourceIT {
             .andExpect(jsonPath("$.[*].place").value(hasItem(DEFAULT_PLACE.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT)))
-            .andExpect(jsonPath("$.[*].rows").value(hasItem(DEFAULT_ROWS)))
+            .andExpect(jsonPath("$.[*].sectorRows").value(hasItem(DEFAULT_SECTOR_ROWS)))
             .andExpect(jsonPath("$.[*].seats").value(hasItem(DEFAULT_SEATS)))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE)));
     }
@@ -243,7 +243,7 @@ public class TicketsResourceIT {
             .andExpect(jsonPath("$.place").value(DEFAULT_PLACE.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT))
-            .andExpect(jsonPath("$.rows").value(DEFAULT_ROWS))
+            .andExpect(jsonPath("$.sectorRows").value(DEFAULT_SECTOR_ROWS))
             .andExpect(jsonPath("$.seats").value(DEFAULT_SEATS))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE));
     }
@@ -273,7 +273,7 @@ public class TicketsResourceIT {
             .place(UPDATED_PLACE)
             .type(UPDATED_TYPE)
             .amount(UPDATED_AMOUNT)
-            .rows(UPDATED_ROWS)
+            .sectorRows(UPDATED_SECTOR_ROWS)
             .seats(UPDATED_SEATS)
             .state(UPDATED_STATE);
         TicketsDTO ticketsDTO = ticketsMapper.toDto(updatedTickets);
@@ -291,7 +291,7 @@ public class TicketsResourceIT {
         assertThat(testTickets.getPlace()).isEqualTo(UPDATED_PLACE);
         assertThat(testTickets.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testTickets.getAmount()).isEqualTo(UPDATED_AMOUNT);
-        assertThat(testTickets.getRows()).isEqualTo(UPDATED_ROWS);
+        assertThat(testTickets.getSectorRows()).isEqualTo(UPDATED_SECTOR_ROWS);
         assertThat(testTickets.getSeats()).isEqualTo(UPDATED_SEATS);
         assertThat(testTickets.getState()).isEqualTo(UPDATED_STATE);
     }
