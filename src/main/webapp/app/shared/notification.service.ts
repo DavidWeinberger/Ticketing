@@ -16,6 +16,7 @@ export class NotificationService {
   connectedPromise: any;
   listener: Observable<any>;
   listenerObserver: Observer<any>[] = [];
+  currentObserver: Observer<any>;
   alreadyConnectedOnce = false;
   private subscription: Subscription;
 
@@ -68,6 +69,9 @@ export class NotificationService {
       this.listener.subscribe(msg => {
         // console.log(msg);
         subscriber.next(msg);
+        if (subscriber.closed) {
+          this.unsubscribe();
+        }
       });
     });
   }
@@ -76,7 +80,10 @@ export class NotificationService {
     this.connection.then(() => {
       this.subscriber = this.stompClient.subscribe('/topic/notificationChannel', data => {
         this.listenerObserver.forEach(observer => {
-          observer.next(data.body);
+          if (!observer.closed) {
+            this.currentObserver = observer;
+            observer.next(data.body);
+          }
         });
       });
     });
@@ -86,7 +93,6 @@ export class NotificationService {
     if (this.subscriber !== null) {
       this.subscriber.unsubscribe();
     }
-    this.listener = this.createListener();
   }
 
   private createListener(): Observable<any> {
