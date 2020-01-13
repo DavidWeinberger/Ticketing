@@ -86,19 +86,8 @@ export class DisplaysectorComponent implements OnInit {
     /* this.notificationService.listen().subscribe(data => {
       this.loadAll();
     }); */
-    this.notificationService.receive().subscribe( msg => {
-      if (msg !== undefined) {
-        const parts = msg.toString().split('|');
-        console.log(parts);
-        if (parts.length > 1) {
-          const chunks = parts[2].split(':');
-          if (this.sector === chunks[1]) {
-            this.loadAll();
-          }
-        } else {
-          this.loadAll();
-        }
-      }
+    this.notificationService.receive().subscribe(msg => {
+      this.loadAll();
     });
   }
 
