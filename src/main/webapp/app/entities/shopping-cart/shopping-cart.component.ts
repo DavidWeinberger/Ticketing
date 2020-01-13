@@ -34,7 +34,7 @@ export class ShoppingCartComponent implements OnInit {
 
   ngOnInit() {
     this.refreshCart();
-    this.notificationService.connect();
+    // this.notificationService.connect();
     this.notificationService.subscribe();
     this.notificationService.receive().subscribe(msg => {
       if (msg !== undefined) {

@@ -32,7 +32,9 @@ export class NotificationService {
 
   connect() {
     console.log('-----Connecting-Notification-Server-----');
-    this.connection = this.createConnection();
+    if (this.connectedPromise === null) {
+      this.connection = this.createConnection();
+    }
     // building absolute path so that websocket doesn't fail when deploying with a context path
     let url = '/websocket/notification';
     url = this.location.prepareExternalUrl(url);
@@ -44,6 +46,8 @@ export class NotificationService {
     this.stompClient = Stomp.over(socket);
     const headers = {};
     this.stompClient.connect(headers, () => {
+      this.connectedPromise('success');
+      this.connectedPromise = null;
       this.sendActivity();
       if (!this.alreadyConnectedOnce) {
         this.subscription = this.router.events.subscribe(event => {
@@ -106,7 +110,6 @@ export class NotificationService {
   private createConnection(): Promise<any> {
     return new Promise((resolve, reject) => (this.connectedPromise = resolve));
   }
-
   /*
   // readonly url: string = 'ws://127.0.0.1:8180/notification/websocket';
   readonly url: string = 'ws://10.0.71.1:8180/notification';
