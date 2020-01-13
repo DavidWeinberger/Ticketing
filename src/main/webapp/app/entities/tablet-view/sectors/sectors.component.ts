@@ -79,10 +79,10 @@ export class SectorsComponent implements OnInit {
       this.userId = Number(x.id);
     });
     this.loadAll();
-    this.notificationService.receive().subscribe( msg => {
+    this.notificationService.receive().subscribe(msg => {
       if (msg !== undefined) {
         const parts = msg.toString().split('|');
-        console.log(parts);
+        // console.log(parts);
         if (parts.length > 1) {
           const chunks = parts[2].split(':');
           if (this.sector === chunks[1]) {
@@ -117,21 +117,21 @@ export class SectorsComponent implements OnInit {
     seat++;
     row = this.rows - row;
     this.ticket = this.tickets.find(x => x.sectorRows === row && x.seats === seat);
-    console.log(this.userId);
+    // console.log(this.userId);
     if (this.ticket.state === 0) {
       this.reserve();
     } else if (this.ticket.state === 1) {
       this.cartService.findCartsByUserId(this.userId).subscribe(data => {
-        console.log(data);
+        // console.log(data);
         data.body.forEach(carts => {
           if (this.ticket.id === carts.ticketId) {
-            console.log('found');
+            // console.log('found');
             this.ticketsService
               .find(carts.ticketId)
               .toPromise()
               .then(_ticket => {
-                console.log('got ticket');
-                console.log(_ticket);
+                // console.log('got ticket');
+                // console.log(_ticket);
                 this.remove(_ticket.body);
               });
           }

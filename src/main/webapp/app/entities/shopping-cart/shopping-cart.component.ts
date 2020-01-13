@@ -35,8 +35,8 @@ export class ShoppingCartComponent implements OnInit {
   ngOnInit() {
     this.refreshCart();
     // this.notificationService.connect();
-    this.notificationService.receive().subscribe( msg => {
-      console.log('Cart');
+    this.notificationService.receive().subscribe(msg => {
+      // console.log('Cart');
       if (msg !== undefined) {
         const parts = msg.toString().split('|');
         if (parts.length > 1) {
@@ -119,7 +119,7 @@ export class ShoppingCartComponent implements OnInit {
       this.cartService.deleteByTicketId(ticket.id).subscribe();
       ticket.state = 2;
       this.ticketService.update(ticket).subscribe();
-      console.log(this.tickets);
+      // console.log(this.tickets);
     });
     // else {
     //         this.tickets.filter( x => x.id === ticket.id).forEach( y => {

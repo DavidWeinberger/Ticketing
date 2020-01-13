@@ -31,7 +31,7 @@ export class NotificationService {
   }
 
   connect() {
-    console.log('-----Connecting-Notification-Server-----');
+    // console.log('-----Connecting-Notification-Server-----');
     if (this.connectedPromise === null) {
       this.connection = this.createConnection();
     }
@@ -66,7 +66,7 @@ export class NotificationService {
   receive() {
     return new Observable(subscriber => {
       this.listener.subscribe(msg => {
-        console.log(msg);
+        // console.log(msg);
         subscriber.next(msg);
       });
     });
@@ -75,7 +75,7 @@ export class NotificationService {
   subscribe() {
     this.connection.then(() => {
       this.subscriber = this.stompClient.subscribe('/topic/notificationChannel', data => {
-        this.listenerObserver.forEach( observer => {
+        this.listenerObserver.forEach(observer => {
           observer.next(data.body);
         });
       });
@@ -98,23 +98,4 @@ export class NotificationService {
   private createConnection(): Promise<any> {
     return new Promise((resolve, reject) => (this.connectedPromise = resolve));
   }
-
-  /*
-  // readonly url: string = 'ws://127.0.0.1:8180/notification/websocket';
-  readonly url: string = 'ws://10.0.71.1:8180/notification';
-  // readonly url: string = 'ws://134.255.233.103:8180/notification/websocket';
-
-  constructor() {}
-
-  listen() {
-    console.log('Connect Websocket');
-    const notificationSocket = webSocket(this.url);
-    console.log('******Connected******');
-    return new Observable(subscriber => {
-      notificationSocket.subscribe(msg => {
-        console.log(msg);
-        subscriber.next(msg);
-      });
-    });
-  }*/
 }

@@ -70,12 +70,12 @@ export class TicketsUpdateComponent implements OnInit {
 
   async save() {
     this.isSaving = true;
-    console.log('saving');
+    // console.log('saving');
     const tickets = this.createFromForm();
     if (tickets.id !== undefined) {
       this.subscribeToSaveResponse(this.ticketsService.update(tickets));
     } else {
-      console.log(this.items + '=' + Types[Types.Sitzplatz]);
+      // console.log(this.items + '=' + Types[Types.Sitzplatz]);
       this.subscribeToSaveResponse(this.ticketsService.create(tickets));
     }
   }
