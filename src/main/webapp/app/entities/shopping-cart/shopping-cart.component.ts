@@ -33,36 +33,12 @@ export class ShoppingCartComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('CREATING CONNECTION');
-    this.notificationService.connect();
-    console.log('finished');
     this.refreshCart();
+    this.notificationService.connect();
     this.notificationService.subscribe();
     this.notificationService.receive().subscribe(msg => {
-      console.log(msg);
-      this.refreshCart();
-    });
-    if (this.notificationService.stompClient != null) {
-      console.log('');
-      console.log('');
-      console.log('');
-      console.log('Connected');
-      console.log('');
-      console.log('');
-      console.log('');
-    } else {
-      console.log('');
-      console.log('');
-      console.log('');
-      console.log('Not Connected');
-      console.log('');
-      console.log('');
-      console.log('');
-    }
-    /* this.notificationService.listen().subscribe(data => {
-      if (data !== undefined) {
-        const parts = data.toString().split('|');
-        // console.log(parts);
+      if (msg !== undefined) {
+        const parts = msg.toString().split('|');
         if (parts.length > 1) {
           const chunks = parts[1].split(':');
           if (this.userId.toString() === chunks[1]) {
@@ -72,9 +48,8 @@ export class ShoppingCartComponent implements OnInit {
         } else {
           this.refreshCart();
         }
-        // this.refreshCart();
       }
-    }); */
+    });
   }
 
   public refreshCart() {

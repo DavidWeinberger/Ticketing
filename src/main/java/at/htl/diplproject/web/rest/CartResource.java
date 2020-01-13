@@ -52,7 +52,6 @@ public class CartResource {
     /**
      * {@code POST  /carts} : Create a new cart.
      *
-     * @param cartDTO the cartDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new cartDTO, or with status {@code 400 (Bad Request)} if the cart has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
@@ -99,18 +98,22 @@ public class CartResource {
     }
 
     private void sentCreateWS(CartDTO cartDTO) {
-        final int[] count = {0};
-        if (ticketsService.findOne((long) cartDTO.getTicketId()).get().getType() == 2) {
-            cartService.findAll().forEach(x -> {
-                if (x.getTicketId() == cartDTO.getTicketId()) {
-                    count[0]++;
-                    if (count[0] > 1) {
-                        cartService.delete(x.getId());
+        String msg = "update";
+        if(cartDTO != null) {
+            final int[] count = {0};
+            if (ticketsService.findOne((long) cartDTO.getTicketId()).get().getType() == 2) {
+                cartService.findAll().forEach(x -> {
+                    if (x.getTicketId() == cartDTO.getTicketId()) {
+                        count[0]++;
+                        if (count[0] > 1) {
+                            cartService.delete(x.getId());
+                        }
                     }
-                }
-            });
+                });
+            }
+            msg =  "update|user:" + cartDTO.getUserId() + "|ticket:" + cartDTO.getTicketId();
         }
-        String msg =  "update|user:" + cartDTO.getUserId() + "|ticket:" + cartDTO.getTicketId();
+
         this.messagingTemplate.convertAndSend("/topic/notificationChannel", msg);
     }
 
@@ -129,6 +132,8 @@ public class CartResource {
         if (cartDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+        sentCreateWS(cartDTO);
         // SocketHandler.getSocketHandler().sendTextMessage("|user:" + cartDTO.getUserId() + "|ticket:" + cartDTO.getTicketId());
         CartDTO result = cartService.save(cartDTO);
         return ResponseEntity.ok()
@@ -188,7 +193,7 @@ public class CartResource {
     public ResponseEntity<Void> deleteCart(@PathVariable Long id) {
         log.debug("REST request to delete Cart : {}", id);
         cartService.delete(id);
-        // SocketHandler.getSocketHandler().sendTextMessage("");
+        sentCreateWS(null);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -207,7 +212,7 @@ public class CartResource {
                 cartService.delete(x.getId());
             }
         }
-        // SocketHandler.getSocketHandler().sendTextMessage("");
+        sentCreateWS(null);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }
