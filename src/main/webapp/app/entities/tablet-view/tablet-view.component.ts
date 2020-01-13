@@ -10,6 +10,7 @@ import { TabletViewService } from './tablet-view.service';
 import { ITickets } from 'app/shared/model/tickets.model';
 import { TicketsService } from 'app/entities/tickets';
 import { ModalDismissReasons, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationService } from 'app/shared/notification.service';
 
 @Component({
   selector: 'jhi-tablet-view',
@@ -31,7 +32,8 @@ export class TabletViewComponent implements OnInit, OnDestroy {
     protected eventManager: JhiEventManager,
     protected accountService: AccountService,
     protected ticketsService: TicketsService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private notificationService: NotificationService
   ) {}
 
   loadAll() {
@@ -47,6 +49,8 @@ export class TabletViewComponent implements OnInit, OnDestroy {
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
+    this.notificationService.connect();
+    this.notificationService.subscribe();
     // this.ticketsService
     //   .query()
     //   .pipe(
