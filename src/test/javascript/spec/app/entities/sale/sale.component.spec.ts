@@ -41,7 +41,7 @@ describe('Component Tests', () => {
       // );
 
       // WHEN
-      comp.ngOnInit();
+      // comp.ngOnInit();
 
       // THEN
       expect(service.query).toHaveBeenCalled();
