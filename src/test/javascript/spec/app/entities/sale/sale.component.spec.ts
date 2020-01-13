@@ -30,7 +30,7 @@ describe('Component Tests', () => {
 
     it('Should call load all on init', () => {
       // GIVEN
-      const headers = new HttpHeaders().append('link', 'link;link');
+      // const headers = new HttpHeaders().append('link', 'link;link');
       // spyOn(service, 'query').and.returnValue(
       //   of(
       //     new HttpResponse({
@@ -39,10 +39,8 @@ describe('Component Tests', () => {
       //     })
       //   )
       // );
-
       // WHEN
       // comp.ngOnInit();
-
       // THEN
       // expect(service.query).toHaveBeenCalled();
       // expect(comp.sales[0]).toEqual(jasmine.objectContaining({ id: 123 }));
