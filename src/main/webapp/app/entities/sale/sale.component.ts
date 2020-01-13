@@ -59,9 +59,10 @@ export class SaleComponent implements OnInit, OnDestroy {
     this.accountService.identity().then(account => {
       this.currentAccount = account;
     });
+
     this.notificationService.connect();
-    this.registerChangeInSales();
     this.notificationService.subscribe();
+    this.registerChangeInSales();
     this.notificationService.receive().subscribe(msg => {
       this.loadAll();
     });

@@ -15,7 +15,7 @@ export class NotificationService {
   subscriber = null;
   connectedPromise: any;
   listener: Observable<any>;
-  listenerObserver: Observer<any>;
+  listenerObserver: Observer<any>[] = [];
   alreadyConnectedOnce = false;
   private subscription: Subscription;
 
@@ -48,15 +48,6 @@ export class NotificationService {
     this.stompClient.connect(headers, () => {
       this.connectedPromise('success');
       this.connectedPromise = null;
-      this.sendActivity();
-      if (!this.alreadyConnectedOnce) {
-        this.subscription = this.router.events.subscribe(event => {
-          if (event instanceof NavigationEnd) {
-            this.sendActivity();
-          }
-        });
-        this.alreadyConnectedOnce = true;
-      }
     });
   }
 
@@ -73,23 +64,20 @@ export class NotificationService {
   }
 
   receive() {
-    return this.listener;
-  }
-
-  sendActivity() {
-    if (this.stompClient !== null && this.stompClient.connected) {
-      this.stompClient.send(
-        '/topic/notificationChannel', // destination
-        JSON.stringify({ page: this.router.routerState.snapshot.url }), // body
-        {} // header
-      );
-    }
+    return new Observable(subscriber => {
+      this.listener.subscribe(msg => {
+        console.log(msg);
+        subscriber.next(msg);
+      });
+    });
   }
 
   subscribe() {
     this.connection.then(() => {
       this.subscriber = this.stompClient.subscribe('/topic/notificationChannel', data => {
-        this.listenerObserver.next(data.body);
+        this.listenerObserver.forEach( observer => {
+          observer.next(data.body);
+        });
       });
     });
   }
@@ -103,13 +91,14 @@ export class NotificationService {
 
   private createListener(): Observable<any> {
     return new Observable(observer => {
-      this.listenerObserver = observer;
+      this.listenerObserver.push(observer);
     });
   }
 
   private createConnection(): Promise<any> {
     return new Promise((resolve, reject) => (this.connectedPromise = resolve));
   }
+
   /*
   // readonly url: string = 'ws://127.0.0.1:8180/notification/websocket';
   readonly url: string = 'ws://10.0.71.1:8180/notification';

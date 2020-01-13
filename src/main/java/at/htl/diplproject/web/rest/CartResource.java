@@ -55,26 +55,6 @@ public class CartResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new cartDTO, or with status {@code 400 (Bad Request)} if the cart has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-
-    private void updateBulkTicket(Long id) {
-        final int[] count = {0};
-        if (ticketsService.findOne(id).get().getType() != 2) {
-            cartService.findAll().forEach(x -> {
-                if ((long) x.getTicketId() == id) {
-                    count[0]++;
-                }
-            });
-            TicketsDTO ticketsDTO = ticketsService.findOne(id).get();
-            if (ticketsDTO.getSeats() != null) {
-                ticketsDTO.setState(count[0] + ticketsDTO.getSeats());
-            } else {
-                ticketsDTO.setState(count[0]);
-            }
-            ticketsService.save(ticketsDTO);
-        }
-    }
-
-
     @PostMapping("/carts")
     public ResponseEntity<CartDTO> createCart(@Valid @RequestBody CartDTO cartDTO) throws URISyntaxException {
         log.debug("REST request to save Cart : {}", cartDTO);
@@ -83,7 +63,6 @@ public class CartResource {
         }
 
         CartDTO result = cartService.save(cartDTO);
-        updateBulkTicket((long) result.getTicketId());
         sentCreateWS(cartDTO);
         return ResponseEntity.created(new URI("/api/carts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

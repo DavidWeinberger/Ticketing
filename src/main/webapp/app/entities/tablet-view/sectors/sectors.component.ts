@@ -79,9 +79,9 @@ export class SectorsComponent implements OnInit {
       this.userId = Number(x.id);
     });
     this.loadAll();
-    /* this.notificationService.listen().subscribe(data => {
-      if (data !== undefined) {
-        const parts = data.toString().split('|');
+    this.notificationService.receive().subscribe( msg => {
+      if (msg !== undefined) {
+        const parts = msg.toString().split('|');
         console.log(parts);
         if (parts.length > 1) {
           const chunks = parts[2].split(':');
@@ -92,7 +92,7 @@ export class SectorsComponent implements OnInit {
           this.loadAll();
         }
       }
-    }); */
+    });
   }
 
   protected onError(errorMessage: string) {
