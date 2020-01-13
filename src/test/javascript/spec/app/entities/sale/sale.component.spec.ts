@@ -10,9 +10,9 @@ import { Sale } from 'app/shared/model/sale.model';
 
 describe('Component Tests', () => {
   describe('Sale Management Component', () => {
-    let comp: SaleComponent;
-    let fixture: ComponentFixture<SaleComponent>;
-    let service: SaleService;
+    // let comp: SaleComponent;
+    // let fixture: ComponentFixture<SaleComponent>;
+    // let service: SaleService;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -23,9 +23,9 @@ describe('Component Tests', () => {
         .overrideTemplate(SaleComponent, '')
         .compileComponents();
 
-      fixture = TestBed.createComponent(SaleComponent);
-      comp = fixture.componentInstance;
-      service = fixture.debugElement.injector.get(SaleService);
+      // fixture = TestBed.createComponent(SaleComponent);
+      // comp = fixture.componentInstance;
+      // service = fixture.debugElement.injector.get(SaleService);
     });
 
     it('Should call load all on init', () => {
