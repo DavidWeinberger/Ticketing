@@ -5,18 +5,15 @@ import at.htl.diplproject.service.TicketsService;
 import at.htl.diplproject.service.dto.CartDTO;
 import at.htl.diplproject.service.dto.TicketsDTO;
 import at.htl.diplproject.web.rest.errors.BadRequestAlertException;
-import at.htl.diplproject.web.websocket.SocketHandler;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.*;
 
@@ -132,7 +129,7 @@ public class CartResource {
         if (cartDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        SocketHandler.getSocketHandler().sendTextMessage("|user:" + cartDTO.getUserId() + "|ticket:" + cartDTO.getTicketId());
+        // SocketHandler.getSocketHandler().sendTextMessage("|user:" + cartDTO.getUserId() + "|ticket:" + cartDTO.getTicketId());
         CartDTO result = cartService.save(cartDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, cartDTO.getId().toString()))
@@ -191,7 +188,7 @@ public class CartResource {
     public ResponseEntity<Void> deleteCart(@PathVariable Long id) {
         log.debug("REST request to delete Cart : {}", id);
         cartService.delete(id);
-        SocketHandler.getSocketHandler().sendTextMessage("");
+        // SocketHandler.getSocketHandler().sendTextMessage("");
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -210,7 +207,7 @@ public class CartResource {
                 cartService.delete(x.getId());
             }
         }
-        SocketHandler.getSocketHandler().sendTextMessage("");
+        // SocketHandler.getSocketHandler().sendTextMessage("");
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

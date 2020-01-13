@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Observable, Observer, Subscription} from 'rxjs';
-import {webSocket} from 'rxjs/webSocket';
-import {NavigationEnd, Router} from '@angular/router';
-import {AuthServerProvider, CSRFService} from 'app/core';
-import {Location} from '@angular/common';
+import { Observable, Observer, Subscription } from 'rxjs';
+import { webSocket } from 'rxjs/webSocket';
+import { NavigationEnd, Router } from '@angular/router';
+import { AuthServerProvider, CSRFService } from 'app/core';
+import { Location } from '@angular/common';
 
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'webstomp-client';
@@ -26,13 +26,15 @@ export class NotificationService {
     // tslint:disable-next-line: no-unused-variable
     private csrfService: CSRFService
   ) {
-    this.connect();
     this.connection = this.createConnection();
     this.listener = this.createListener();
   }
 
   connect() {
-    this.connection = this.createConnection();
+    console.log('-----Connecting-Notification-Server-----');
+    if (this.connectedPromise === null) {
+      this.connection = this.createConnection();
+    }
     // building absolute path so that websocket doesn't fail when deploying with a context path
     let url = '/websocket/notification';
     url = this.location.prepareExternalUrl(url);
@@ -44,6 +46,8 @@ export class NotificationService {
     this.stompClient = Stomp.over(socket);
     const headers = {};
     this.stompClient.connect(headers, () => {
+      this.connectedPromise('success');
+      this.connectedPromise = null;
       this.sendActivity();
       if (!this.alreadyConnectedOnce) {
         this.subscription = this.router.events.subscribe(event => {

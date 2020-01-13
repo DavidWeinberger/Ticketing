@@ -30,17 +30,35 @@ export class ShoppingCartComponent implements OnInit {
     protected eventManager: JhiEventManager,
     protected accountService: AccountService,
     protected notificationService: NotificationService
-  ) {
-    this.notificationService.connect();
-  }
+  ) {}
 
   ngOnInit() {
+    console.log('CREATING CONNECTION');
+    this.notificationService.connect();
+    console.log('finished');
     this.refreshCart();
     this.notificationService.subscribe();
-    this.notificationService.receive().subscribe( msg => {
+    this.notificationService.receive().subscribe(msg => {
       console.log(msg);
       this.refreshCart();
     });
+    if (this.notificationService.stompClient != null) {
+      console.log('');
+      console.log('');
+      console.log('');
+      console.log('Connected');
+      console.log('');
+      console.log('');
+      console.log('');
+    } else {
+      console.log('');
+      console.log('');
+      console.log('');
+      console.log('Not Connected');
+      console.log('');
+      console.log('');
+      console.log('');
+    }
     /* this.notificationService.listen().subscribe(data => {
       if (data !== undefined) {
         const parts = data.toString().split('|');
