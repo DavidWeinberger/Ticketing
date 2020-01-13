@@ -83,9 +83,9 @@ export class DisplaysectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.notificationService.listen().subscribe(data => {
+    /* this.notificationService.listen().subscribe(data => {
       this.loadAll();
-    });
+    }); */
   }
 
   getState(row, seat) {

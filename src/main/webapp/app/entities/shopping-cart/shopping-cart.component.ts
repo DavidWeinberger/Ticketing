@@ -30,11 +30,18 @@ export class ShoppingCartComponent implements OnInit {
     protected eventManager: JhiEventManager,
     protected accountService: AccountService,
     protected notificationService: NotificationService
-  ) {}
+  ) {
+    this.notificationService.connect();
+  }
 
   ngOnInit() {
     this.refreshCart();
-    this.notificationService.listen().subscribe(data => {
+    this.notificationService.subscribe();
+    this.notificationService.receive().subscribe( msg => {
+      console.log(msg);
+      this.refreshCart();
+    });
+    /* this.notificationService.listen().subscribe(data => {
       if (data !== undefined) {
         const parts = data.toString().split('|');
         // console.log(parts);
@@ -49,7 +56,7 @@ export class ShoppingCartComponent implements OnInit {
         }
         // this.refreshCart();
       }
-    });
+    }); */
   }
 
   public refreshCart() {

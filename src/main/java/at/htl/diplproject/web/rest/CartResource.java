@@ -10,8 +10,13 @@ import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,10 +44,12 @@ public class CartResource {
 
     private final CartService cartService;
     private final TicketsService ticketsService;
+    private final SimpMessageSendingOperations messagingTemplate;
 
-    public CartResource(CartService cartService, TicketsService ticketsService) {
+    public CartResource(CartService cartService, TicketsService ticketsService, SimpMessageSendingOperations messagingTemplate) {
         this.cartService = cartService;
         this.ticketsService = ticketsService;
+        this.messagingTemplate = messagingTemplate;
     }
 
     /**
@@ -87,6 +94,13 @@ public class CartResource {
             .body(result);
     }
 
+
+    @MessageMapping("/topic/notification")
+    @SendTo("/topic/notificationChannel")
+    String sentNotification (String message) {
+        return message;
+    }
+
     private void sentCreateWS(CartDTO cartDTO) {
         final int[] count = {0};
         if (ticketsService.findOne((long) cartDTO.getTicketId()).get().getType() == 2) {
@@ -99,7 +113,8 @@ public class CartResource {
                 }
             });
         }
-        SocketHandler.getSocketHandler().sendTextMessage("|user:" + cartDTO.getUserId() + "|ticket:" + cartDTO.getTicketId());
+        String msg =  "update|user:" + cartDTO.getUserId() + "|ticket:" + cartDTO.getTicketId();
+        this.messagingTemplate.convertAndSend("/topic/notificationChannel", msg);
     }
 
     /**

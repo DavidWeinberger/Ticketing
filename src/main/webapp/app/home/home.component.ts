@@ -3,6 +3,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginModalService, AccountService, Account } from 'app/core';
+import {NotificationService} from 'app/shared/notification.service';
 
 @Component({
   selector: 'jhi-home',
@@ -16,8 +17,12 @@ export class HomeComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private loginModalService: LoginModalService,
-    private eventManager: JhiEventManager
-  ) {}
+    private eventManager: JhiEventManager,
+    private notificationService: NotificationService
+  ) {
+
+    // this.notificationService.connect();
+  }
 
   ngOnInit() {
     this.accountService.identity().then((account: Account) => {

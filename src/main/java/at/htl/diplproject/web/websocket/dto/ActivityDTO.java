@@ -17,6 +17,8 @@ public class ActivityDTO {
 
     private Instant time;
 
+    private String msg;
+
     public String getSessionId() {
         return sessionId;
     }
@@ -57,6 +59,14 @@ public class ActivityDTO {
         this.time = time;
     }
 
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
     @Override
     public String toString() {
         return "ActivityDTO{" +
@@ -65,6 +75,8 @@ public class ActivityDTO {
             ", ipAddress='" + ipAddress + '\'' +
             ", page='" + page + '\'' +
             ", time='" + time + '\'' +
+            ", msg='" + msg + '\'' +
             '}';
     }
+
 }
