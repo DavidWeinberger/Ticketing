@@ -72,7 +72,6 @@ export class NotificationService {
         if (subscriber.closed) {
           this.unsubscribe();
           this.currentObserver.complete();
-          this.listenerObserver = this.listenerObserver.filter( x => x !== this.currentObserver);
         }
       });
     });
