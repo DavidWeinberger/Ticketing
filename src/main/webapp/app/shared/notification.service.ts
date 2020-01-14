@@ -70,7 +70,7 @@ export class NotificationService {
         // console.log(msg);
         subscriber.next(msg);
         if (subscriber.closed) {
-          this.unsubscribe();
+          // this.unsubscribe();
           this.currentObserver.complete();
         }
       });
@@ -85,8 +85,9 @@ export class NotificationService {
             this.currentObserver = observer;
             observer.next(data.body);
           } else  {
+            console.log('Closing observer')
             observer.complete();
-            this.listenerObserver = this.listenerObserver.filter( x => x !== observer);
+            this.listenerObserver = this.listenerObserver.filter( x => x !== observer || observer.closed);
           }
         });
       });
