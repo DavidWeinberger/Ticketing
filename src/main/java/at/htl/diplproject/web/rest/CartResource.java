@@ -111,13 +111,14 @@ public class CartResource {
         if (cartDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-
-        sentCreateWS(cartDTO);
-        // SocketHandler.getSocketHandler().sendTextMessage("|user:" + cartDTO.getUserId() + "|ticket:" + cartDTO.getTicketId());
-        CartDTO result = cartService.save(cartDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, cartDTO.getId().toString()))
-            .body(result);
+        if(!getAllCarts().stream().filter(x -> x.getTicketId() == cartDTO.getTicketId()).findFirst().isPresent()){
+            sentCreateWS(cartDTO);
+            CartDTO result = cartService.save(cartDTO);
+            return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, cartDTO.getId().toString()))
+                .body(result);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     /**
