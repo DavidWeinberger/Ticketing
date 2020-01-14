@@ -57,10 +57,10 @@ export class NotificationService {
       this.stompClient.disconnect();
       this.stompClient = null;
     }
-    if (this.subscription) {
+    /*if (this.subscription) {
       this.subscription.unsubscribe();
       this.subscription = null;
-    }
+    }*/
     this.alreadyConnectedOnce = false;
   }
 
