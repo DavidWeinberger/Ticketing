@@ -71,6 +71,8 @@ export class NotificationService {
         subscriber.next(msg);
         if (subscriber.closed) {
           this.unsubscribe();
+          this.currentObserver.complete();
+          this.listenerObserver = this.listenerObserver.filter( x => x !== this.currentObserver);
         }
       });
     });
@@ -83,6 +85,9 @@ export class NotificationService {
           if (!observer.closed) {
             this.currentObserver = observer;
             observer.next(data.body);
+          } else  {
+            observer.complete();
+            this.listenerObserver = this.listenerObserver.filter( x => x !== observer);
           }
         });
       });
