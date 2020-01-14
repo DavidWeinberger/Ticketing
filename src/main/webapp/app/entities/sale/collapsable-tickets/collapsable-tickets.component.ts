@@ -122,7 +122,7 @@ export class CollapsableTicketsComponent implements OnInit {
       this.cartService.create(this.cart).subscribe();
     });
     this.tickets[0].state = 1;
-    this.ticketsService.update(this.tickets[0]).subscribe();
-    this.tickets.shift();
+    this.ticketsService.update(this.tickets[0]).subscribe( X =>
+      this.tickets.shift());
   }
 }
