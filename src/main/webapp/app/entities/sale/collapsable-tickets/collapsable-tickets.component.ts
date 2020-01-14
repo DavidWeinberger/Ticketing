@@ -123,6 +123,6 @@ export class CollapsableTicketsComponent implements OnInit {
     });
     this.tickets[0].state = 1;
     this.ticketsService.update(this.tickets[0]).subscribe();
-    this.loadAll();
+    this.tickets.shift();
   }
 }
