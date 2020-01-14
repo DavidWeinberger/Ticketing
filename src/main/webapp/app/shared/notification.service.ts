@@ -94,11 +94,11 @@ export class NotificationService {
     });
   }
 
-  unsubscribe() {
+  /*unsubscribe() {
     if (this.subscriber !== null) {
       this.subscriber.unsubscribe();
     }
-  }
+  }*/
 
   private createListener(): Observable<any> {
     return new Observable(observer => {
