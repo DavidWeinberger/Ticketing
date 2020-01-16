@@ -40,7 +40,7 @@ export class DisplaysectorComponent implements OnInit {
   account: Promise<Account>;
   cart: Cart = new Cart();
   userId: number;
-  
+
   constructor(
     protected ticketsService: TicketsService,
     protected jhiAlertService: JhiAlertService,
