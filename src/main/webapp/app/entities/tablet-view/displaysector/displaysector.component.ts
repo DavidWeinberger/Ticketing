@@ -62,7 +62,7 @@ export class DisplaysectorComponent implements OnInit {
       .subscribe(
         (res: ITickets[]) => {
           if (res.length > 0) {
-            if (res[0].type === 2) {
+            if (res.find(x => x.type === 2)) {
               this.tickets = res;
               // console.log(this.sector.toString());
               // console.log(this.tickets);
