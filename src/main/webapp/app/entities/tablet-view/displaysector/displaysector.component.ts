@@ -116,7 +116,7 @@ export class DisplaysectorComponent implements OnInit {
       case 0:
         return 'green';
       case 1:
-        return 'khaki';
+        return 'darkgrey';
       case 2:
         return 'darkgrey';
     }
