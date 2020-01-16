@@ -86,7 +86,8 @@ export class DisplaysectorComponent implements OnInit {
     /* this.notificationService.listen().subscribe(data => {
       this.loadAll();
     }); */
-    this.notificationService.receive().subscribe(msg => {
+    const listener = this.notificationService.createListener();
+    this.notificationService.receive(listener).subscribe(msg => {
       this.loadAll();
     });
   }
@@ -95,16 +96,21 @@ export class DisplaysectorComponent implements OnInit {
     seat++;
     row = this.rows - row;
     const ticket = this.tickets.find(x => x.sectorRows === row && x.seats === seat);
-    // console.log(ticket);
     if (ticket.state === null || ticket.state == null || ticket.state === undefined) {
-      // console.log('i am here');
       ticket.state = 0;
     }
+    this.cartService.findCartsByUserId(this.userId).subscribe(data => {
+      if (data.body.find(cart => cart.ticketId === ticket.id)) {
+        return -1;
+      }
+    });
     return ticket.state;
   }
 
   getColor(state) {
     switch (state) {
+      case -1:
+        return 'gold';
       case 0:
         return 'green';
       case 1:

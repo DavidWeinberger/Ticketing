@@ -79,7 +79,8 @@ export class SectorsComponent implements OnInit {
       this.userId = Number(x.id);
     });
     this.loadAll();
-    this.notificationService.receive().subscribe(msg => {
+    const listener = this.notificationService.createListener();
+    this.notificationService.receive(listener).subscribe(msg => {
       if (msg !== undefined) {
         const parts = msg.toString().split('|');
         // console.log(parts);

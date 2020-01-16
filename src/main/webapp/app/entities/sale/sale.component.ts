@@ -23,6 +23,7 @@ export class SaleComponent implements OnInit, OnDestroy {
   currentAccount: any;
   eventSubscriber: Subscription;
   sektors: string[] = [];
+  id = 0;
 
   constructor(
     protected saleService: SaleService,
@@ -59,10 +60,10 @@ export class SaleComponent implements OnInit, OnDestroy {
     this.accountService.identity().then(account => {
       this.currentAccount = account;
     });
-    this.notificationService.connect();
-    this.notificationService.subscribe();
     this.registerChangeInSales();
-    this.notificationService.receive().subscribe(msg => {
+    this.notificationService.connect();
+    const listener = this.notificationService.createListener();
+    this.notificationService.receive(listener).subscribe(msg => {
       this.loadAll();
     });
   }

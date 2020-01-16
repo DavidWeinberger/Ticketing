@@ -50,7 +50,7 @@ export class TabletViewComponent implements OnInit, OnDestroy {
         (res: HttpErrorResponse) => this.onError(res.message)
       );
     this.notificationService.connect();
-    this.notificationService.subscribe();
+    // this.notificationService.subscribe();
     // this.ticketsService
     //   .query()
     //   .pipe(

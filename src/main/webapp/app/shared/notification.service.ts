@@ -14,7 +14,8 @@ export class NotificationService {
   stompClient = null;
   subscriber = null;
   connectedPromise: any;
-  listener: Observable<any>;
+  subscriberDict = [];
+  // listener: Observable<any>;
   listenerObserver: Observer<any>[] = [];
   currentObserver: Observer<any>;
   alreadyConnectedOnce = false;
@@ -28,7 +29,7 @@ export class NotificationService {
     private csrfService: CSRFService
   ) {
     this.connection = this.createConnection();
-    this.listener = this.createListener();
+    // this.listener = this.createListener();
   }
 
   connect() {
@@ -64,14 +65,10 @@ export class NotificationService {
     this.alreadyConnectedOnce = false;
   }
 
-  receive() {
+  receive(listening: Observable<any>) {
     return new Observable(subscriber => {
-      this.listener.subscribe(msg => {
-        // console.log(msg);
+      listening.subscribe(msg => {
         subscriber.next(msg);
-        if (subscriber.closed) {
-          this.unsubscribe();
-        }
       });
     });
   }
@@ -79,12 +76,11 @@ export class NotificationService {
   subscribe() {
     this.connection.then(() => {
       this.subscriber = this.stompClient.subscribe('/topic/notificationChannel', data => {
-        this.listenerObserver.forEach(observer => {
-          if (!observer.closed) {
-            this.currentObserver = observer;
-            observer.next(data.body);
-          }
-        });
+        /* this.listenerObserver.forEach(observer => {
+          this.currentObserver = observer;
+          observer.next(data.body);
+        });*/
+        this.currentObserver.next(data.body);
       });
     });
   }
@@ -95,9 +91,10 @@ export class NotificationService {
     }
   }
 
-  private createListener(): Observable<any> {
+  createListener(): Observable<any> {
     return new Observable(observer => {
-      this.listenerObserver.push(observer);
+      // this.listenerObserver.push(observer);
+      this.currentObserver = observer;
     });
   }
 
