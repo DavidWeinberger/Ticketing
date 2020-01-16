@@ -62,17 +62,21 @@ export class DisplaysectorComponent implements OnInit {
       .subscribe(
         (res: ITickets[]) => {
           if (res.length > 0) {
-            this.tickets = res;
-            // console.log(this.sector.toString());
-            // console.log(this.tickets);
-            this.tickets = this.tickets.filter(x => x.place === this.sector.toString());
-            this.amount = this.tickets.filter(x => x.place === this.sector.toString() && x.state === 0).length;
-            // console.log(this.tickets);
-            this.rows = Math.max.apply(Math, this.tickets.map(o => o.sectorRows));
-            this.seats = Math.max.apply(Math, this.tickets.map(o => o.seats));
-            this.calculateSpace();
-            this.rowArr = new Array(this.rows);
-            this.seatArr = new Array(this.seats);
+            if (res[0].type === 2) {
+              this.tickets = res;
+              // console.log(this.sector.toString());
+              // console.log(this.tickets);
+              this.tickets = this.tickets.filter(x => x.place === this.sector.toString());
+              this.amount = this.tickets.filter(x => x.place === this.sector.toString() && x.state === 0).length;
+              // console.log(this.tickets);
+              this.rows = Math.max.apply(Math, this.tickets.map(o => o.sectorRows));
+              this.seats = Math.max.apply(Math, this.tickets.map(o => o.seats));
+              this.calculateSpace();
+              this.rowArr = new Array(this.rows);
+              this.seatArr = new Array(this.seats);
+            } else {
+              this.tickets = res.filter(x => x.state === 0 && x.place === this.sector.toString());
+            }
           }
         },
         (res: HttpErrorResponse) => this.onError(res.message)
@@ -150,15 +154,15 @@ export class DisplaysectorComponent implements OnInit {
   }
 
   reserveBulk() {
+    const tempTickets = this.tickets.shift();
     this.account = this.accountService.identity().then();
     this.account.then(x => {
       this.userId = Number(x.id);
       this.cart.userId = this.userId;
-      this.cart.ticketId = this.tickets[0].id;
+      this.cart.ticketId = tempTickets.id;
       this.cartService.create(this.cart).subscribe();
     });
-    this.tickets[0].state = 1;
-    this.ticketsService.update(this.tickets[0]).subscribe();
-    this.loadAll();
+    tempTickets.state = 1;
+    this.ticketsService.update(tempTickets).subscribe();
   }
 }
