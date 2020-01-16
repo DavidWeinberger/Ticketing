@@ -40,8 +40,7 @@ export class DisplaysectorComponent implements OnInit {
   account: Promise<Account>;
   cart: Cart = new Cart();
   userId: number;
-  amount: any;
-
+  
   constructor(
     protected ticketsService: TicketsService,
     protected jhiAlertService: JhiAlertService,
@@ -62,12 +61,11 @@ export class DisplaysectorComponent implements OnInit {
       .subscribe(
         (res: ITickets[]) => {
           if (res.length > 0) {
-            if (res.find(x => x.type === 2)) {
+            if (res.find(x => x.type === 2 && x.place === this.sector.toString())) {
               this.tickets = res;
               // console.log(this.sector.toString());
               // console.log(this.tickets);
               this.tickets = this.tickets.filter(x => x.place === this.sector.toString());
-              this.amount = this.tickets.filter(x => x.place === this.sector.toString() && x.state === 0).length;
               // console.log(this.tickets);
               this.rows = Math.max.apply(Math, this.tickets.map(o => o.sectorRows));
               this.seats = Math.max.apply(Math, this.tickets.map(o => o.seats));
