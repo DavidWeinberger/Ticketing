@@ -1,6 +1,6 @@
 <h2>Sektor {{sektor}}</h2>
 <div *ngIf="tickets.length !== 0 && bulkTicket">
-    <h3>{{selectType(tickets[0].type)}} - ({{tickets.length}}/{{amount}})</h3> <button class="button" (click)="reserveBulk()">+</button>
+    <h3>{{selectType(tickets[0].type)}} - ({{tickets.length}}/{{amount}})</h3> <button class="button" [disabled]="enableReserve" (click)="reserveBulk()">+</button>
 </div>
 <div *ngIf="!opened && tickets.length !== 0 && !bulkTicket">
     <button (click)="openTickets()">˅</button> <button (click)="open(content, '4')">Sektor ansicht öffnen</button>

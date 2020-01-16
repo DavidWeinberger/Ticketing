@@ -28,6 +28,7 @@ export class DisplaysectorComponent implements OnInit {
   @Input() bulkTickets = false;
   @ViewChild('one', { static: false }) d1: ElementRef;
   tickets: ITickets[] = [];
+  ticketIds: number[] = [];
   rows = 0;
   seats = 0;
   space = 5;
@@ -76,6 +77,7 @@ export class DisplaysectorComponent implements OnInit {
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
+    this.cartService.findCartsByUserId(this.userId).subscribe( x => x.body.forEach(y => this.ticketIds.push(y.ticketId)));
   }
 
   protected onError(errorMessage: string) {
@@ -83,9 +85,11 @@ export class DisplaysectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /* this.notificationService.listen().subscribe(data => {
+    this.account = this.accountService.identity().then();
+    this.account.then(x => {
+      this.userId = Number(x.id);
       this.loadAll();
-    }); */
+    });
     const listener = this.notificationService.createListener();
     this.notificationService.receive(listener).subscribe(msg => {
       this.loadAll();
@@ -99,11 +103,9 @@ export class DisplaysectorComponent implements OnInit {
     if (ticket.state === null || ticket.state == null || ticket.state === undefined) {
       ticket.state = 0;
     }
-    this.cartService.findCartsByUserId(this.userId).subscribe(data => {
-      if (data.body.find(cart => cart.ticketId === ticket.id)) {
-        return -1;
-      }
-    });
+    if (this.ticketIds.find(x => x === ticket.id)) {
+      return -1;
+    }
     return ticket.state;
   }
 
@@ -114,7 +116,7 @@ export class DisplaysectorComponent implements OnInit {
       case 0:
         return 'green';
       case 1:
-        return 'gold';
+        return 'khaki';
       case 2:
         return 'darkgrey';
     }

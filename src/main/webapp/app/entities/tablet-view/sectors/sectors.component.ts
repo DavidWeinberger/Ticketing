@@ -29,6 +29,7 @@ export class SectorsComponent implements OnInit {
   paging = false;
   page = 0;
   sides = 0;
+  ticketIds: number[] = [];
 
   constructor(
     protected accountService: AccountService,
@@ -71,27 +72,20 @@ export class SectorsComponent implements OnInit {
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
+    this.cartService.findCartsByUserId(this.userId).subscribe( x => x.body.forEach(y => this.ticketIds.push(y.ticketId)));
   }
 
   ngOnInit() {
     this.account = this.accountService.identity().then();
     this.account.then(x => {
       this.userId = Number(x.id);
+      this.loadAll();
     });
-    this.loadAll();
     const listener = this.notificationService.createListener();
     this.notificationService.receive(listener).subscribe(msg => {
       if (msg !== undefined) {
         const parts = msg.toString().split('|');
-        // console.log(parts);
-        if (parts.length > 1) {
-          const chunks = parts[2].split(':');
-          if (this.sector === chunks[1]) {
-            this.loadAll();
-          }
-        } else {
-          this.loadAll();
-        }
+        this.loadAll();
       }
     });
   }
@@ -109,6 +103,9 @@ export class SectorsComponent implements OnInit {
         // console.log('i am here');
         ticket.state = 0;
       }
+      if (this.ticketIds.find(x => x === ticket.id)) {
+        return -1;
+      }
       return ticket.state;
     }
     return 0;
@@ -121,6 +118,7 @@ export class SectorsComponent implements OnInit {
     // console.log(this.userId);
     if (this.ticket.state === 0) {
       this.reserve();
+      this.ticketIds.push(this.ticket.id);
     } else if (this.ticket.state === 1) {
       this.cartService.findCartsByUserId(this.userId).subscribe(data => {
         // console.log(data);
@@ -157,10 +155,12 @@ export class SectorsComponent implements OnInit {
 
   getColor(state) {
     switch (state) {
+      case -1:
+        return 'gold';
       case 0:
         return 'green';
       case 1:
-        return 'gold';
+        return 'khaki';
       case 2:
         return 'darkgrey';
     }

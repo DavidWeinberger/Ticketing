@@ -50,20 +50,6 @@ export class TabletViewComponent implements OnInit, OnDestroy {
         (res: HttpErrorResponse) => this.onError(res.message)
       );
     this.notificationService.connect();
-    // this.notificationService.subscribe();
-    // this.ticketsService
-    //   .query()
-    //   .pipe(
-    //     filter((res: HttpResponse<ITickets[]>) => res.ok),
-    //     map((res: HttpResponse<ITickets[]>) => res.body)
-    //   )
-    //   .subscribe(
-    //     (res: ITickets[]) => {
-    //       this.tickets = res;
-    //       console.log(this.tickets);
-    //     },
-    //     (res: HttpErrorResponse) => this.onError(res.message)
-    //   );
   }
 
   ngOnInit() {

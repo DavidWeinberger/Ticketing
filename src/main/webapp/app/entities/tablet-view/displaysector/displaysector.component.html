@@ -3,7 +3,8 @@
         <span *ngFor="let seats of seatArr; let b = index" class="dot"
               style="position: relative;"
               [ngStyle]="{'top': a*topSpacing+'px', 'left': (0.5+b)*sideSpacing+'px', 'width' : space+'px', 'height' : space+'px'}"
-              [style.backgroundColor]="getColor(getState(a,b))"></span>
+              [style.backgroundColor]="getColor(getState(a,b))">
+        </span>
     </div>
 </div>
 <div [ngStyle]="{'height': height+'vh'}" *ngIf="bulkTickets && tickets.length > 0" (click)="reserveBulk()">

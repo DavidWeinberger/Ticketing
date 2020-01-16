@@ -32,6 +32,7 @@ export class CollapsableTicketsComponent implements OnInit {
   activeSector: number;
   closeResult: string;
   amount: number;
+  enableReserve = false;
 
   constructor(
     protected ticketsService: TicketsService,
@@ -116,6 +117,7 @@ export class CollapsableTicketsComponent implements OnInit {
   }
 
   reserveBulk() {
+    this.enableReserve = true;
     const tempTickets = this.tickets.shift();
     this.account = this.accountService.identity().then();
     this.account.then(x => {
@@ -125,6 +127,6 @@ export class CollapsableTicketsComponent implements OnInit {
       this.cartService.create(this.cart).subscribe();
     });
     tempTickets.state = 1;
-    this.ticketsService.update(tempTickets).subscribe();
+    this.ticketsService.update(tempTickets).subscribe(x => this.enableReserve = false);
   }
 }
