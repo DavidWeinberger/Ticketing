@@ -36,6 +36,8 @@ export class JhiTrackerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.trackerService.unsubscribe();
+    if (this.trackerService) {
+      this.trackerService.unsubscribe();
+    }
   }
 }

@@ -58,10 +58,10 @@ export class NotificationService {
       this.stompClient.disconnect();
       this.stompClient = null;
     }
-    if (this.subscription) {
+    /*if (this.subscription) {
       this.subscription.unsubscribe();
       this.subscription = null;
-    }
+    }*/
     this.alreadyConnectedOnce = false;
   }
 
@@ -85,11 +85,11 @@ export class NotificationService {
     });
   }
 
-  unsubscribe() {
+  /*unsubscribe() {
     if (this.subscriber !== null) {
       this.subscriber.unsubscribe();
     }
-  }
+  }*/
 
   createListener(): Observable<any> {
     return new Observable(observer => {

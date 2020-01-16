@@ -115,15 +115,15 @@ export class CollapsableTicketsComponent implements OnInit {
   }
 
   reserveBulk() {
+    const tempTickets = this.tickets.shift();
     this.account = this.accountService.identity().then();
     this.account.then(x => {
       this.userId = Number(x.id);
       this.cart.userId = this.userId;
-      this.cart.ticketId = this.tickets[0].id;
+      this.cart.ticketId = tempTickets.id;
       this.cartService.create(this.cart).subscribe();
     });
-    this.tickets[0].state = 1;
-    this.ticketsService.update(this.tickets[0]).subscribe();
-    this.loadAll();
+    tempTickets.state = 1;
+    this.ticketsService.update(tempTickets).subscribe();
   }
 }
