@@ -14,7 +14,6 @@ export class NotificationService {
   stompClient = null;
   subscriber = null;
   connectedPromise: any;
-  subscriberDict = [];
   // listener: Observable<any>;
   listenerObserver: Observer<any>[] = [];
   currentObserver: Observer<any>;
@@ -29,7 +28,6 @@ export class NotificationService {
     private csrfService: CSRFService
   ) {
     this.connection = this.createConnection();
-    // this.listener = this.createListener();
   }
 
   connect() {
@@ -73,14 +71,10 @@ export class NotificationService {
     });
   }
 
-  subscribe() {
+  subscribe(observer: Observer<any>) {
     this.connection.then(() => {
       this.subscriber = this.stompClient.subscribe('/topic/notificationChannel', data => {
-        /* this.listenerObserver.forEach(observer => {
-          this.currentObserver = observer;
-          observer.next(data.body);
-        });*/
-        this.currentObserver.next(data.body);
+        observer.next(data.body);
       });
     });
   }
@@ -94,7 +88,8 @@ export class NotificationService {
   createListener(): Observable<any> {
     return new Observable(observer => {
       // this.listenerObserver.push(observer);
-      this.currentObserver = observer;
+      // this.currentObserver = observer;
+      this.subscribe( observer );
     });
   }
 

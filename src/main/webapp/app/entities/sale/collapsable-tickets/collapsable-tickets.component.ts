@@ -44,9 +44,10 @@ export class CollapsableTicketsComponent implements OnInit {
 
   ngOnInit() {
     this.loadAll();
+    // this.notificationService.subscribe();
     const listener = this.notificationService.createListener();
     this.notificationService.receive(listener).subscribe(msg => {
-      // console.log('Tickets');
+      console.log('Tickets');
       this.loadAll();
     });
   }
