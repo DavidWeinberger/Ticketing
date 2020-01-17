@@ -1,4 +1,5 @@
-<div *ngIf="!bulkTickets" class="one" [ngStyle]="{'height': height+'vh'}" [style.transform]="'rotate('+rotation+'deg)'" #one>
+<div *ngIf="!bulkTickets" class="one" [ngStyle]="{'height': height+'vh'}" [style.transform]="'rotate('+rotation+'deg)'"
+     #one>
     <div *ngFor="let row of rowArr; let a = index" style="line-height: 0vh;">
         <span *ngFor="let seats of seatArr; let b = index" class="dot"
               style="position: relative;"
@@ -7,9 +8,8 @@
         </span>
     </div>
 </div>
-<div [ngStyle]="{'height': height+'vh'}" *ngIf="bulkTickets && tickets.length > 0" (click)="reserveBulk()">
-    <h5 class="font-weight-bold">{{selectType(tickets[0].type)}}</h5>
-    <p class="font-weight-bold" >{{tickets.length}}/{{tickets[0].amount}}</p>
+<div class="center" [ngStyle]="{'height': height+'vh'}" *ngIf="bulkTickets && tickets.length > 0" (click)="reserveBulk()">
+    <a class="verticalCenter">{{selectType(tickets[0].type)}} <br> {{tickets.length}}/{{tickets[0].amount}}</a>
 </div>
 
 <!--"-->

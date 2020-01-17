@@ -79,7 +79,9 @@ export class DisplaysectorComponent implements OnInit {
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
-    this.cartService.findCartsByUserId(this.userId).subscribe( x => x.body.forEach(y => this.ticketIds.push(y.ticketId)));
+    if (this.userId) {
+      this.cartService.findCartsByUserId(this.userId).subscribe( x => x.body.forEach(y => this.ticketIds.push(y.ticketId)));
+    }
   }
 
   protected onError(errorMessage: string) {
@@ -148,6 +150,9 @@ export class DisplaysectorComponent implements OnInit {
   }
 
   selectType(type: number) {
+    if (Types[Types.Vip_Stehplatz] === Types[type]) {
+      return 'Vip-Stehplatz';
+    }
     return Types[type];
   }
 

@@ -1,12 +1,12 @@
 <div class="container">
     <div class="row">
-        <div class="col-sm">
+        <div class="col-sm split_left">
             <div *ngFor="let sektor of sektors" class="ticket">
                 <jhi-collapsable-tickets [sektor]="sektor"></jhi-collapsable-tickets>
             </div>
         </div>
-        <div class="col-sm">
-            <jhi-shopping-cart></jhi-shopping-cart>
+        <div class="col-sm split_right">
+            <jhi-shopping-cart class="widthOfCart"></jhi-shopping-cart>
         </div>
     </div>
     <div class="row" style="height: 50vh">

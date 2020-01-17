@@ -72,7 +72,9 @@ export class SectorsComponent implements OnInit {
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
-    this.cartService.findCartsByUserId(this.userId).subscribe( x => x.body.forEach(y => this.ticketIds.push(y.ticketId)));
+    if (this.userId) {
+      this.cartService.findCartsByUserId(this.userId).subscribe( x => x.body.forEach(y => this.ticketIds.push(y.ticketId)));
+    }
   }
 
   ngOnInit() {
@@ -120,22 +122,24 @@ export class SectorsComponent implements OnInit {
       this.reserve();
       this.ticketIds.push(this.ticket.id);
     } else if (this.ticket.state === 1) {
-      this.cartService.findCartsByUserId(this.userId).subscribe(data => {
-        // console.log(data);
-        data.body.forEach(carts => {
-          if (this.ticket.id === carts.ticketId) {
-            // console.log('found');
-            this.ticketsService
-              .find(carts.ticketId)
-              .toPromise()
-              .then(_ticket => {
-                // console.log('got ticket');
-                // console.log(_ticket);
-                this.remove(_ticket.body);
-              });
-          }
+      if (this.userId) {
+        this.cartService.findCartsByUserId(this.userId).subscribe(data => {
+          // console.log(data);
+          data.body.forEach(carts => {
+            if (this.ticket.id === carts.ticketId) {
+              // console.log('found');
+              this.ticketsService
+                .find(carts.ticketId)
+                .toPromise()
+                .then(_ticket => {
+                  // console.log('got ticket');
+                  // console.log(_ticket);
+                  this.remove(_ticket.body);
+                });
+            }
+          });
         });
-      });
+      }
     }
   }
 

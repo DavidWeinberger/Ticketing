@@ -52,20 +52,6 @@ export class ShoppingCartComponent implements OnInit {
         }
       }
     });
-    /*this.notificationService.receive().subscribe(msg => {
-      if (msg !== undefined) {
-        const parts = msg.toString().split('|');
-        if (parts.length > 1) {
-          const chunks = parts[1].split(':');
-          if (this.userId.toString() === chunks[1]) {
-            // console.log('User found');
-            this.refreshCart();
-          }
-        } else {
-          this.refreshCart();
-        }
-      }
-    });*/
   }
 
   public refreshCart() {
@@ -117,23 +103,10 @@ export class ShoppingCartComponent implements OnInit {
 
   buy() {
     this.tickets.forEach(ticket => {
-      // console.log(ticket.type);
       this.cartService.deleteByTicketId(ticket.id).subscribe();
       ticket.state = 2;
       this.ticketService.update(ticket).subscribe();
-      // console.log(this.tickets);
     });
-    // else {
-    //         this.tickets.filter( x => x.id === ticket.id).forEach( y => {
-    //           count++;
-    //         });
-    //         this.tickets = this.tickets.filter( x => x.id !== ticket.id);
-    //         ticket.seats += count;
-    //         console.log(ticket.seats);
-    //         await this.cartService.deleteByTicketId(ticket.id).subscribe();
-    //         await this.ticketService.update(ticket).subscribe();
-    //       }
-    // });
   }
 
   cancel() {

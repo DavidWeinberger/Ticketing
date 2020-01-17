@@ -6,12 +6,33 @@
   background-size: contain;
 }
 
+.widthOfCart {
+  width: 60%;
+}
+
 .ticket {
-  background: #cccccc;
+  background: #ECECEC;
   padding: 10px;
   margin: 10px;
   border-radius: 5px;
-  width: 45vh;
+  width: 70%;
   border-style: solid;
   border-width: 1px;
+}
+
+.split_left {
+  height: 80%;
+  width: 50%;
+  z-index: 1;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.split_right {
+  height: 80%;
+  width: 50%;
+  left: 10%;
+  z-index: 1;
+  overflow-x: hidden;
+  padding-top: 20px;
 }

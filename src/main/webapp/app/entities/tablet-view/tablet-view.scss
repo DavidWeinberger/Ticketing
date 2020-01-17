@@ -29,9 +29,6 @@
 }
 
 .middle {
-  background: lightblue;
-  border-style: solid;
-  border-radius: 8vh;
   width: 60vh;
   height: 40vh;
 }
@@ -41,35 +38,40 @@
 }
 
 .middleTopBottom {
-  background: lightgrey;
+  background: #ECECEC;
   width: 60vh;
   height: 20vh;
-  border-style: solid;
+  border-top-style: solid;
+  border-bottom-style: solid;
 }
 
 .leftBottomCorner {
-  background: lightgrey;
+  border-bottom-left-radius: 4vh;
+  background: #ECECEC;
   width: 20vh;
   height: 20vh;
   border-style: solid;
 }
 
 .rightBottomCorner {
-  background: lightgrey;
+  border-bottom-right-radius: 4vh;
+  background: #ECECEC;
   width: 20vh;
   height: 20vh;
   border-style: solid;
 }
 
 .leftTopCorner {
-  background: lightgrey;
+  border-top-left-radius: 4vh;
+  background: #ECECEC;
   width: 20vh;
   height: 20vh;
   border-style: solid;
 }
 
 .rightTopCorner {
-  background: lightgrey;
+  border-top-right-radius: 4vh;
+  background: #ECECEC;
   width: 20vh;
   height: 20vh;
   border-style: solid;
@@ -85,10 +87,12 @@
 }
 
 .leftAndRight {
-  background: lightgrey;
+  background: #ECECEC;
   width: 20vh;
   height: 40vh;
-  border-style: solid;
+  border-left-style: solid;
+  border-right-style: solid;
+  border-top-style: inset;
 }
 
 .modal-backdrop {
@@ -103,7 +107,7 @@
 
 .split_left {
   height: 100%;
-  width: 80%;
+  width: 75%;
   position: fixed;
   left: -50px;
   top: -20px;
@@ -115,7 +119,7 @@
 
 .split_right {
   height: 100%;
-  width: 20%;
+  width: 25%;
   z-index: 1;
   top: 0;
   overflow-x: hidden;
