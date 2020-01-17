@@ -11,5 +11,7 @@
 <div class="center" [ngStyle]="{'height': height+'vh'}" *ngIf="bulkTickets && tickets.length > 0" (click)="reserveBulk()">
     <a class="verticalCenter">{{selectType(tickets[0].type)}} <br> {{tickets.length}}/{{tickets[0].amount}}</a>
 </div>
-
+<div class="center" *ngIf="tickets.length == 0" >
+    <a class="verticalCenter">Ausverkauft</a>
+</div>
 <!--"-->
