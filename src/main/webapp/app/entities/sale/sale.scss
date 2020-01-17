@@ -15,14 +15,14 @@
   padding: 10px;
   margin: 10px;
   border-radius: 5px;
-  width: 70%;
+  width: 75%;
   border-style: solid;
   border-width: 1px;
 }
 
 .split_left {
   height: 80%;
-  width: 50%;
+  width: 60%;
   z-index: 1;
   overflow-x: hidden;
   padding-top: 20px;
@@ -30,7 +30,7 @@
 
 .split_right {
   height: 80%;
-  width: 50%;
+  width: 40%;
   left: 10%;
   z-index: 1;
   overflow-x: hidden;
